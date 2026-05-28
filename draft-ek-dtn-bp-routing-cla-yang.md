@@ -47,7 +47,6 @@ informative:
   RFC5326:
   RFC9675:
   I-D.ietf-dtn-bibect:
-  I-D.ietf-dtn-btpu:
 
 --- abstract
 
@@ -210,9 +209,9 @@ augment individual CLA list entries.
 | ietf-dtn-bp    |   | (others)    |
 | /bp:bp         |   |             |
 +----------------+   +-------------+
-        ^                 
-        | augment         
-        |                 
+        ^
+        | augment
+        |
    +----+------------------+
    |                       |
 +--+-------------+    +----+-----------+
@@ -1430,13 +1429,6 @@ module ietf-dtn-cla {
     reference "I-D.ietf-dtn-bibect";
   }
 
-  identity cla-btpu {
-    base cla-type;
-    description
-      "Bundle Transfer Protocol - Unidirectional.";
-    reference "I-D.ietf-dtn-btpu";
-  }
-
   identity cla-direction {
     description
       "Base identity for the directional capability of a CLA
@@ -2082,3 +2074,4 @@ The following issues are flagged for working group discussion:
    FIB construction.  Real deployments will need explicit
    semantics; whether to define these in this document or defer to
    a companion document is open.
+
