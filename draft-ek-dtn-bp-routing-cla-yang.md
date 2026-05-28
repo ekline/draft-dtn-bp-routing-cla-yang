@@ -243,9 +243,10 @@ semantics of EID patterns are defined in {{I-D.ietf-dtn-eid-pattern}}.
 
 A BPA's administrative endpoint EIDs are listed in
 `/bp:bp/admin-endpoint-eid`.  Each entry MUST be an Administrative
-Endpoint EID as defined in Section 4.2.5.2 of {{RFC9171}}: for the `dtn`
-scheme this is the node ID itself; for the `ipn` scheme this is the
-EID with service number 0 (e.g., `ipn:974848.5.0`), per {{RFC9758}}.
+Endpoint EID as defined in Sections 3.2 and 4.2.5.2 of {{RFC9171}}:
+for the `dtn` scheme this is the node ID itself; for the `ipn` scheme
+this is the EID with service number 0 (e.g., `ipn:974848.5.0`), per
+{{RFC9758}} Sections 5.3 and 5.7.
 Any EID whose scheme-specific node component matches the node
 component of an entry in this list is considered local to the BPA
 and is subject to local delivery rather than forwarding.
@@ -575,7 +576,7 @@ module ietf-dtn-types {
        RFC 9758.";
     reference
       "RFC 9171, Section 4.2.5.1.2;
-       RFC 9758";
+       RFC 9758, Section 5.3";
   }
 
   /* -------------------- Typedefs -------------------- */
@@ -608,7 +609,7 @@ module ietf-dtn-types {
        admitted here.";
     reference
       "RFC 9171, Section 4.2.5.1;
-       RFC 9758";
+       RFC 9758, Section 5.3";
   }
 
   typedef eid-pattern {
@@ -703,7 +704,8 @@ module ietf-dtn-bp {
       type dtn-types:eid;
       description
         "An Administrative Endpoint EID of this Bundle Protocol
-         Agent (BPA), as defined in Section 4.2.5.2 of RFC 9171.
+         Agent (BPA), as defined in Sections 3.2 and 4.2.5.2 of
+         RFC 9171.
 
          Each entry MUST be an Administrative Endpoint EID for
          its scheme.  For the 'dtn' scheme, the administrative
@@ -711,7 +713,9 @@ module ietf-dtn-bp {
          authority component and an empty path, e.g.,
          'dtn://example/').  For the 'ipn' scheme, the
          administrative endpoint EID is the EID with service
-         number 0 (e.g., 'ipn:974848.5.0'), per RFC 9758.
+         number 0 (e.g., 'ipn:974848.5.0'), per RFC 9758
+         Sections 5.3 (ipn node-number semantics) and 5.7
+         (administrative endpoint determinism).
          This module cannot enforce scheme-specific format
          constraints in YANG; implementations MUST validate
          that each configured EID satisfies the administrative
@@ -733,8 +737,8 @@ module ietf-dtn-bp {
          permit a configured-but-disabled BPA to exist
          transiently with no entries declared.";
       reference
-        "RFC 9171, Section 4.2.5.1 and Section 4.2.5.2;
-         RFC 9758";
+        "RFC 9171, Sections 3.2 and 4.2.5.2;
+         RFC 9758, Sections 5.3 and 5.7";
     }
 
     leaf primary-admin-eid {
