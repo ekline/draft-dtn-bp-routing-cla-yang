@@ -4,15 +4,32 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>TODO - Your title</title>
+<title>YANG Data Models for Bundle Protocol Routing and Convergence Layers</title>
 <meta content="Erik Kline" name="author">
 <meta content="
-       TODO Abstract 
+       This document defines YANG data models for two aspects of a Bundle
+Protocol Agent (BPA): the routing information base (RIB) and forwarding
+information base (FIB) used to direct bundles toward their destinations,
+and the convergence layer adapters (CLAs) that exchange bundles with
+peer BPAs.  A minimal companion module defines the BPA's node
+identifiers, providing a common augmentation point for the routing and
+CLA modules. 
+       A complete YANG data model for a Bundle Protocol Agent (covering
+fragmentation, reassembly, status report generation, endpoint
+registration, storage management, CRC handling, and BPSec policy) is
+explicitly out of scope for this document and is expected to be
+addressed by a forthcoming companion document, structured as an
+additive revision of the minimal BPA module defined here. 
     " name="description">
 <meta content="xml2rfc 3.33.0" name="generator">
-<meta content="Bundle Routing" name="keyword">
-<meta content="Convergence Layer Adapter Forwarding" name="keyword">
-<meta content="DTN Neighbors" name="keyword">
+<meta content="DTN" name="keyword">
+<meta content="Bundle Protocol" name="keyword">
+<meta content="BPv7" name="keyword">
+<meta content="YANG" name="keyword">
+<meta content="RIB" name="keyword">
+<meta content="FIB" name="keyword">
+<meta content="Convergence Layer" name="keyword">
+<meta content="TCPCLv4" name="keyword">
 <meta content="draft-ek-dtn-bp-routing-cla-yang-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.33.0
@@ -1044,7 +1061,7 @@ svg {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">TODO - Abbreviation</td>
+<td class="center">BP Routing and CLA YANG</td>
 <td class="right">May 2026</td>
 </tr></thead>
 <tfoot><tr>
@@ -1057,7 +1074,7 @@ svg {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">DTN Working Group</dd>
+<dd class="workgroup">Delay-Tolerant Networking</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
 <dd class="internet-draft">draft-ek-dtn-bp-routing-cla-yang-latest</dd>
 <dt class="label-published">Published:</dt>
@@ -1065,38 +1082,34 @@ svg {
 <time datetime="2026-05-28" class="published">28 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
-<dd class="intended-status">Informational</dd>
+<dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
 <dd class="expires"><time datetime="2026-11-29">29 November 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
       <div class="author-name">E. Kline</div>
-<div class="org">Aalyria Technologies, Inc.</div>
+<div class="org">Aalyria Technologies</div>
 </div>
 </dd>
 </dl>
 </div>
-<h1 id="title">TODO - Your title</h1>
+<h1 id="title">YANG Data Models for Bundle Protocol Routing and Convergence Layers</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-</section>
-<section class="note rfcEditorRemove" id="section-note.1">
-      <h2 id="name-about-this-document">
-<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
-      </h2>
-<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
-<p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://example.com/LATEST">https://example.com/LATEST</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-ek-dtn-bp-routing-cla-yang/">https://datatracker.ietf.org/doc/draft-ek-dtn-bp-routing-cla-yang/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
-<p id="section-note.1-3">
-        Discussion of this document takes place on the
-        DTN Working Group mailing list (<span><a href="mailto:dtn@ietf.org">mailto:dtn@ietf.org</a></span>),
-        which is archived at <span><a href="https://example.com/WG">https://example.com/WG</a></span>.
-        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/dtn/">https://www.ietf.org/mailman/listinfo/dtn/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
-<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/USER/REPO">https://github.com/USER/REPO</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines YANG data models for two aspects of a Bundle
+Protocol Agent (BPA): the routing information base (RIB) and forwarding
+information base (FIB) used to direct bundles toward their destinations,
+and the convergence layer adapters (CLAs) that exchange bundles with
+peer BPAs.  A minimal companion module defines the BPA's node
+identifiers, providing a common augmentation point for the routing and
+CLA modules.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">A complete YANG data model for a Bundle Protocol Agent (covering
+fragmentation, reassembly, status report generation, endpoint
+registration, storage management, CRC handling, and BPSec policy) is
+explicitly out of scope for this document and is expected to be
+addressed by a forthcoming companion document, structured as an
+additive revision of the minimal BPA module defined here.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1147,25 +1160,115 @@ svg {
         </h2>
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
-            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-scope" class="internal xref">Scope</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-non-goals" class="internal xref">Non-Goals</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3">
+                <p id="section-toc.1-1.1.2.3.1" class="keepWithNext"><a href="#section-1.3" class="auto internal xref">1.3</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4">
+                <p id="section-toc.1-1.1.2.4.1"><a href="#section-1.4" class="auto internal xref">1.4</a>.  <a href="#name-tree-diagram-notation" class="internal xref">Tree Diagram Notation</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-architectural-overview" class="internal xref">Architectural Overview</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-module-structure" class="internal xref">Module Structure</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-endpoint-identifiers" class="internal xref">Endpoint Identifiers</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-relationship-to-rfc-8349" class="internal xref">Relationship to RFC 8349</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
+                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="auto internal xref">2.4</a>.  <a href="#name-route-selection-algorithm" class="internal xref">Route Selection Algorithm</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5">
+                <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="auto internal xref">2.5</a>.  <a href="#name-forward-compatibility" class="internal xref">Forward Compatibility</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-module-tree-diagrams" class="internal xref">Module Tree Diagrams</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-ietf-dtn-bp" class="internal xref">ietf-dtn-bp</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-ietf-dtn-bp-routing" class="internal xref">ietf-dtn-bp-routing</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-ietf-dtn-cla" class="internal xref">ietf-dtn-cla</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-ietf-dtn-cla-tcpclv4" class="internal xref">ietf-dtn-cla-tcpclv4</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-yang-modules" class="internal xref">YANG Modules</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-ietf-dtn-types" class="internal xref">ietf-dtn-types</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-ietf-dtn-bp-2" class="internal xref">ietf-dtn-bp</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-ietf-dtn-bp-routing-2" class="internal xref">ietf-dtn-bp-routing</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
+                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="auto internal xref">4.4</a>.  <a href="#name-ietf-dtn-cla-2" class="internal xref">ietf-dtn-cla</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5">
+                <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="auto internal xref">4.5</a>.  <a href="#name-ietf-dtn-cla-tcpclv4-2" class="internal xref">ietf-dtn-cla-tcpclv4</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-worked-examples" class="internal xref">Worked Examples</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-static-route-via-peer-eid" class="internal xref">Static Route via Peer EID</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-ecmp-across-two-clas" class="internal xref">ECMP across Two CLAs</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-open-issues" class="internal xref">Open Issues</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1176,69 +1279,2322 @@ svg {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">The Bundle Protocol version 7 (BPv7) <span>[<a href="#RFC9171" class="cite xref">RFC9171</a>]</span> provides delay- and
+disruption-tolerant data transfer across a heterogeneous internetwork
+of nodes connected by potentially intermittent links.  A Bundle
+Protocol Agent (BPA) is the software entity at a node that originates,
+forwards, and delivers bundles; it does so by consulting a routing
+information base (RIB), selecting a route from a forwarding
+information base (FIB) derived from that RIB, and handing matching
+bundles to a convergence layer adapter (CLA) that implements bundle
+transfer over an underlying transport.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">To date, the IETF has produced numerous specifications describing how
+BPAs interoperate, but no standardized YANG <span>[<a href="#RFC7950" class="cite xref">RFC7950</a>]</span> data model
+exists for managing BPAs through NETCONF <span>[<a href="#RFC6241" class="cite xref">RFC6241</a>]</span>, RESTCONF
+<span>[<a href="#RFC8040" class="cite xref">RFC8040</a>]</span>, or other YANG-driven mechanisms.  Operators deploying
+BPAs across diverse hardware and software platforms have therefore
+relied on implementation-specific configuration interfaces, hindering
+multi-vendor interoperability and operational uniformity.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">This document begins addressing that gap by defining YANG models for
+the routing and convergence-layer aspects of a BPA.  These are the
+two subsystems most directly involved in determining how bundles flow
+through a DTN, and they are also the two subsystems where
+multi-vendor operational consistency is most urgently needed.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<div id="scope">
+<section id="section-1.1">
+        <h3 id="name-scope">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-scope" class="section-name selfRef">Scope</a>
+        </h3>
+<p id="section-1.1-1">This document defines five YANG modules:<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.1-2.1">
+            <p id="section-1.1-2.1.1"><code>ietf-dtn-types</code> — common types and identities for DTN YANG
+modules, including the Endpoint Identifier (EID) type and the EID
+scheme identity hierarchy.<a href="#section-1.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.2">
+            <p id="section-1.1-2.2.1"><code>ietf-dtn-bp</code> — a minimal BPA model containing only the BPA's node
+identifiers, providing a common augmentation point (<code>/bp:bp</code>) for
+other DTN YANG modules.<a href="#section-1.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.3">
+            <p id="section-1.1-2.3.1"><code>ietf-dtn-bp-routing</code> — the routing information base (RIB) and
+forwarding information base (FIB), structured along the lines of
+<span>[<a href="#RFC8349" class="cite xref">RFC8349</a>]</span> but adapted to the EID-based naming and CLA-based
+next-hop resolution of the Bundle Protocol.<a href="#section-1.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.4">
+            <p id="section-1.1-2.4.1"><code>ietf-dtn-cla</code> — base configuration and operational state for
+convergence layer adapters, with provision for CLA-type-specific
+augmentation.<a href="#section-1.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.5">
+            <p id="section-1.1-2.5.1"><code>ietf-dtn-cla-tcpclv4</code> — an illustrative augmentation of the base
+CLA module with TCPCLv4-specific configuration <span>[<a href="#RFC9174" class="cite xref">RFC9174</a>]</span>.
+Analogous augmentation modules can be defined for other CLA types.<a href="#section-1.1-2.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
-<div id="conventions-and-definitions">
-<section id="section-2">
-      <h2 id="name-conventions-and-definitions">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
-      </h2>
-<p id="section-2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+<div id="non-goals">
+<section id="section-1.2">
+        <h3 id="name-non-goals">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-non-goals" class="section-name selfRef">Non-Goals</a>
+        </h3>
+<p id="section-1.2-1">The following are explicitly out of scope for this document:<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.2-2.1">
+            <p id="section-1.2-2.1.1"><strong>Complete BPA modeling.</strong>  Configuration of fragmentation,
+reassembly, status report generation, endpoint registration,
+storage management, CRC handling, and BPSec policy are deferred
+to a future revision of the <code>ietf-dtn-bp</code> module.  The skeleton
+defined here is intentionally minimal so that the future revision
+can be purely additive.<a href="#section-1.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-2.2">
+            <p id="section-1.2-2.2.1"><strong>Contact Graph Routing (CGR) and other dynamic routing
+protocols.</strong>  This document defines static routing only.  The
+<code>routing-protocol-type</code> identity defined herein is the
+extensibility hook for future routing protocol modules.  A
+companion CGR YANG module, including contact plan modeling, is
+envisioned as separate future work.<a href="#section-1.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-2.3">
+            <p id="section-1.2-2.3.1"><strong>Policy-based routing on criteria other than destination EID.</strong>
+Source-EID matching, extension-block matching (e.g., for QoS
+blocks), and other policy criteria are anticipated as future
+augmentations of the route <code>match</code> container defined here.  The
+schema is structured to make such extensions purely additive.<a href="#section-1.2-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-2.4">
+            <p id="section-1.2-2.4.1"><strong>Endpoint registration and local delivery configuration.</strong>  These
+are anticipated for a companion delivery-management module.<a href="#section-1.2-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-2.5">
+            <p id="section-1.2-2.5.1"><strong>Application-level interfaces.</strong>  Application-to-BPA APIs are
+outside the IETF YANG modeling scope.<a href="#section-1.2-2.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="terminology">
+<section id="section-1.3">
+        <h3 id="name-terminology">
+<a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
+        </h3>
+<p id="section-1.3-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+appear in all capitals, as shown here.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+<p id="section-1.3-2">This document uses the terminology of <span>[<a href="#RFC9171" class="cite xref">RFC9171</a>]</span> for Bundle Protocol
+concepts (bundle, BPA, EID, convergence layer, administrative
+endpoint, etc.) and the terminology of <span>[<a href="#RFC7950" class="cite xref">RFC7950</a>]</span> for YANG
+concepts (module, container, list, leaf, leafref, identity,
+augmentation, etc.).<a href="#section-1.3-2" class="pilcrow">¶</a></p>
+<p id="section-1.3-3">The following additional terms are used:<a href="#section-1.3-3" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-1.3-4">
+          <dt id="section-1.3-4.1">EID pattern:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.3-4.2">
+            <p id="section-1.3-4.2.1">A string that matches a set of EIDs, as defined in
+<span>[<a href="#I-D.ietf-dtn-eid-pattern" class="cite xref">I-D.ietf-dtn-eid-pattern</a>]</span>.<a href="#section-1.3-4.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.3-4.3">Route:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.3-4.4">
+            <p id="section-1.3-4.4.1">A configured or computed association between a set of bundles
+(described by match criteria) and a forwarding action (described
+by a next hop and optional forwarding policy).<a href="#section-1.3-4.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.3-4.5">Equal-cost group:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.3-4.6">
+            <p id="section-1.3-4.6.1">The set of routes that are applicable to a given bundle and that
+share the same preference value.  Selection within an equal-cost
+group is governed by the routes' forwarding-policy mode.<a href="#section-1.3-4.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.3-4.7">Forwarding-policy mode:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.3-4.8">
+            <p id="section-1.3-4.8.1">A property of a route describing how the BPA selects among
+multiple applicable routes in the same equal-cost group.  Modes
+defined here include <code>mode-none</code> (deterministic selection),
+<code>mode-ecmp</code> (equal-cost multipath), and <code>mode-ucmp</code> (weighted
+multipath).<a href="#section-1.3-4.8.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="tree-diagram-notation">
+<section id="section-1.4">
+        <h3 id="name-tree-diagram-notation">
+<a href="#section-1.4" class="section-number selfRef">1.4. </a><a href="#name-tree-diagram-notation" class="section-name selfRef">Tree Diagram Notation</a>
+        </h3>
+<p id="section-1.4-1">Tree diagrams in this document use the notation defined in
+<span>[<a href="#RFC8340" class="cite xref">RFC8340</a>]</span>.<a href="#section-1.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="architectural-overview">
+<section id="section-2">
+      <h2 id="name-architectural-overview">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-architectural-overview" class="section-name selfRef">Architectural Overview</a>
+      </h2>
+<div id="module-structure">
+<section id="section-2.1">
+        <h3 id="name-module-structure">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-module-structure" class="section-name selfRef">Module Structure</a>
+        </h3>
+<p id="section-2.1-1">The five modules defined here are organized around a common
+augmentation point.  The minimal <code>ietf-dtn-bp</code> module defines the
+top-level <code>/bp:bp</code> container with only the BPA's node identifiers as
+direct children.  The routing and CLA modules each augment <code>/bp:bp</code>
+with their respective subtrees.  CLA-type-specific modules in turn
+augment individual CLA list entries.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.1-2">
+<pre>
++---------------------+
+| ietf-dtn-types      |   (typedefs, identities)
++---------------------+
+            ^  ^  ^
+            |  |  |
+   +--------+  |  +---------+
+   |           |            |
++--+-------------+   +------+------+
+| ietf-dtn-bp    |   | (others)    |
+| /bp:bp         |   |             |
++----------------+   +-------------+
+        ^
+        | augment
+        |
+   +----+------------------+
+   |                       |
++--+-------------+    +----+-----------+
+| ietf-dtn-bp-   |    | ietf-dtn-cla   |
+| routing        |    |                |
++----------------+    +----------------+
+                              ^
+                              | augment
+                              |
+                      +-------+--------+
+                      | ietf-dtn-cla-  |
+                      | tcpclv4 (and   |
+                      | other type-    |
+                      | specific       |
+                      | modules)       |
+                      +----------------+
+</pre><a href="#section-2.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-2.1-3">This structure allows the future BPA-completion document to revise
+<code>ietf-dtn-bp</code> additively (introducing fragmentation, reassembly,
+storage, etc., as new children of <code>/bp:bp</code> or as new sibling
+containers) without disturbing the routing or CLA modules.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="endpoint-identifiers">
+<section id="section-2.2">
+        <h3 id="name-endpoint-identifiers">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-endpoint-identifiers" class="section-name selfRef">Endpoint Identifiers</a>
+        </h3>
+<p id="section-2.2-1">Endpoint Identifiers (EIDs) are represented in this model as strings,
+following the URI form mandated by <span>[<a href="#RFC9171" class="cite xref">RFC9171</a>]</span>.  The <code>ietf-dtn-types</code>
+module defines a permissive <code>eid</code> typedef that accepts any URI-form
+string within length bounds.  Scheme-specific validation (notably
+the <code>ipn</code> scheme as updated by <span>[<a href="#RFC9758" class="cite xref">RFC9758</a>]</span>) is left to
+implementations.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">EID patterns, used to specify the set of EIDs matched by a route,
+are defined as a separate <code>eid-pattern</code> typedef.  The grammar and
+semantics of EID patterns are defined in <span>[<a href="#I-D.ietf-dtn-eid-pattern" class="cite xref">I-D.ietf-dtn-eid-pattern</a>]</span>.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">A BPA's node IDs, exposed via the <code>/bp:bp/node-id</code> leaf-list, also
+identify the BPA's administrative endpoints per Section 6.1 of
+<span>[<a href="#RFC9171" class="cite xref">RFC9171</a>]</span>.  For the <code>dtn</code> scheme, the node ID and the
+administrative endpoint EID are identical.  For the <code>ipn</code> scheme,
+the administrative endpoint is the EID with service number 0 sharing
+the same node component (per <span>[<a href="#RFC9758" class="cite xref">RFC9758</a>]</span>).  Any EID whose
+scheme-specific node component matches the node component of an
+entry in the <code>node-id</code> list is considered local to the BPA and is
+subject to local delivery rather than forwarding.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="relationship-to-rfc-8349">
+<section id="section-2.3">
+        <h3 id="name-relationship-to-rfc-8349">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-relationship-to-rfc-8349" class="section-name selfRef">Relationship to RFC 8349</a>
+        </h3>
+<p id="section-2.3-1">The routing module follows the broad structure of <span>[<a href="#RFC8349" class="cite xref">RFC8349</a>]</span>:<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.3-2.1">
+            <p id="section-2.3-2.1.1">A <code>control-plane-protocols/control-plane-protocol</code> list keyed by
+protocol type and instance name, providing the extensibility
+point for adding routing protocols (static routing here; CGR and
+others in future modules).<a href="#section-2.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.3-2.2">
+            <p id="section-2.3-2.2.1">A <code>ribs/rib</code> list for the RIBs maintained by configured
+protocols, with operational <code>routes</code> lists populated from each
+RIB.<a href="#section-2.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.3-2.3">
+            <p id="section-2.3-2.3.1">A <code>fib</code> container exposing the routes currently selected for
+forwarding.<a href="#section-2.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-2.3-3">The routing module diverges from <span>[<a href="#RFC8349" class="cite xref">RFC8349</a>]</span> in three ways:<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-2.3-4">
+<li id="section-2.3-4.1">
+            <p id="section-2.3-4.1.1"><strong>Route keying.</strong>  Static routes are keyed by an administrative
+<code>name</code>, not by destination prefix.  This admits future
+augmentations that match on criteria other than destination
+(source EID, extension blocks, etc.) without disturbing the
+schema.<a href="#section-2.3-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-2.3-4.2">
+            <p id="section-2.3-4.2.1"><strong>Match expressed as a container.</strong>  Each static route contains
+a <code>match</code> container holding match criteria.  This revision
+defines a single criterion (<code>destination-eid-pattern</code>); future
+companion documents are expected to augment the <code>match</code>
+container additively.<a href="#section-2.3-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-2.3-4.3">
+            <p id="section-2.3-4.3.1"><strong>Explicit FIB.</strong>  A <code>fib</code> container is provided as operational
+state separate from the RIB.  The BPA's route selection
+algorithm (see <a href="#route-selection" class="auto internal xref">Section 2.4</a>) determines FIB membership
+from RIB content; this can differ from per-RIB best-route
+selection alone, especially once policy-based matching extends
+the model.<a href="#section-2.3-4.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+</section>
+</div>
+<div id="route-selection">
+<section id="section-2.4">
+        <h3 id="name-route-selection-algorithm">
+<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-route-selection-algorithm" class="section-name selfRef">Route Selection Algorithm</a>
+        </h3>
+<p id="section-2.4-1">A BPA, given a bundle to forward, performs route selection as
+follows.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-2.4-2">
+<li id="section-2.4-2.1">
+            <p id="section-2.4-2.1.1">The BPA constructs a <em>candidate list</em> by enumerating all routes
+across all configured RIBs in ascending order of <code>preference</code>.
+Ties in preference are broken by route <code>name</code> in lexicographic
+order, for determinism.<a href="#section-2.4-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-2.4-2.2">
+            <p id="section-2.4-2.2.1">The BPA walks the candidate list.  For each route, it evaluates
+all leaves and child containers within the route's <code>match</code>
+container against the bundle.  A route is <em>applicable</em> if and
+only if every match criterion is satisfied.<a href="#section-2.4-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-2.4-2.3">
+            <p id="section-2.4-2.3.1">The BPA locates the <em>equal-cost group</em>: the maximal set of
+applicable routes that share the same <code>preference</code> value,
+beginning at the first applicable route found in step 2.<a href="#section-2.4-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-2.4-2.4">
+            <p id="section-2.4-2.4.1">If the equal-cost group contains exactly one route, the BPA
+forwards the bundle via that route's <code>next-hop</code>.<a href="#section-2.4-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-2.4-2.5">
+            <p id="section-2.4-2.5.1">If the equal-cost group contains more than one route, the BPA
+selects among them according to the <code>forwarding-policy/mode</code> of
+the routes in the group:<a href="#section-2.4-2.5.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.4-2.5.2.1">
+                <p id="section-2.4-2.5.2.1.1"><code>mode-none</code>: the BPA selects one route deterministically
+(e.g., the lexicographically first by <code>name</code>) and uses it
+for every bundle that matches.<a href="#section-2.4-2.5.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-2.4-2.5.2.2">
+                <p id="section-2.4-2.5.2.2.1"><code>mode-ecmp</code>: the BPA distributes bundles across the routes in
+the group by hashing the tuple specified by <code>hash-input</code>
+(defaulting to <code>(source EID, destination EID)</code>).<a href="#section-2.4-2.5.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-2.4-2.5.2.3">
+                <p id="section-2.4-2.5.2.3.1"><code>mode-ucmp</code>: the BPA distributes bundles across the routes in
+the group in proportion to their configured <code>weight</code> values,
+normalized within the group.<a href="#section-2.4-2.5.2.3.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-2.4-2.5.3">
+Routes in the same equal-cost group <span class="bcp14">SHOULD</span> have identical
+<code>forwarding-policy</code> configuration.  If they differ, the BPA <span class="bcp14">MUST</span>
+treat the group as if <code>mode-none</code> were in effect and select the
+first applicable route by <code>name</code>.<a href="#section-2.4-2.5.3" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-2.4-2.6">
+            <p id="section-2.4-2.6.1">The schema does not enforce non-overlapping match criteria.
+Operators are responsible for ordering routes by <code>preference</code>
+such that the intended forwarding policy is expressed by step 2.<a href="#section-2.4-2.6.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+<p id="section-2.4-3">Future companion documents defining new forwarding-policy modes
+(notably modes that replicate a bundle across multiple routes in a
+group) <span class="bcp14">MUST</span> specify the interaction of the new mode with primary-
+block flags (custody transfer, deletion-on-forward, do-not-fragment)
+and with BPSec security blocks.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="forward-compatibility">
+<section id="section-2.5">
+        <h3 id="name-forward-compatibility">
+<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-forward-compatibility" class="section-name selfRef">Forward Compatibility</a>
+        </h3>
+<p id="section-2.5-1">Three points in the schema are explicitly reserved as augmentation
+hooks for future work:<a href="#section-2.5-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.5-2.1">
+            <p id="section-2.5-2.1.1">The <code>match</code> container under each static route.  Future modules
+add policy criteria (source EID, extension block matching, etc.)
+by augmenting <code>match</code> additively.<a href="#section-2.5-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.5-2.2">
+            <p id="section-2.5-2.2.1">The <code>mode-parameters</code> choice under each route's
+<code>forwarding-policy</code> container.  New forwarding modes derived
+from <code>forwarding-policy-mode</code> add their parameters as new cases.<a href="#section-2.5-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.5-2.3">
+            <p id="section-2.5-2.3.1">The <code>active-contact-info</code> container under each CLA's <code>state</code>
+container.  Future contact-plan modules augment this container
+with operational state describing the currently-active contact
+bound to the CLA, if any.<a href="#section-2.5-2.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="module-tree-diagrams">
+<section id="section-3">
+      <h2 id="name-module-tree-diagrams">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-module-tree-diagrams" class="section-name selfRef">Module Tree Diagrams</a>
+      </h2>
+<div id="ietf-dtn-bp">
+<section id="section-3.1">
+        <h3 id="name-ietf-dtn-bp">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-ietf-dtn-bp" class="section-name selfRef">ietf-dtn-bp</a>
+        </h3>
+<div class="alignLeft art-text artwork" id="section-3.1-1">
+<pre>
+module: ietf-dtn-bp
+  +--rw bp
+     +--rw node-id*           dtn-types:eid
+     +--rw primary-node-id?   -&gt; ../node-id
+</pre><a href="#section-3.1-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="ietf-dtn-bp-routing">
+<section id="section-3.2">
+        <h3 id="name-ietf-dtn-bp-routing">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-ietf-dtn-bp-routing" class="section-name selfRef">ietf-dtn-bp-routing</a>
+        </h3>
+<div class="alignLeft art-text artwork" id="section-3.2-1">
+<pre>
+module: ietf-dtn-bp-routing
+
+  augment /bp:bp:
+    +--rw routing
+       +--rw control-plane-protocols
+       |  +--rw control-plane-protocol* [type name]
+       |     +--rw type           identityref
+       |     +--rw name           string
+       |     +--rw description?   string
+       |     +--rw static-routes
+       |        +--rw route* [name]
+       |           +--rw name                 string
+       |           +--rw preference?          uint32
+       |           +--rw match
+       |           |  +--rw destination-eid-pattern
+       |           |          dtn-types:eid-pattern
+       |           +--rw next-hop
+       |           |  +--rw next-hop-type    identityref
+       |           |  +--rw (next-hop-resolution)?
+       |           |     +--:(eid)
+       |           |     |  +--rw next-hop-eid       dtn-types:eid
+       |           |     +--:(cla)
+       |           |     |  +--rw cla-binding
+       |           |     |          -&gt; /bp:bp/cla:convergence-layers
+       |           |     |             /cla:cla/cla:name
+       |           |     +--:(multicast)
+       |           |        +--rw multicast-member*  dtn-types:eid
+       |           +--rw forwarding-policy
+       |              +--rw mode?              identityref
+       |              +--rw (mode-parameters)?
+       |                 +--:(ecmp)
+       |                 |  +--rw hash-input?  identityref
+       |                 +--:(ucmp)
+       |                    +--rw weight       uint32
+       +--rw ribs
+       |  +--rw rib* [name]
+       |     +--rw name           string
+       |     +--rw description?   string
+       |     +--ro routes
+       |        +--ro route* [name]
+       |           +--ro name                       string
+       |           +--ro source-protocol?           leafref
+       |           +--ro preference?                uint32
+       |           +--ro destination-eid-pattern?
+       |           |        dtn-types:eid-pattern
+       |           +--ro installed-time?            yang:date-and-time
+       +--ro fib
+          +--ro entry* [name]
+             +--ro name                       string
+             +--ro rib?                       leafref
+             +--ro destination-eid-pattern?   dtn-types:eid-pattern
+             +--ro next-hop-eid?              dtn-types:eid
+             +--ro cla-binding?               leafref
+             +--ro selected-at?               yang:date-and-time
+             +--ro statistics
+                +--ro bundles-forwarded?     yang:counter64
+                +--ro bytes-forwarded?       yang:counter64
+                +--ro forwarding-failures?   yang:counter64
+</pre><a href="#section-3.2-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="ietf-dtn-cla">
+<section id="section-3.3">
+        <h3 id="name-ietf-dtn-cla">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-ietf-dtn-cla" class="section-name selfRef">ietf-dtn-cla</a>
+        </h3>
+<div class="alignLeft art-text artwork" id="section-3.3-1">
+<pre>
+module: ietf-dtn-cla
+
+  augment /bp:bp:
+    +--rw convergence-layers
+       +--rw cla* [name]
+          +--rw name                  string
+          +--rw type                  identityref
+          +--rw enabled?              boolean
+          +--rw direction?            identityref
+          +--rw local-eid?            -&gt; /bp:bp/node-id
+          +--rw bound-interface*      if:interface-ref
+          +--rw mtu?                  uint64
+          +--rw peer* [peer-eid]
+          |  +--rw peer-eid    dtn-types:eid
+          |  +--rw address?    string
+          |  +--ro source*     identityref
+          +--ro state
+             +--ro oper-status?         identityref
+             +--ro last-state-change?   yang:date-and-time
+             +--ro active-peers?        yang:gauge32
+             +--ro bundles-tx?          yang:counter64
+             +--ro bundles-rx?          yang:counter64
+             +--ro bytes-tx?            yang:counter64
+             +--ro bytes-rx?            yang:counter64
+             +--ro active-contact-info
+</pre><a href="#section-3.3-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="ietf-dtn-cla-tcpclv4">
+<section id="section-3.4">
+        <h3 id="name-ietf-dtn-cla-tcpclv4">
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-ietf-dtn-cla-tcpclv4" class="section-name selfRef">ietf-dtn-cla-tcpclv4</a>
+        </h3>
+<div class="alignLeft art-text artwork" id="section-3.4-1">
+<pre>
+module: ietf-dtn-cla-tcpclv4
+
+  augment /bp:bp/cla:convergence-layers/cla:cla:
+    +--rw tcpclv4
+       +--rw listener* [local-address local-port]
+       |  +--rw local-address    inet:ip-address
+       |  +--rw local-port       inet:port-number
+       +--rw segment-mru?         uint64
+       +--rw transfer-mru?        uint64
+       +--rw keepalive-interval?  uint16
+       +--rw idle-timeout?        uint16
+       +--rw tls
+          +--rw require?            boolean
+          +--rw min-version?        enumeration
+          +--rw cipher-suite*       string
+          +--rw node-certificate?   string
+</pre><a href="#section-3.4-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="yang-modules">
+<section id="section-4">
+      <h2 id="name-yang-modules">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-yang-modules" class="section-name selfRef">YANG Modules</a>
+      </h2>
+<div id="ietf-dtn-types">
+<section id="section-4.1">
+        <h3 id="name-ietf-dtn-types">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-ietf-dtn-types" class="section-name selfRef">ietf-dtn-types</a>
+        </h3>
+<div class="breakable lang-yang sourcecode" id="section-4.1-1">
+<pre>
+&lt;CODE BEGINS&gt; file "ietf-dtn-types@2026-05-27.yang"
+module ietf-dtn-types {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:ietf-dtn-types";
+  prefix dtn-types;
+
+  organization
+    "IETF Delay-Tolerant Networking (DTN) Working Group";
+
+  contact
+    "WG Web:   &lt;https://datatracker.ietf.org/wg/dtn/&gt;
+     WG List:  &lt;mailto:dtn@ietf.org&gt;";
+
+  description
+    "This module defines common YANG types and identities used by
+     other Delay-Tolerant Networking (DTN) YANG modules.
+
+     Copyright (c) 2026 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
+     to the license terms contained in, the Revised BSD License
+     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX
+     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC
+     itself for full legal notices.";
+
+  revision 2026-05-27 {
+    description
+      "Initial revision.";
+    reference
+      "RFC XXXX: YANG Data Models for Bundle Protocol Routing
+                and Convergence Layers";
+  }
+
+  /* -------------------- Identities -------------------- */
+
+  identity eid-scheme {
+    description
+      "Base identity for URI schemes used in Bundle Protocol
+       Endpoint Identifiers (EIDs).  Derived identities correspond
+       to specific schemes registered for use in BP EIDs.";
+    reference
+      "RFC 9171, Section 4.2.5.1";
+  }
+
+  identity scheme-dtn {
+    base eid-scheme;
+    description
+      "The 'dtn' URI scheme for Bundle Protocol Endpoint
+       Identifiers.";
+    reference
+      "RFC 9171, Section 4.2.5.1.1";
+  }
+
+  identity scheme-ipn {
+    base eid-scheme;
+    description
+      "The 'ipn' URI scheme for Bundle Protocol Endpoint
+       Identifiers, with textual representation as updated by
+       RFC 9758.";
+    reference
+      "RFC 9171, Section 4.2.5.1.2;
+       RFC 9758";
+  }
+
+  /* -------------------- Typedefs -------------------- */
+
+  typedef eid {
+    type string {
+      length "1..1024";
+      pattern '[a-zA-Z][a-zA-Z0-9+\-.]*:.*';
+    }
+    description
+      "A Bundle Protocol Endpoint Identifier (EID), encoded as a
+       URI.  An EID begins with a scheme name followed by ':'
+       and a scheme-specific part.
+
+       The detailed format of the scheme-specific part is defined
+       by each scheme:
+
+       - The 'dtn' scheme is defined in Section 4.2.5.1.1 of
+         RFC 9171.
+
+       - The 'ipn' scheme is defined in Section 4.2.5.1.2 of
+         RFC 9171, with the textual representation as updated by
+         RFC 9758.  RFC 9758 supersedes the original textual
+         representation of ipn-scheme EIDs.
+
+       The pattern enforced by this typedef is intentionally
+       permissive to allow for future scheme extensions.
+       Implementations of this YANG model SHOULD validate
+       scheme-specific syntax in addition to the loose pattern
+       admitted here.";
+    reference
+      "RFC 9171, Section 4.2.5.1;
+       RFC 9758";
+  }
+
+  typedef eid-pattern {
+    type string {
+      length "1..1024";
+    }
+    description
+      "A pattern that matches one or more Bundle Protocol
+       Endpoint Identifiers.  The grammar and semantics of EID
+       patterns are defined in [I-D.ietf-dtn-eid-pattern].
+
+       An EID pattern is used to specify the set of destination
+       (or, in future extensions, source) EIDs to which a route
+       or policy applies.  A pattern that exactly equals an EID
+       (with no wildcard or range constructs) matches only that
+       single EID.
+
+       Implementations SHOULD validate pattern syntax against the
+       grammar defined in [I-D.ietf-dtn-eid-pattern] when
+       accepting configuration.";
+    reference
+      "I-D.ietf-dtn-eid-pattern";
+  }
+}
+&lt;CODE ENDS&gt;
+</pre><a href="#section-4.1-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="ietf-dtn-bp-1">
+<section id="section-4.2">
+        <h3 id="name-ietf-dtn-bp-2">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-ietf-dtn-bp-2" class="section-name selfRef">ietf-dtn-bp</a>
+        </h3>
+<div class="breakable lang-yang sourcecode" id="section-4.2-1">
+<pre>
+&lt;CODE BEGINS&gt; file "ietf-dtn-bp@2026-05-27.yang"
+module ietf-dtn-bp {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:ietf-dtn-bp";
+  prefix bp;
+
+  import ietf-dtn-types {
+    prefix dtn-types;
+    reference "RFC XXXX";
+  }
+
+  organization
+    "IETF Delay-Tolerant Networking (DTN) Working Group";
+
+  contact
+    "WG Web:   &lt;https://datatracker.ietf.org/wg/dtn/&gt;
+     WG List:  &lt;mailto:dtn@ietf.org&gt;";
+
+  description
+    "This module defines a minimal YANG data model for a Bundle
+     Protocol Agent (BPA), comprising only the BPA's set of node
+     identifiers.  It provides a common augmentation point
+     ('/bp:bp') for other DTN YANG modules, including those for
+     routing and convergence-layer management.
+
+     A complete YANG data model for a BPA (covering fragmentation,
+     reassembly, status report generation, endpoint registration,
+     storage management, CRC handling, and BPSec policy) is out
+     of scope for the document defining the initial revision of
+     this module and is expected to be addressed by a future
+     revision that adds child nodes to '/bp:bp' additively.
+
+     Copyright (c) 2026 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
+     to the license terms contained in, the Revised BSD License
+     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX
+     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC
+     itself for full legal notices.";
+
+  revision 2026-05-27 {
+    description
+      "Initial revision.";
+    reference
+      "RFC XXXX";
+  }
+
+  container bp {
+    description
+      "Top-level container for Bundle Protocol Agent configuration
+       and operational state.  Other DTN YANG modules augment
+       this container to add routing, convergence-layer, and
+       related subtrees.";
+
+    leaf-list node-id {
+      type dtn-types:eid;
+      description
+        "A node identifier of this Bundle Protocol Agent (BPA),
+         expressed as an Endpoint Identifier (EID).
+
+         Per Section 6.1 of RFC 9171, each node ID also
+         identifies an administrative endpoint at which this BPA
+         receives administrative records (status reports and
+         other control bundles).  For the 'dtn' scheme the node
+         ID and the administrative endpoint EID are identical;
+         for the 'ipn' scheme the administrative endpoint is the
+         EID with service number 0 sharing the same node
+         component, per RFC 9758.
+
+         Any EID whose scheme-specific node component matches the
+         node component of an entry in this list is considered
+         local to this BPA and is subject to local delivery
+         processing rather than forwarding.
+
+         A BPA typically has one node ID per EID scheme it
+         supports.  Multiple node IDs within the same scheme are
+         permitted but unusual; their use is implementation-
+         defined.
+
+         At least one node ID SHOULD be configured for any BPA
+         that originates or accepts bundles.  This module does
+         not impose a 'min-elements 1' constraint on the
+         leaf-list so as to permit a configured-but-disabled BPA
+         to exist transiently with no node IDs declared.";
+      reference
+        "RFC 9171, Section 4.2.5.1 and Section 6.1;
+         RFC 9758";
+    }
+
+    leaf primary-node-id {
+      type leafref {
+        path "../node-id";
+      }
+      description
+        "Designates one entry in the 'node-id' leaf-list as the
+         primary node ID of this BPA.  The primary node ID is
+         used as the source EID for bundles originated by this
+         BPA when no source EID is specified by the originating
+         application, and as the default 'local-eid' for CLA
+         instances that do not explicitly configure one.
+
+         If this leaf is unset, the BPA selects a primary node
+         ID in an implementation-defined manner, typically by
+         choosing the first entry in 'node-id' in declaration
+         order.";
+    }
+  }
+}
+&lt;CODE ENDS&gt;
+</pre><a href="#section-4.2-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="ietf-dtn-bp-routing-1">
+<section id="section-4.3">
+        <h3 id="name-ietf-dtn-bp-routing-2">
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-ietf-dtn-bp-routing-2" class="section-name selfRef">ietf-dtn-bp-routing</a>
+        </h3>
+<div class="breakable lang-yang sourcecode" id="section-4.3-1">
+<pre>
+&lt;CODE BEGINS&gt; file "ietf-dtn-bp-routing@2026-05-27.yang"
+module ietf-dtn-bp-routing {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:ietf-dtn-bp-routing";
+  prefix bp-rt;
+
+  import ietf-dtn-types {
+    prefix dtn-types;
+    reference "RFC XXXX";
+  }
+  import ietf-dtn-bp {
+    prefix bp;
+    reference "RFC XXXX";
+  }
+  import ietf-dtn-cla {
+    prefix cla;
+    reference "RFC XXXX";
+  }
+  import ietf-yang-types {
+    prefix yang;
+    reference "RFC 6991";
+  }
+
+  organization
+    "IETF Delay-Tolerant Networking (DTN) Working Group";
+
+  contact
+    "WG Web:   &lt;https://datatracker.ietf.org/wg/dtn/&gt;
+     WG List:  &lt;mailto:dtn@ietf.org&gt;";
+
+  description
+    "This module defines a YANG data model for the Bundle
+     Protocol Routing Information Base (RIB) and Forwarding
+     Information Base (FIB).  Its structure is inspired by the
+     routing data model defined in RFC 8349, adapted to the
+     Bundle Protocol's EID-based naming, EID-pattern-based
+     matching, and convergence-layer-based next-hop resolution.
+
+     This revision supports static routing only.  Additional
+     routing protocols (notably Contact Graph Routing) are
+     expected to be addressed by future companion documents that
+     define new identities derived from 'routing-protocol-type'
+     and augment the corresponding 'control-plane-protocol' list
+     entries.
+
+     Copyright (c) 2026 IETF Trust ...";
+
+  revision 2026-05-27 {
+    description "Initial revision.";
+    reference "RFC XXXX";
+  }
+
+  /* -------------------- Identities -------------------- */
+
+  identity routing-protocol-type {
+    description
+      "Base identity for Bundle Protocol routing protocol types.";
+  }
+
+  identity proto-static {
+    base routing-protocol-type;
+    description
+      "Static routing.  Routes installed by configuration only.";
+  }
+
+  identity proto-direct {
+    base routing-protocol-type;
+    description
+      "Direct routes derived from local CLA peer configuration.
+       Implementations MAY automatically install direct routes
+       for each peer EID configured on an active CLA.";
+  }
+
+  identity next-hop-type {
+    description
+      "Base identity for the kind of next-hop resolution used by
+       a route.";
+  }
+
+  identity nh-type-eid {
+    base next-hop-type;
+    description
+      "Next hop is identified by the EID of a peer BPA.  The
+       local BPA resolves the peer EID to one or more convergence
+       layer adapters at forwarding time.";
+  }
+
+  identity nh-type-cla {
+    base next-hop-type;
+    description
+      "Next hop is identified by direct reference to a CLA
+       instance, bypassing peer-EID resolution.  Used for
+       point-to-point links and opportunistic contacts.";
+  }
+
+  identity nh-type-multicast {
+    base next-hop-type;
+    description
+      "Next hop is a set of peer EIDs representing the recipients
+       of a multicast bundle.  The local BPA replicates the
+       bundle and forwards one copy to each listed member.";
+  }
+
+  identity forwarding-policy-mode {
+    description
+      "Base identity for forwarding-policy modes governing
+       selection among routes in an equal-cost group.
+
+       Future modules MAY derive additional modes from this
+       identity, including modes that replicate a bundle across
+       multiple routes within a group.  Such modules MUST
+       specify the interaction of the new mode with primary-
+       block flags (notably custody transfer, deletion-on-
+       forward, and do-not-fragment) and with BPSec security
+       blocks.";
+  }
+
+  identity mode-none {
+    base forwarding-policy-mode;
+    description
+      "No multipath behavior.  When multiple applicable routes
+       share the same preference, the BPA selects one
+       deterministically and forwards all matching bundles via
+       that route.";
+  }
+
+  identity mode-ecmp {
+    base forwarding-policy-mode;
+    description
+      "Equal-Cost Multi-Path.  Bundles matching the equal-cost
+       group are distributed across applicable routes by hash,
+       according to the 'hash-input' parameter.";
+  }
+
+  identity mode-ucmp {
+    base forwarding-policy-mode;
+    description
+      "Unequal-Cost Multi-Path.  Bundles matching the equal-cost
+       group are distributed across applicable routes in
+       proportion to their configured weights.";
+  }
+
+  identity hash-input {
+    description
+      "Base identity for hash-input selections used by ECMP-mode
+       routes.";
+  }
+
+  identity hash-per-bundle {
+    base hash-input;
+    description
+      "Each bundle is independently assigned to a route via a
+       fresh random or pseudo-random selection.  No flow
+       affinity is preserved.";
+  }
+
+  identity hash-per-flow-eid-pair {
+    base hash-input;
+    description
+      "Bundles are assigned to routes by hashing the tuple
+       (source EID, destination EID).  All bundles in the same
+       (source, destination) flow take the same path within an
+       equal-cost group.";
+  }
+
+  identity hash-per-flow-with-creation-ts {
+    base hash-input;
+    description
+      "Bundles are assigned to routes by hashing the tuple
+       (source EID, destination EID, creation timestamp).
+       Provides flow stickiness with looser grouping than
+       'hash-per-flow-eid-pair'.";
+  }
+
+  /* -------------------- Augmentation -------------------- */
+
+  augment "/bp:bp" {
+    description
+      "Augments the Bundle Protocol Agent with routing
+       configuration and operational state.";
+
+    container routing {
+      description
+        "Top-level container for Bundle Protocol routing.";
+
+      container control-plane-protocols {
+        description
+          "Configured instances of routing protocols (and static
+           routing) that contribute routes to one or more RIBs.";
+
+        list control-plane-protocol {
+          key "type name";
+          description
+            "An instance of a routing protocol or static routing
+             configuration.  Multiple instances of the same
+             protocol type MAY coexist.";
+
+          leaf type {
+            type identityref {
+              base routing-protocol-type;
+            }
+            description
+              "The routing protocol type of this instance.";
+          }
+
+          leaf name {
+            type string {
+              length "1..64";
+            }
+            description
+              "An administrative name for this protocol
+               instance.";
+          }
+
+          leaf description {
+            type string;
+            description
+              "Free-form description of this protocol instance.";
+          }
+
+          container static-routes {
+            when "derived-from-or-self(../type, "
+               + "'bp-rt:proto-static')";
+            description
+              "Static routes configured under this protocol
+               instance.  Present only when 'type' is
+               'proto-static'.";
+
+            list route {
+              key "name";
+              description
+                "A statically configured route.
+
+                 Routes are keyed by an administrative 'name'
+                 rather than by destination, to permit future
+                 extensions that match on criteria other than
+                 destination (notably source EID and extension
+                 block matching, defined in companion
+                 documents).";
+
+              leaf name {
+                type string {
+                  length "1..64";
+                }
+                description
+                  "Administrative name for this route.";
+              }
+
+              leaf preference {
+                type uint32;
+                default "100";
+                description
+                  "Route preference.  Smaller values are more
+                   preferred.  Routes are evaluated against
+                   incoming bundles in ascending preference
+                   order; the first route whose 'match' criteria
+                   are satisfied is selected for forwarding.
+
+                   See the Route Selection Algorithm section of
+                   RFC XXXX for the full selection algorithm.";
+              }
+
+              container match {
+                description
+                  "Criteria a bundle must satisfy to be
+                   eligible for forwarding via this route.
+
+                   This revision defines a single match
+                   criterion: destination EID pattern.  Future
+                   companion documents are expected to augment
+                   this container to add source EID matching,
+                   extension block matching, and other
+                   policy-based matching criteria.  Such
+                   augmentations are purely additive: existing
+                   leaves and their semantics are preserved.";
+
+                leaf destination-eid-pattern {
+                  type dtn-types:eid-pattern;
+                  mandatory true;
+                  description
+                    "Pattern matching the set of destination
+                     EIDs to which this route applies.  Pattern
+                     grammar is defined in
+                     [I-D.ietf-dtn-eid-pattern].";
+                }
+              }
+
+              container next-hop {
+                description
+                  "Forwarding next hop for bundles matching
+                   this route.";
+
+                leaf next-hop-type {
+                  type identityref {
+                    base next-hop-type;
+                  }
+                  mandatory true;
+                  description
+                    "Discriminator selecting the next-hop kind.";
+                }
+
+                choice next-hop-resolution {
+                  description
+                    "The next-hop value, whose form depends on
+                     'next-hop-type'.";
+
+                  case eid {
+                    when "derived-from-or-self(../next-hop-type,"
+                       + " 'bp-rt:nh-type-eid')";
+                    leaf next-hop-eid {
+                      type dtn-types:eid;
+                      mandatory true;
+                      description
+                        "The EID of the peer BPA to which
+                         matching bundles SHOULD be forwarded.";
+                    }
+                  }
+
+                  case cla {
+                    when "derived-from-or-self(../next-hop-type,"
+                       + " 'bp-rt:nh-type-cla')";
+                    leaf cla-binding {
+                      type leafref {
+                        path "/bp:bp/cla:convergence-layers"
+                           + "/cla:cla/cla:name";
+                      }
+                      mandatory true;
+                      description
+                        "Direct reference to a CLA instance
+                         used to forward bundles matching this
+                         route.";
+                    }
+                  }
+
+                  case multicast {
+                    when "derived-from-or-self(../next-hop-type,"
+                       + " 'bp-rt:nh-type-multicast')";
+                    leaf-list multicast-member {
+                      type dtn-types:eid;
+                      min-elements 1;
+                      description
+                        "Set of peer EIDs constituting the
+                         multicast fanout for this route.  The
+                         BPA replicates the bundle and forwards
+                         one copy to each listed member.";
+                    }
+                  }
+                }
+              }
+
+              container forwarding-policy {
+                description
+                  "Forwarding-policy parameters governing
+                   selection within an equal-cost group of
+                   routes (those sharing the same preference and
+                   matching the same bundle).
+
+                   Routes that are the sole applicable route in
+                   their preference group are unaffected by this
+                   container.";
+
+                must "not(derived-from-or-self("
+                   + "../next-hop/next-hop-type,"
+                   + " 'bp-rt:nh-type-multicast'))"
+                   + " or derived-from-or-self(mode,"
+                   + " 'bp-rt:mode-none')" {
+                  error-message
+                    "A multicast next-hop is incompatible with "
+                  + "non-trivial forwarding-policy modes.";
+                  description
+                    "Multicast next-hops already implement
+                     replication semantics; combining them with
+                     ECMP or UCMP is not defined.";
+                }
+
+                leaf mode {
+                  type identityref {
+                    base forwarding-policy-mode;
+                  }
+                  default "bp-rt:mode-none";
+                  description
+                    "The forwarding-policy mode for this route.";
+                }
+
+                choice mode-parameters {
+                  description
+                    "Parameters specific to the configured
+                     mode.  Each derived mode identity that
+                     requires parameters defines a case here.";
+
+                  case ecmp {
+                    when "derived-from-or-self(../mode,"
+                       + " 'bp-rt:mode-ecmp')";
+                    leaf hash-input {
+                      type identityref {
+                        base hash-input;
+                      }
+                      default "bp-rt:hash-per-flow-eid-pair";
+                      description
+                        "Selects the tuple over which the BPA
+                         hashes to assign bundles to routes
+                         within the equal-cost group.";
+                    }
+                  }
+
+                  case ucmp {
+                    when "derived-from-or-self(../mode,"
+                       + " 'bp-rt:mode-ucmp')";
+                    leaf weight {
+                      type uint32 {
+                        range "1..max";
+                      }
+                      mandatory true;
+                      description
+                        "Relative weight of this route within
+                         the equal-cost group.  Weights are
+                         normalized across all members of the
+                         group.";
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      container ribs {
+        description
+          "Routing Information Bases (RIBs) maintained by this
+           BPA.
+
+           This revision defines RIBs only as operational state
+           populated by control-plane protocols.  A future
+           revision MAY introduce configuration controls for
+           RIB selection and filtering.";
+
+        list rib {
+          key "name";
+          description
+            "A named RIB.  Most deployments will use a single
+             default RIB; multiple RIBs MAY be defined for
+             scenarios requiring routing-domain separation.";
+
+          leaf name {
+            type string {
+              length "1..64";
+            }
+            description "Administrative name of this RIB.";
+          }
+
+          leaf description {
+            type string;
+            description "Free-form description of this RIB.";
+          }
+
+          container routes {
+            config false;
+            description
+              "Routes currently installed in this RIB by
+               configured control-plane protocols.";
+
+            list route {
+              key "name";
+              description
+                "An installed route.";
+
+              leaf name {
+                type string;
+                description
+                  "Name of this route as reported by the
+                   installing protocol.";
+              }
+
+              leaf source-protocol {
+                type leafref {
+                  path
+                    "../../../../control-plane-protocols"
+                  + "/control-plane-protocol/name";
+                }
+                description
+                  "Reference to the control-plane protocol
+                   instance that installed this route.";
+              }
+
+              leaf preference {
+                type uint32;
+                description "Preference of this route.";
+              }
+
+              leaf destination-eid-pattern {
+                type dtn-types:eid-pattern;
+                description
+                  "Destination EID pattern, replicated here
+                   from the route's match container for ease
+                   of inspection.";
+              }
+
+              leaf installed-time {
+                type yang:date-and-time;
+                description
+                  "Time at which this route was installed.";
+              }
+            }
+          }
+        }
+      }
+
+      container fib {
+        config false;
+        description
+          "Forwarding Information Base (FIB).  Operational
+           state describing the routes currently selected by
+           the BPA for forwarding, derived from the RIBs by
+           the route selection algorithm specified in
+           RFC XXXX.
+
+           FIB entries are keyed by route name (matching the
+           installing route) rather than by destination,
+           because future policy extensions may produce
+           multiple selected routes whose destinations
+           overlap.";
+
+        list entry {
+          key "name";
+          description "A selected forwarding entry.";
+
+          leaf name {
+            type string;
+            description
+              "Name of the selected route (matching the route
+               name in the installing RIB).";
+          }
+
+          leaf rib {
+            type leafref {
+              path "../../../ribs/rib/name";
+            }
+            description
+              "RIB from which this entry was selected.";
+          }
+
+          leaf destination-eid-pattern {
+            type dtn-types:eid-pattern;
+            description
+              "Destination EID pattern of the selected route.";
+          }
+
+          leaf next-hop-eid {
+            type dtn-types:eid;
+            description
+              "Resolved peer EID, when applicable.";
+          }
+
+          leaf cla-binding {
+            type leafref {
+              path "/bp:bp/cla:convergence-layers/cla:cla"
+                 + "/cla:name";
+            }
+            description
+              "Resolved CLA instance used to transmit bundles
+               matching this entry, when applicable.";
+          }
+
+          leaf selected-at {
+            type yang:date-and-time;
+            description
+              "Time at which this FIB entry was last
+               computed.";
+          }
+
+          container statistics {
+            description
+              "Per-FIB-entry forwarding statistics.";
+
+            leaf bundles-forwarded {
+              type yang:counter64;
+              description
+                "Total bundles forwarded via this entry since
+                 it was installed.";
+            }
+            leaf bytes-forwarded {
+              type yang:counter64;
+              description
+                "Total bytes forwarded via this entry since
+                 it was installed.";
+            }
+            leaf forwarding-failures {
+              type yang:counter64;
+              description
+                "Total forwarding attempts via this entry
+                 that failed.";
+            }
+          }
+        }
+      }
+    }
+  }
+}
+&lt;CODE ENDS&gt;
+</pre><a href="#section-4.3-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="ietf-dtn-cla-1">
+<section id="section-4.4">
+        <h3 id="name-ietf-dtn-cla-2">
+<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-ietf-dtn-cla-2" class="section-name selfRef">ietf-dtn-cla</a>
+        </h3>
+<div class="breakable lang-yang sourcecode" id="section-4.4-1">
+<pre>
+&lt;CODE BEGINS&gt; file "ietf-dtn-cla@2026-05-27.yang"
+module ietf-dtn-cla {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:ietf-dtn-cla";
+  prefix cla;
+
+  import ietf-dtn-types {
+    prefix dtn-types;
+    reference "RFC XXXX";
+  }
+  import ietf-dtn-bp {
+    prefix bp;
+    reference "RFC XXXX";
+  }
+  import ietf-yang-types {
+    prefix yang;
+    reference "RFC 6991";
+  }
+  import ietf-interfaces {
+    prefix if;
+    reference "RFC 8343";
+  }
+
+  organization
+    "IETF Delay-Tolerant Networking (DTN) Working Group";
+
+  contact
+    "WG Web:   &lt;https://datatracker.ietf.org/wg/dtn/&gt;
+     WG List:  &lt;mailto:dtn@ietf.org&gt;";
+
+  description
+    "Base YANG data model for Bundle Protocol Convergence Layer
+     Adapters (CLAs).  CLA-specific modules augment the 'cla'
+     list defined here with parameters appropriate to each CLA
+     type (TCPCLv4, UDPCL, LTP, BIBE, BTP-U, etc.).
+
+     Copyright (c) 2026 IETF Trust ...";
+
+  revision 2026-05-27 {
+    description "Initial revision.";
+    reference "RFC XXXX";
+  }
+
+  /* -------------------- Identities -------------------- */
+
+  identity cla-type {
+    description
+      "Base identity for convergence layer adapter types.";
+  }
+
+  identity cla-tcpclv4 {
+    base cla-type;
+    description "TCP Convergence Layer Protocol Version 4.";
+    reference "RFC 9174";
+  }
+
+  identity cla-udpcl {
+    base cla-type;
+    description
+      "UDP Convergence Layer.  A datagram-based CLA suitable for
+       single-bundle exchanges over UDP.";
+  }
+
+  identity cla-ltp {
+    base cla-type;
+    description
+      "Licklider Transmission Protocol convergence layer.";
+    reference "RFC 5326";
+  }
+
+  identity cla-bibe {
+    base cla-type;
+    description
+      "Bundle-in-Bundle Encapsulation convergence layer.";
+    reference "I-D.ietf-dtn-bibect";
+  }
+
+  identity cla-direction {
+    description
+      "Base identity for the directional capability of a CLA
+       instance.";
+  }
+
+  identity direction-bidirectional {
+    base cla-direction;
+    description
+      "CLA supports both transmission and reception.";
+  }
+
+  identity direction-tx-only {
+    base cla-direction;
+    description "CLA supports transmission only.";
+  }
+
+  identity direction-rx-only {
+    base cla-direction;
+    description "CLA supports reception only.";
+  }
+
+  identity cla-oper-status {
+    description
+      "Base identity for CLA operational status values.";
+  }
+
+  identity oper-up {
+    base cla-oper-status;
+    description "CLA is up and able to transfer bundles.";
+  }
+
+  identity oper-down {
+    base cla-oper-status;
+    description
+      "CLA is administratively or operationally down.";
+  }
+
+  identity oper-degraded {
+    base cla-oper-status;
+    description
+      "CLA is partially operational (e.g., some peers reachable
+       but not others).";
+  }
+
+  identity peer-source {
+    description
+      "Base identity for the provenance of a CLA peer entry.";
+  }
+
+  identity peer-source-static {
+    base peer-source;
+    description "Peer was configured statically.";
+  }
+
+  identity peer-source-discovery {
+    base peer-source;
+    description
+      "Peer was learned via a neighbor-discovery mechanism.
+       Specific discovery mechanisms are defined by future
+       documents.";
+  }
+
+  identity peer-source-contact-plan {
+    base peer-source;
+    description
+      "Peer was instantiated by a contact-plan-driven routing
+       protocol.  Defined here as a placeholder; the contact
+       plan data model is expected to be specified in a future
+       companion document.";
+  }
+
+  /* -------------------- Augmentation -------------------- */
+
+  augment "/bp:bp" {
+    description
+      "Augments the Bundle Protocol Agent with convergence-layer
+       configuration and state.";
+
+    container convergence-layers {
+      description
+        "Container for the BPA's convergence layer adapters.";
+
+      list cla {
+        key "name";
+        description
+          "A convergence layer adapter instance.
+
+           Each entry represents one configured CLA.  CLA-type-
+           specific configuration is provided by augmentations
+           that are conditional on 'type'.";
+
+        leaf name {
+          type string {
+            length "1..64";
+          }
+          description
+            "Administrative name of this CLA instance.
+
+             Implementations SHOULD NOT change a CLA's name
+             during its lifetime; external references to a CLA
+             (notably from the routing module and from future
+             contact-plan modules) depend on name stability.";
+        }
+
+        leaf type {
+          type identityref {
+            base cla-type;
+          }
+          mandatory true;
+          description "The CLA type of this instance.";
+        }
+
+        leaf enabled {
+          type boolean;
+          default "true";
+          description
+            "Administratively enables this CLA instance.";
+        }
+
+        leaf direction {
+          type identityref {
+            base cla-direction;
+          }
+          default "cla:direction-bidirectional";
+          description
+            "Directional capability of this CLA instance.";
+        }
+
+        leaf local-eid {
+          type leafref {
+            path "/bp:bp/bp:node-id";
+          }
+          description
+            "The local node ID this CLA advertises to peers.
+
+             If unset, the CLA defaults to the BPA's primary
+             node ID (see '/bp:bp/bp:primary-node-id').  Setting
+             this leaf is useful in multi-persona deployments
+             where different CLAs advertise different node IDs
+             of the same BPA (e.g., a 'dtn:' identity on one
+             network and an 'ipn:' identity on another).";
+        }
+
+        leaf-list bound-interface {
+          type if:interface-ref;
+          description
+            "Network interfaces to which this CLA is
+             restricted.  If empty, the CLA may use any
+             interface.";
+        }
+
+        leaf mtu {
+          type uint64;
+          units "bytes";
+          description
+            "Maximum transfer unit at this CLA: the largest
+             single bundle (or bundle fragment) that may be
+             transmitted via this CLA in one transfer.  Unset
+             means no CLA-imposed limit beyond those imposed by
+             the underlying transport.";
+        }
+
+        list peer {
+          key "peer-eid";
+          description
+            "Peer endpoints known to this CLA.  Used by CLAs
+             that maintain explicit peer relationships (e.g.,
+             TCPCLv4); CLAs that do not maintain peer state
+             SHOULD leave this list empty.";
+
+          leaf peer-eid {
+            type dtn-types:eid;
+            description "The peer BPA's node ID.";
+          }
+
+          leaf address {
+            type string;
+            description
+              "Transport-layer address of the peer, in a
+               CLA-specific format.  CLA-specific augmentations
+               SHOULD provide a strongly-typed alternative leaf
+               (e.g., 'inet:host' plus 'inet:port-number' for
+               TCPCLv4) and SHOULD NOT require this leaf when
+               the typed alternative is present.";
+          }
+
+          leaf-list source {
+            type identityref {
+              base peer-source;
+            }
+            config false;
+            description
+              "Provenance of this peer entry: how it came to be
+               in this list (static configuration, neighbor
+               discovery, contact-plan instantiation, etc.).";
+          }
+        }
+
+        container state {
+          config false;
+          description
+            "Operational state of this CLA instance.";
+
+          leaf oper-status {
+            type identityref {
+              base cla-oper-status;
+            }
+            description "Current operational status.";
+          }
+
+          leaf last-state-change {
+            type yang:date-and-time;
+            description
+              "Time of the most recent change in
+               'oper-status'.";
+          }
+
+          leaf active-peers {
+            type yang:gauge32;
+            description
+              "Number of peers currently in an active state on
+               this CLA.";
+          }
+
+          leaf bundles-tx {
+            type yang:counter64;
+            description "Total bundles transmitted.";
+          }
+
+          leaf bundles-rx {
+            type yang:counter64;
+            description "Total bundles received.";
+          }
+
+          leaf bytes-tx {
+            type yang:counter64;
+            description "Total bytes transmitted.";
+          }
+
+          leaf bytes-rx {
+            type yang:counter64;
+            description "Total bytes received.";
+          }
+
+          container active-contact-info {
+            description
+              "Container reserved for future augmentation by
+               modules that bind CLAs to scheduled contacts.
+
+               This revision defines no child nodes; a future
+               contact-plan YANG module is expected to augment
+               this container with operational state describing
+               the currently-active contact bound to this CLA,
+               if any.";
+          }
+        }
+      }
+    }
+  }
+}
+&lt;CODE ENDS&gt;
+</pre><a href="#section-4.4-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="ietf-dtn-cla-tcpclv4-1">
+<section id="section-4.5">
+        <h3 id="name-ietf-dtn-cla-tcpclv4-2">
+<a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-ietf-dtn-cla-tcpclv4-2" class="section-name selfRef">ietf-dtn-cla-tcpclv4</a>
+        </h3>
+<div class="breakable lang-yang sourcecode" id="section-4.5-1">
+<pre>
+&lt;CODE BEGINS&gt; file "ietf-dtn-cla-tcpclv4@2026-05-27.yang"
+module ietf-dtn-cla-tcpclv4 {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:ietf-dtn-cla-tcpclv4";
+  prefix cla-tcpcl;
+
+  import ietf-dtn-bp {
+    prefix bp;
+    reference "RFC XXXX";
+  }
+  import ietf-dtn-cla {
+    prefix cla;
+    reference "RFC XXXX";
+  }
+  import ietf-inet-types {
+    prefix inet;
+    reference "RFC 6991";
+  }
+
+  organization
+    "IETF Delay-Tolerant Networking (DTN) Working Group";
+
+  contact
+    "WG Web:   &lt;https://datatracker.ietf.org/wg/dtn/&gt;
+     WG List:  &lt;mailto:dtn@ietf.org&gt;";
+
+  description
+    "Augmentation of the base CLA YANG module with configuration
+     parameters specific to TCPCLv4 (RFC 9174).  This module is
+     provided as an illustrative example of the CLA-specific
+     augmentation pattern; analogous modules can be defined for
+     other CLA types.
+
+     Copyright (c) 2026 IETF Trust ...";
+
+  reference "RFC 9174";
+
+  revision 2026-05-27 {
+    description "Initial revision.";
+    reference "RFC XXXX";
+  }
+
+  augment "/bp:bp/cla:convergence-layers/cla:cla" {
+    when "derived-from-or-self(cla:type, 'cla:cla-tcpclv4')";
+    description
+      "Adds TCPCLv4-specific configuration to a CLA instance.";
+
+    container tcpclv4 {
+      description
+        "TCPCLv4-specific configuration.";
+
+      list listener {
+        key "local-address local-port";
+        description
+          "Local TCP endpoints on which this TCPCLv4 instance
+           accepts inbound connections.";
+
+        leaf local-address {
+          type inet:ip-address;
+          description "Local IP address to bind.";
+        }
+        leaf local-port {
+          type inet:port-number;
+          default "4556";
+          description
+            "Local TCP port to bind.  Default 4556 per
+             RFC 9174.";
+          reference "RFC 9174, Section 5";
+        }
+      }
+
+      leaf segment-mru {
+        type uint64;
+        units "bytes";
+        default "1048576";
+        description
+          "Maximum size of an inbound transfer segment.";
+        reference "RFC 9174, Section 4.3";
+      }
+
+      leaf transfer-mru {
+        type uint64;
+        units "bytes";
+        description
+          "Maximum size of an inbound transfer (bundle).
+           Unset means no CLA-imposed limit.";
+        reference "RFC 9174, Section 4.3";
+      }
+
+      leaf keepalive-interval {
+        type uint16;
+        units "seconds";
+        default "60";
+        description
+          "Interval between keepalive messages.  Zero
+           disables keepalives.";
+        reference "RFC 9174, Section 4.6";
+      }
+
+      leaf idle-timeout {
+        type uint16;
+        units "seconds";
+        default "600";
+        description
+          "Idle session timeout.  Zero disables the timeout.";
+      }
+
+      container tls {
+        description
+          "TLS configuration for this TCPCLv4 instance.";
+
+        leaf require {
+          type boolean;
+          default "false";
+          description
+            "When true, TLS MUST be used; sessions that
+             cannot establish TLS are rejected.";
+          reference "RFC 9174, Section 4.4";
+        }
+
+        leaf min-version {
+          type enumeration {
+            enum tls12 {
+              description "TLS 1.2 (RFC 5246).";
+            }
+            enum tls13 {
+              description "TLS 1.3 (RFC 8446).";
+            }
+          }
+          default "tls13";
+          description "Minimum acceptable TLS version.";
+        }
+
+        leaf-list cipher-suite {
+          type string;
+          description
+            "Permitted TLS cipher suites, in IANA registry
+             string form (e.g., 'TLS_AES_256_GCM_SHA384').
+             If empty, implementation defaults apply.";
+        }
+
+        leaf node-certificate {
+          type string;
+          description
+            "Reference to or PEM-encoded form of the X.509
+             certificate this node presents during TLS
+             negotiation.  The encoding and lookup of this
+             leaf are implementation-specific.";
+        }
+      }
+    }
+  }
+}
+&lt;CODE ENDS&gt;
+</pre><a href="#section-4.5-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="worked-examples">
+<section id="section-5">
+      <h2 id="name-worked-examples">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-worked-examples" class="section-name selfRef">Worked Examples</a>
+      </h2>
+<p id="section-5-1">This section illustrates the data models with two small examples in
+abbreviated YANG instance-data form.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<div id="static-route-via-peer-eid">
+<section id="section-5.1">
+        <h3 id="name-static-route-via-peer-eid">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-static-route-via-peer-eid" class="section-name selfRef">Static Route via Peer EID</a>
+        </h3>
+<p id="section-5.1-1">A BPA with a single <code>ipn</code>-scheme node ID, one TCPCLv4 CLA, and one
+static route directing all <code>ipn:42.*</code> traffic to peer <code>ipn:7.0</code> over
+the TCPCLv4 CLA:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.1-2">
+<pre>
+/bp:bp/node-id = ["ipn:5.0"]
+/bp:bp/primary-node-id = "ipn:5.0"
+
+/bp:bp/cla:convergence-layers/cla:cla[name="tcpcl-public"]:
+  type             = cla:cla-tcpclv4
+  enabled          = true
+  local-eid        = "ipn:5.0"
+
+  /cla-tcpcl:tcpclv4/listener:
+    [local-address="0.0.0.0", local-port=4556]
+
+/bp:bp/bp-rt:routing/control-plane-protocols/control-plane-protocol
+       [type="bp-rt:proto-static", name="default"]:
+  static-routes/route[name="ipn-42-network"]:
+    preference                            = 100
+    match/destination-eid-pattern         = "ipn:42.*"
+    next-hop/next-hop-type                = bp-rt:nh-type-eid
+    next-hop/next-hop-eid                 = "ipn:7.0"
+    forwarding-policy/mode                = bp-rt:mode-none
+</pre><a href="#section-5.1-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="ecmp-across-two-clas">
+<section id="section-5.2">
+        <h3 id="name-ecmp-across-two-clas">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-ecmp-across-two-clas" class="section-name selfRef">ECMP across Two CLAs</a>
+        </h3>
+<p id="section-5.2-1">Two static routes at the same preference, each directing to a
+different CLA, forming an ECMP group hashed per (source, destination)
+flow:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.2-2">
+<pre>
+/bp:bp/bp-rt:routing/control-plane-protocols/control-plane-protocol
+       [type="bp-rt:proto-static", name="default"]:
+  static-routes/route[name="ipn-42-via-cla-a"]:
+    preference                            = 100
+    match/destination-eid-pattern         = "ipn:42.*"
+    next-hop/next-hop-type                = bp-rt:nh-type-cla
+    next-hop/cla-binding                  = "cla-a"
+    forwarding-policy/mode                = bp-rt:mode-ecmp
+    forwarding-policy/hash-input          = bp-rt:hash-per-flow-eid-pair
+
+  static-routes/route[name="ipn-42-via-cla-b"]:
+    preference                            = 100
+    match/destination-eid-pattern         = "ipn:42.*"
+    next-hop/next-hop-type                = bp-rt:nh-type-cla
+    next-hop/cla-binding                  = "cla-b"
+    forwarding-policy/mode                = bp-rt:mode-ecmp
+    forwarding-policy/hash-input          = bp-rt:hash-per-flow-eid-pair
+</pre><a href="#section-5.2-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-3">
+<section id="section-6">
       <h2 id="name-security-considerations">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-3-1">TODO Security<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">The YANG modules specified in this document define schemas for data
+that is designed to be accessed via network management protocols
+such as NETCONF <span>[<a href="#RFC6241" class="cite xref">RFC6241</a>]</span> or RESTCONF <span>[<a href="#RFC8040" class="cite xref">RFC8040</a>]</span>.  The lowest
+NETCONF layer is the secure transport layer, and the mandatory-to-
+implement secure transport is Secure Shell (SSH).  The lowest
+RESTCONF layer is HTTPS, and the mandatory-to-implement secure
+transport is TLS.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">The Network Configuration Access Control Model (NACM) provides the
+means to restrict access for particular NETCONF or RESTCONF users
+to a preconfigured subset of all available NETCONF or RESTCONF
+protocol operations and content.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">There are a number of data nodes defined in these YANG modules
+that are writable, creatable, and deletable (i.e., <code>config true</code>,
+which is the default).  These data nodes may be considered
+sensitive or vulnerable in some network environments.  Write
+operations to these data nodes can have a negative effect on
+network operations.  Specifically:<a href="#section-6-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6-4.1">
+          <p id="section-6-4.1.1"><code>/bp:bp/node-id</code>, <code>/bp:bp/primary-node-id</code>: Modifying a BPA's
+node identifiers changes the identity it presents to peers and
+may invalidate authentication state, contact plan entries, and
+static routes configured by peers.  Unauthorized modification
+can also enable identity spoofing.<a href="#section-6-4.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-4.2">
+          <p id="section-6-4.2.1"><code>/bp:bp/bp-rt:routing/.../static-routes/route</code>: Unauthorized
+creation, modification, or deletion of static routes can cause
+bundles to be misforwarded, replayed, dropped, or delivered to
+attacker-controlled endpoints.  This is the most operationally
+consequential subtree in the modules defined here and <span class="bcp14">SHOULD</span> be
+protected with the strictest NACM rules.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-4.3">
+          <p id="section-6-4.3.1"><code>/bp:bp/cla:convergence-layers/cla:cla</code>: Modifying CLA
+configuration can disable an entire transport path, alter the
+set of peers a CLA accepts, or change TLS or other security
+parameters (in CLA-specific augmentations).  Of particular
+sensitivity in TCPCLv4 are the <code>tls/require</code>, <code>tls/min-version</code>,
+and <code>tls/node-certificate</code> leaves; tampering with these can
+downgrade or disable transport security.<a href="#section-6-4.3.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-6-5">Some of the readable data nodes in these YANG modules may be
+considered sensitive or vulnerable in some network environments.
+It is thus important to control read access to these data nodes:<a href="#section-6-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6-6.1">
+          <p id="section-6-6.1.1">The full set of routes in the RIB and FIB reveals the BPA's
+view of network topology, including peer EIDs and contact
+arrangements.  In adversarial environments, this information
+can be used to plan traffic-analysis or denial-of-service
+attacks.<a href="#section-6-6.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-6.2">
+          <p id="section-6-6.2.1">CLA peer lists reveal the identities of correspondent BPAs.<a href="#section-6-6.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-6.3">
+          <p id="section-6-6.3.1">Operational counters (bundles-tx, bytes-tx, etc.) may permit
+inference of traffic patterns even when bundle contents are
+protected.<a href="#section-6-6.3.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-6-7">The models defined here do not themselves provide bundle-level
+security; bundle confidentiality, integrity, and authentication
+are provided by BPSec <span>[<a href="#RFC9172" class="cite xref">RFC9172</a>]</span>.  A future YANG module for
+BPSec policy configuration is anticipated.<a href="#section-6-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-4">
+<section id="section-7">
       <h2 id="name-iana-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-4-1">This document has no IANA actions.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">This document registers the following URIs in the "ns" subregistry
+within the "IETF XML Registry" <span>[<a href="#RFC3688" class="cite xref">RFC3688</a>]</span>:<a href="#section-7-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7-2">
+<pre>
+URI: urn:ietf:params:xml:ns:yang:ietf-dtn-types
+Registrant Contact: The IESG.
+XML: N/A; the requested URI is an XML namespace.
+
+URI: urn:ietf:params:xml:ns:yang:ietf-dtn-bp
+Registrant Contact: The IESG.
+XML: N/A; the requested URI is an XML namespace.
+
+URI: urn:ietf:params:xml:ns:yang:ietf-dtn-bp-routing
+Registrant Contact: The IESG.
+XML: N/A; the requested URI is an XML namespace.
+
+URI: urn:ietf:params:xml:ns:yang:ietf-dtn-cla
+Registrant Contact: The IESG.
+XML: N/A; the requested URI is an XML namespace.
+
+URI: urn:ietf:params:xml:ns:yang:ietf-dtn-cla-tcpclv4
+Registrant Contact: The IESG.
+XML: N/A; the requested URI is an XML namespace.
+</pre><a href="#section-7-2" class="pilcrow">¶</a>
+</div>
+<p id="section-7-3">This document registers the following YANG modules in the "YANG
+Module Names" registry <span>[<a href="#RFC6020" class="cite xref">RFC6020</a>]</span>:<a href="#section-7-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7-4">
+<pre>
+name:         ietf-dtn-types
+namespace:    urn:ietf:params:xml:ns:yang:ietf-dtn-types
+prefix:       dtn-types
+reference:    RFC XXXX
+
+name:         ietf-dtn-bp
+namespace:    urn:ietf:params:xml:ns:yang:ietf-dtn-bp
+prefix:       bp
+reference:    RFC XXXX
+
+name:         ietf-dtn-bp-routing
+namespace:    urn:ietf:params:xml:ns:yang:ietf-dtn-bp-routing
+prefix:       bp-rt
+reference:    RFC XXXX
+
+name:         ietf-dtn-cla
+namespace:    urn:ietf:params:xml:ns:yang:ietf-dtn-cla
+prefix:       cla
+reference:    RFC XXXX
+
+name:         ietf-dtn-cla-tcpclv4
+namespace:    urn:ietf:params:xml:ns:yang:ietf-dtn-cla-tcpclv4
+prefix:       cla-tcpcl
+reference:    RFC XXXX
+</pre><a href="#section-7-4" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
-<div id="sec-normative-references">
-<section id="section-5">
-      <h2 id="name-normative-references">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<div id="sec-combined-references">
+<section id="section-8">
+      <h2 id="name-references">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-8.1">
+        <h3 id="name-normative-references">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
+<dt id="I-D.ietf-dtn-eid-pattern">[I-D.ietf-dtn-eid-pattern]</dt>
+        <dd>
+<span class="refAuthor">Sipos, B.</span>, <span class="refTitle">"Bundle Protocol Endpoint ID Patterns"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-dtn-eid-pattern-07</span>, <time datetime="2026-03-16" class="refDate">16 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-dtn-eid-pattern-07">https://datatracker.ietf.org/doc/html/draft-ietf-dtn-eid-pattern-07</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC3688">[RFC3688]</dt>
+        <dd>
+<span class="refAuthor">Mealling, M.</span>, <span class="refTitle">"The IETF XML Registry"</span>, <span class="seriesInfo">BCP 81</span>, <span class="seriesInfo">RFC 3688</span>, <span class="seriesInfo">DOI 10.17487/RFC3688</span>, <time datetime="2004-01" class="refDate">January 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3688">https://www.rfc-editor.org/rfc/rfc3688</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6020">[RFC6020]</dt>
+        <dd>
+<span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refTitle">"YANG - A Data Modeling Language for the Network Configuration Protocol (NETCONF)"</span>, <span class="seriesInfo">RFC 6020</span>, <span class="seriesInfo">DOI 10.17487/RFC6020</span>, <time datetime="2010-10" class="refDate">October 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6020">https://www.rfc-editor.org/rfc/rfc6020</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6241">[RFC6241]</dt>
+        <dd>
+<span class="refAuthor">Enns, R., Ed.</span>, <span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refAuthor">Schoenwaelder, J., Ed.</span>, and <span class="refAuthor">A. Bierman, Ed.</span>, <span class="refTitle">"Network Configuration Protocol (NETCONF)"</span>, <span class="seriesInfo">RFC 6241</span>, <span class="seriesInfo">DOI 10.17487/RFC6241</span>, <time datetime="2011-06" class="refDate">June 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6241">https://www.rfc-editor.org/rfc/rfc6241</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6991">[RFC6991]</dt>
+        <dd>
+<span class="refAuthor">Schoenwaelder, J., Ed.</span>, <span class="refTitle">"Common YANG Data Types"</span>, <span class="seriesInfo">RFC 6991</span>, <span class="seriesInfo">DOI 10.17487/RFC6991</span>, <time datetime="2013-07" class="refDate">July 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6991">https://www.rfc-editor.org/rfc/rfc6991</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7950">[RFC7950]</dt>
+        <dd>
+<span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refTitle">"The YANG 1.1 Data Modeling Language"</span>, <span class="seriesInfo">RFC 7950</span>, <span class="seriesInfo">DOI 10.17487/RFC7950</span>, <time datetime="2016-08" class="refDate">August 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7950">https://www.rfc-editor.org/rfc/rfc7950</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8040">[RFC8040]</dt>
+        <dd>
+<span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Bjorklund, M.</span>, and <span class="refAuthor">K. Watsen</span>, <span class="refTitle">"RESTCONF Protocol"</span>, <span class="seriesInfo">RFC 8040</span>, <span class="seriesInfo">DOI 10.17487/RFC8040</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8040">https://www.rfc-editor.org/rfc/rfc8040</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+        <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8340">[RFC8340]</dt>
+        <dd>
+<span class="refAuthor">Bjorklund, M.</span> and <span class="refAuthor">L. Berger, Ed.</span>, <span class="refTitle">"YANG Tree Diagrams"</span>, <span class="seriesInfo">BCP 215</span>, <span class="seriesInfo">RFC 8340</span>, <span class="seriesInfo">DOI 10.17487/RFC8340</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8340">https://www.rfc-editor.org/rfc/rfc8340</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8342">[RFC8342]</dt>
+        <dd>
+<span class="refAuthor">Bjorklund, M.</span>, <span class="refAuthor">Schoenwaelder, J.</span>, <span class="refAuthor">Shafer, P.</span>, <span class="refAuthor">Watsen, K.</span>, and <span class="refAuthor">R. Wilton</span>, <span class="refTitle">"Network Management Datastore Architecture (NMDA)"</span>, <span class="seriesInfo">RFC 8342</span>, <span class="seriesInfo">DOI 10.17487/RFC8342</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8342">https://www.rfc-editor.org/rfc/rfc8342</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8343">[RFC8343]</dt>
+        <dd>
+<span class="refAuthor">Bjorklund, M.</span>, <span class="refTitle">"A YANG Data Model for Interface Management"</span>, <span class="seriesInfo">RFC 8343</span>, <span class="seriesInfo">DOI 10.17487/RFC8343</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8343">https://www.rfc-editor.org/rfc/rfc8343</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8349">[RFC8349]</dt>
+        <dd>
+<span class="refAuthor">Lhotka, L.</span>, <span class="refAuthor">Lindem, A.</span>, and <span class="refAuthor">Y. Qu</span>, <span class="refTitle">"A YANG Data Model for Routing Management (NMDA Version)"</span>, <span class="seriesInfo">RFC 8349</span>, <span class="seriesInfo">DOI 10.17487/RFC8349</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8349">https://www.rfc-editor.org/rfc/rfc8349</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9171">[RFC9171]</dt>
+        <dd>
+<span class="refAuthor">Burleigh, S.</span>, <span class="refAuthor">Fall, K.</span>, and <span class="refAuthor">E. Birrane, III</span>, <span class="refTitle">"Bundle Protocol Version 7"</span>, <span class="seriesInfo">RFC 9171</span>, <span class="seriesInfo">DOI 10.17487/RFC9171</span>, <time datetime="2022-01" class="refDate">January 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9171">https://www.rfc-editor.org/rfc/rfc9171</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9172">[RFC9172]</dt>
+        <dd>
+<span class="refAuthor">Birrane, III, E.</span> and <span class="refAuthor">K. McKeever</span>, <span class="refTitle">"Bundle Protocol Security (BPSec)"</span>, <span class="seriesInfo">RFC 9172</span>, <span class="seriesInfo">DOI 10.17487/RFC9172</span>, <time datetime="2022-01" class="refDate">January 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9172">https://www.rfc-editor.org/rfc/rfc9172</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9174">[RFC9174]</dt>
+        <dd>
+<span class="refAuthor">Sipos, B.</span>, <span class="refAuthor">Demmer, M.</span>, <span class="refAuthor">Ott, J.</span>, and <span class="refAuthor">S. Perreault</span>, <span class="refTitle">"Delay-Tolerant Networking TCP Convergence-Layer Protocol Version 4"</span>, <span class="seriesInfo">RFC 9174</span>, <span class="seriesInfo">DOI 10.17487/RFC9174</span>, <time datetime="2022-01" class="refDate">January 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9174">https://www.rfc-editor.org/rfc/rfc9174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9758">[RFC9758]</dt>
+      <dd>
+<span class="refAuthor">Taylor, R.</span> and <span class="refAuthor">E. Birrane III</span>, <span class="refTitle">"Updates to the 'ipn' URI Scheme"</span>, <span class="seriesInfo">RFC 9758</span>, <span class="seriesInfo">DOI 10.17487/RFC9758</span>, <time datetime="2025-05" class="refDate">May 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9758">https://www.rfc-editor.org/rfc/rfc9758</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
 </div>
-<div id="acknowledgments">
+<div id="sec-informative-references">
+<section id="section-8.2">
+        <h3 id="name-informative-references">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.ietf-dtn-bibect">[I-D.ietf-dtn-bibect]</dt>
+        <dd>
+<span class="refAuthor">Burleigh, S.</span>, <span class="refAuthor">Montilla, A.</span>, <span class="refAuthor">Deaton, J.</span>, and <span class="refAuthor">C. Caini</span>, <span class="refTitle">"Bundle-in-Bundle Encapsulation"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-dtn-bibect-05</span>, <time datetime="2025-03-15" class="refDate">15 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-dtn-bibect-05">https://datatracker.ietf.org/doc/html/draft-ietf-dtn-bibect-05</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4838">[RFC4838]</dt>
+        <dd>
+<span class="refAuthor">Cerf, V.</span>, <span class="refAuthor">Burleigh, S.</span>, <span class="refAuthor">Hooke, A.</span>, <span class="refAuthor">Torgerson, L.</span>, <span class="refAuthor">Durst, R.</span>, <span class="refAuthor">Scott, K.</span>, <span class="refAuthor">Fall, K.</span>, and <span class="refAuthor">H. Weiss</span>, <span class="refTitle">"Delay-Tolerant Networking Architecture"</span>, <span class="seriesInfo">RFC 4838</span>, <span class="seriesInfo">DOI 10.17487/RFC4838</span>, <time datetime="2007-04" class="refDate">April 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4838">https://www.rfc-editor.org/rfc/rfc4838</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5326">[RFC5326]</dt>
+        <dd>
+<span class="refAuthor">Ramadas, M.</span>, <span class="refAuthor">Burleigh, S.</span>, and <span class="refAuthor">S. Farrell</span>, <span class="refTitle">"Licklider Transmission Protocol - Specification"</span>, <span class="seriesInfo">RFC 5326</span>, <span class="seriesInfo">DOI 10.17487/RFC5326</span>, <time datetime="2008-09" class="refDate">September 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5326">https://www.rfc-editor.org/rfc/rfc5326</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9675">[RFC9675]</dt>
+      <dd>
+<span class="refAuthor">Birrane, III, E.</span>, <span class="refAuthor">Heiner, S.</span>, and <span class="refAuthor">E. Annis</span>, <span class="refTitle">"Delay-Tolerant Networking Management Architecture (DTNMA)"</span>, <span class="seriesInfo">RFC 9675</span>, <span class="seriesInfo">DOI 10.17487/RFC9675</span>, <time datetime="2024-11" class="refDate">November 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9675">https://www.rfc-editor.org/rfc/rfc9675</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="acknowledgements">
 <section id="appendix-A">
-      <h2 id="name-acknowledgments">
-<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      <h2 id="name-acknowledgements">
+<a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
       </h2>
-<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">The authors thank the members of the IETF DTN working group for
+discussions that shaped this work.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="open-issues">
+<section id="appendix-B">
+      <h2 id="name-open-issues">
+<a href="#name-open-issues" class="section-name selfRef">Open Issues</a>
+      </h2>
+<p id="appendix-B-1">The following issues are flagged for working group discussion:<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="appendix-B-2">
+<li id="appendix-B-2.1">
+          <p id="appendix-B-2.1.1"><strong>Author identification.</strong>  Author full name and email address
+are placeholders in this -00 revision and require update before
+working group adoption.<a href="#appendix-B-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-2.2">
+          <p id="appendix-B-2.2.1"><strong>'min-elements 1' on '/bp:bp/node-id'.</strong>  The leaf-list is
+currently unconstrained to permit transient configurations
+without node IDs.  Whether to require at least one node ID via
+YANG (with an associated <code>must</code> or <code>min-elements</code> constraint)
+versus leaving this to operator discipline is open.<a href="#appendix-B-2.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-2.3">
+          <p id="appendix-B-2.3.1"><strong>CLA peer 'address' format.</strong>  This document treats the
+generic peer 'address' leaf as an opaque string, with CLA-
+specific augmentations expected to provide typed alternatives.
+An alternative is to forbid the generic leaf entirely and
+require typed addresses; this is more rigorous but precludes
+minimal CLA configurations.<a href="#appendix-B-2.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-2.4">
+          <p id="appendix-B-2.4.1"><strong>FIB selection visibility.</strong>  The current FIB does not surface
+which RIB routes were considered but not selected.  Operators
+may wish for diagnostic state describing rejection reasons
+(e.g., "route X rejected because next-hop CLA is down").  This
+could be added under each FIB entry without disrupting the
+schema.<a href="#appendix-B-2.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="appendix-B-2.5">
+          <p id="appendix-B-2.5.1"><strong>Multiple RIBs.</strong>  The schema supports multiple named RIBs but
+does not specify how routes from different RIBs interact during
+FIB construction.  Real deployments will need explicit
+semantics; whether to define these in this document or defer to
+a companion document is open.<a href="#appendix-B-2.5.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
 </section>
 </div>
 <div id="authors-addresses">
-<section id="appendix-B">
+<section id="appendix-C">
       <h2 id="name-authors-address">
 <a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
       </h2>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Erik Kline</span></div>
-<div dir="auto" class="left"><span class="org">Aalyria Technologies, Inc.</span></div>
+<div dir="auto" class="left"><span class="org">Aalyria Technologies</span></div>
 <div class="email">
 <span>Email:</span>
 <a href="mailto:ek.ietf@gmail.com" class="email">ek.ietf@gmail.com</a>
