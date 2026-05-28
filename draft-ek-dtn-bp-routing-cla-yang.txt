@@ -316,9 +316,13 @@ Table of Contents
 
    4.  *Explicit FIB.* A fib container is provided as operational state
        separate from the RIB.  The BPA's route selection algorithm (see
-       Section 2.4) determines FIB membership from RIB content; this can
-       differ from per-RIB best-route selection alone, especially once
-       policy-based matching extends the model.
+       Section 2.4) determines FIB membership from RIB content.  Each
+       FIB entry exposes the full resolution chain: cla-binding names
+       the resolved CLA instance and resolved-peer-eid is a leafref into
+       that CLA's peer list, making the FIB-to-neighbour binding
+       explicit and queryable.  An absent resolved-peer-eid indicates
+       either that the next-hop type carries no peer (discard, reflect)
+       or that the CLA does not maintain explicit peer state.
 
 2.4.  Route Selection Algorithm
 
@@ -465,6 +469,7 @@ Table of Contents
                +--ro next-hop-type?             identityref
                +--ro next-hop-eid?              dtn-types:eid
                +--ro cla-binding?               leafref
+               +--ro resolved-peer-eid?         leafref
                +--ro selected-at?               yang:date-and-time
                +--ro statistics
                   +--ro bundles-forwarded?     yang:counter64
@@ -1527,7 +1532,36 @@ Table of Contents
                }
                description
                  "Resolved CLA instance used to transmit bundles
-                  matching this entry, when applicable.";
+                  matching this entry, when applicable.  Absent
+                  for nh-type-discard and nh-type-reflect entries.";
+             }
+
+             leaf resolved-peer-eid {
+               type leafref {
+                 path "/bp:bp/cla:convergence-layers/cla:cla"
+                    + "[cla:name = current()/../cla-binding]"
+                    + "/cla:peer/cla:peer-eid";
+               }
+               description
+                 "The peer EID within the resolved CLA's peer list
+                  that will be used to transmit bundles matching
+                  this FIB entry.
+
+                  This leaf makes the full FIB-to-neighbour
+                  resolution chain explicit and queryable:
+                  'cla-binding' names the CLA and
+                  'resolved-peer-eid' names the specific peer
+                  entry within that CLA, answering the operator
+                  question of whether this route is actually
+                  reachable right now (i.e., whether a peer entry
+                  exists and the CLA is active).
+
+                  Present only when 'cla-binding' is set and the
+                  BPA has resolved the next hop to a specific
+                  peer entry in that CLA's peer list.  Absent
+                  for nh-type-discard, nh-type-reflect, and any
+                  entry where the CLA does not maintain explicit
+                  peer state (e.g., broadcast CLAs).";
              }
 
              leaf selected-at {
