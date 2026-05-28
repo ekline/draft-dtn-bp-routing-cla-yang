@@ -1850,40 +1850,62 @@ Table of Contents
 5.1.  Static Route via Peer EID
 
    A BPA with a single ipn-scheme node ID, one TCPCLv4 CLA, and one
-   static route directing all ipn:42.* traffic to peer ipn:7.0 over the
-   TCPCLv4 CLA:
+   static route directing all ipn:974848.42.* traffic to peer
+   ipn:974848.7.0 by EID.  The CLA carries a static peer entry for
+   ipn:974848.7.0 giving its transport address:
 
-   /bp:bp/node-id = ["ipn:5.0"]
-   /bp:bp/primary-node-id = "ipn:5.0"
+ /bp:bp/node-id = ["ipn:974848.5.0"]
+ /bp:bp/primary-node-id = "ipn:974848.5.0"
 
-   /bp:bp/cla:convergence-layers/cla:cla[name="tcpcl-public"]:
-     type             = cla:cla-tcpclv4
-     enabled          = true
-     local-eid        = "ipn:5.0"
+ /bp:bp/cla:convergence-layers/cla:cla[name="tcpcl-public"]:
+   type             = cla:cla-tcpclv4
+   enabled          = true
+   local-eid        = "ipn:974848.5.0"
 
-     /cla-tcpcl:tcpclv4/listener:
-       [local-address="0.0.0.0", local-port=4556]
+   peer[peer-eid="ipn:974848.7.0"]:
+     address        = "192.0.2.7:4556"
 
-   /bp:bp/bp-rt:routing/control-plane-protocols/control-plane-protocol
-          [type="bp-rt:proto-static", name="default"]:
-     static-routes/route[name="ipn-42-network"]:
-       preference                            = 100
-       match/destination-eid-pattern         = "ipn:42.*"
-       next-hop/next-hop-type                = bp-rt:nh-type-eid
-       next-hop/next-hop-eid                 = "ipn:7.0"
-       forwarding-policy/mode                = bp-rt:mode-none
+   cla-tcpcl:tcpclv4/listener[local-address="0.0.0.0", local-port=4556]:
+     (no additional leaves)
+
+ /bp:bp/bp-rt:routing/control-plane-protocols/control-plane-protocol
+        [type="bp-rt:proto-static", name="default"]:
+   static-routes/route[name="ipn-42-network"]:
+     preference                            = 100
+     match/destination-eid-pattern         = "ipn:974848.42.*"
+     next-hop/next-hop-type                = bp-rt:nh-type-eid
+     next-hop/next-hop-eid                 = "ipn:974848.7.0"
 
 5.2.  ECMP across Two CLAs
 
-   Two static routes at the same preference, each directing to a
-   different CLA, forming an ECMP group hashed per (source, destination)
-   flow:
+   Two static routes at the same preference, each bound directly to a
+   different CLA, forming an equal-preference group distributed across
+   the two CLAs by hashing per (source EID, destination EID) flow:
+
+/bp:bp/node-id = ["ipn:974848.5.0"]
+/bp:bp/primary-node-id = "ipn:974848.5.0"
+
+/bp:bp/cla:convergence-layers/cla:cla[name="cla-a"]:
+  type             = cla:cla-tcpclv4
+  enabled          = true
+  local-eid        = "ipn:974848.5.0"
+
+  cla-tcpcl:tcpclv4/listener[local-address="198.51.100.1", local-port=4556]:
+    (no additional leaves)
+
+/bp:bp/cla:convergence-layers/cla:cla[name="cla-b"]:
+  type             = cla:cla-tcpclv4
+  enabled          = true
+  local-eid        = "ipn:974848.5.0"
+
+  cla-tcpcl:tcpclv4/listener[local-address="203.0.113.1", local-port=4556]:
+    (no additional leaves)
 
 /bp:bp/bp-rt:routing/control-plane-protocols/control-plane-protocol
        [type="bp-rt:proto-static", name="default"]:
   static-routes/route[name="ipn-42-via-cla-a"]:
     preference                            = 100
-    match/destination-eid-pattern         = "ipn:42.*"
+    match/destination-eid-pattern         = "ipn:974848.42.*"
     next-hop/next-hop-type                = bp-rt:nh-type-cla
     next-hop/cla-binding                  = "cla-a"
     forwarding-policy/mode                = bp-rt:mode-ecmp
@@ -1891,7 +1913,7 @@ Table of Contents
 
   static-routes/route[name="ipn-42-via-cla-b"]:
     preference                            = 100
-    match/destination-eid-pattern         = "ipn:42.*"
+    match/destination-eid-pattern         = "ipn:974848.42.*"
     next-hop/next-hop-type                = bp-rt:nh-type-cla
     next-hop/cla-binding                  = "cla-b"
     forwarding-policy/mode                = bp-rt:mode-ecmp

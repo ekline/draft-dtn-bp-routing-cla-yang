@@ -3214,29 +3214,32 @@ abbreviated YANG instance-data form.<a href="#section-5-1" class="pilcrow">¶</a
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-static-route-via-peer-eid" class="section-name selfRef">Static Route via Peer EID</a>
         </h3>
 <p id="section-5.1-1">A BPA with a single <code>ipn</code>-scheme node ID, one TCPCLv4 CLA, and one
-static route directing all <code>ipn:42.*</code> traffic to peer <code>ipn:7.0</code> over
-the TCPCLv4 CLA:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+static route directing all <code>ipn:974848.42.*</code> traffic to peer
+<code>ipn:974848.7.0</code> by EID.  The CLA carries a static peer entry for
+<code>ipn:974848.7.0</code> giving its transport address:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.1-2">
 <pre>
-/bp:bp/node-id = ["ipn:5.0"]
-/bp:bp/primary-node-id = "ipn:5.0"
+/bp:bp/node-id = ["ipn:974848.5.0"]
+/bp:bp/primary-node-id = "ipn:974848.5.0"
 
 /bp:bp/cla:convergence-layers/cla:cla[name="tcpcl-public"]:
   type             = cla:cla-tcpclv4
   enabled          = true
-  local-eid        = "ipn:5.0"
+  local-eid        = "ipn:974848.5.0"
 
-  /cla-tcpcl:tcpclv4/listener:
-    [local-address="0.0.0.0", local-port=4556]
+  peer[peer-eid="ipn:974848.7.0"]:
+    address        = "192.0.2.7:4556"
+
+  cla-tcpcl:tcpclv4/listener[local-address="0.0.0.0", local-port=4556]:
+    (no additional leaves)
 
 /bp:bp/bp-rt:routing/control-plane-protocols/control-plane-protocol
        [type="bp-rt:proto-static", name="default"]:
   static-routes/route[name="ipn-42-network"]:
     preference                            = 100
-    match/destination-eid-pattern         = "ipn:42.*"
+    match/destination-eid-pattern         = "ipn:974848.42.*"
     next-hop/next-hop-type                = bp-rt:nh-type-eid
-    next-hop/next-hop-eid                 = "ipn:7.0"
-    forwarding-policy/mode                = bp-rt:mode-none
+    next-hop/next-hop-eid                 = "ipn:974848.7.0"
 </pre><a href="#section-5.1-2" class="pilcrow">¶</a>
 </div>
 </section>
@@ -3246,16 +3249,35 @@ the TCPCLv4 CLA:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
         <h3 id="name-ecmp-across-two-clas">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-ecmp-across-two-clas" class="section-name selfRef">ECMP across Two CLAs</a>
         </h3>
-<p id="section-5.2-1">Two static routes at the same preference, each directing to a
-different CLA, forming an ECMP group hashed per (source, destination)
-flow:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">Two static routes at the same preference, each bound directly to a
+different CLA, forming an equal-preference group distributed across
+the two CLAs by hashing per (source EID, destination EID) flow:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.2-2">
 <pre>
+/bp:bp/node-id = ["ipn:974848.5.0"]
+/bp:bp/primary-node-id = "ipn:974848.5.0"
+
+/bp:bp/cla:convergence-layers/cla:cla[name="cla-a"]:
+  type             = cla:cla-tcpclv4
+  enabled          = true
+  local-eid        = "ipn:974848.5.0"
+
+  cla-tcpcl:tcpclv4/listener[local-address="198.51.100.1", local-port=4556]:
+    (no additional leaves)
+
+/bp:bp/cla:convergence-layers/cla:cla[name="cla-b"]:
+  type             = cla:cla-tcpclv4
+  enabled          = true
+  local-eid        = "ipn:974848.5.0"
+
+  cla-tcpcl:tcpclv4/listener[local-address="203.0.113.1", local-port=4556]:
+    (no additional leaves)
+
 /bp:bp/bp-rt:routing/control-plane-protocols/control-plane-protocol
        [type="bp-rt:proto-static", name="default"]:
   static-routes/route[name="ipn-42-via-cla-a"]:
     preference                            = 100
-    match/destination-eid-pattern         = "ipn:42.*"
+    match/destination-eid-pattern         = "ipn:974848.42.*"
     next-hop/next-hop-type                = bp-rt:nh-type-cla
     next-hop/cla-binding                  = "cla-a"
     forwarding-policy/mode                = bp-rt:mode-ecmp
@@ -3263,7 +3285,7 @@ flow:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 
   static-routes/route[name="ipn-42-via-cla-b"]:
     preference                            = 100
-    match/destination-eid-pattern         = "ipn:42.*"
+    match/destination-eid-pattern         = "ipn:974848.42.*"
     next-hop/next-hop-type                = bp-rt:nh-type-cla
     next-hop/cla-binding                  = "cla-b"
     forwarding-policy/mode                = bp-rt:mode-ecmp
