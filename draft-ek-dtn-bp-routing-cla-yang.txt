@@ -268,12 +268,12 @@ Table of Contents
 
    A BPA's administrative endpoint EIDs are listed in /bp:bp/admin-
    endpoint-eid.  Each entry MUST be an Administrative Endpoint EID as
-   defined in Section 4.2.5.2 of [RFC9171]: for the dtn scheme this is
-   the node ID itself; for the ipn scheme this is the EID with service
-   number 0 (e.g., ipn:974848.5.0), per [RFC9758].  Any EID whose
-   scheme-specific node component matches the node component of an entry
-   in this list is considered local to the BPA and is subject to local
-   delivery rather than forwarding.
+   defined in Sections 3.2 and 4.2.5.2 of [RFC9171]: for the dtn scheme
+   this is the node ID itself; for the ipn scheme this is the EID with
+   service number 0 (e.g., ipn:974848.5.0), per [RFC9758] Sections 5.3
+   and 5.7.  Any EID whose scheme-specific node component matches the
+   node component of an entry in this list is considered local to the
+   BPA and is subject to local delivery rather than forwarding.
 
 2.3.  Relationship to RFC 8349
 
@@ -490,10 +490,12 @@ Table of Contents
                 +--ro oper-status?         identityref
                 +--ro last-state-change?   yang:date-and-time
                 +--ro active-peers?        yang:gauge32
-                +--ro bundles-tx?          yang:counter64
-                +--ro bundles-rx?          yang:counter64
-                +--ro bytes-tx?            yang:counter64
-                +--ro bytes-rx?            yang:counter64
+                +--ro bundles-tx?             yang:counter64
+                +--ro bundles-rx?             yang:counter64
+                +--ro bytes-tx?              yang:counter64
+                +--ro bytes-rx?              yang:counter64
+                +--ro last-bundle-tx-time?   yang:date-and-time
+                +--ro last-bundle-rx-time?   yang:date-and-time
                 +--ro active-contact-info
 
 3.4.  ietf-dtn-cla-tcpclv4
@@ -586,7 +588,7 @@ Table of Contents
           RFC 9758.";
        reference
          "RFC 9171, Section 4.2.5.1.2;
-          RFC 9758";
+          RFC 9758, Section 5.3";
      }
 
      /* -------------------- Typedefs -------------------- */
@@ -619,7 +621,7 @@ Table of Contents
           admitted here.";
        reference
          "RFC 9171, Section 4.2.5.1;
-          RFC 9758";
+          RFC 9758, Section 5.3";
      }
 
      typedef eid-pattern {
@@ -712,7 +714,8 @@ Table of Contents
          type dtn-types:eid;
          description
            "An Administrative Endpoint EID of this Bundle Protocol
-            Agent (BPA), as defined in Section 4.2.5.2 of RFC 9171.
+            Agent (BPA), as defined in Sections 3.2 and 4.2.5.2 of
+            RFC 9171.
 
             Each entry MUST be an Administrative Endpoint EID for
             its scheme.  For the 'dtn' scheme, the administrative
@@ -720,7 +723,9 @@ Table of Contents
             authority component and an empty path, e.g.,
             'dtn://example/').  For the 'ipn' scheme, the
             administrative endpoint EID is the EID with service
-            number 0 (e.g., 'ipn:974848.5.0'), per RFC 9758.
+            number 0 (e.g., 'ipn:974848.5.0'), per RFC 9758
+            Sections 5.3 (ipn node-number semantics) and 5.7
+            (administrative endpoint determinism).
             This module cannot enforce scheme-specific format
             constraints in YANG; implementations MUST validate
             that each configured EID satisfies the administrative
@@ -742,8 +747,8 @@ Table of Contents
             permit a configured-but-disabled BPA to exist
             transiently with no entries declared.";
          reference
-           "RFC 9171, Section 4.2.5.1 and Section 4.2.5.2;
-            RFC 9758";
+           "RFC 9171, Sections 3.2 and 4.2.5.2;
+            RFC 9758, Sections 5.3 and 5.7";
        }
 
        leaf primary-admin-eid {
@@ -1854,6 +1859,35 @@ Table of Contents
              leaf bytes-rx {
                type yang:counter64;
                description "Total bytes received.";
+             }
+
+             leaf last-bundle-tx-time {
+               type yang:date-and-time;
+               description
+                 "Timestamp of the most recent bundle successfully
+                  transmitted via this CLA.  Unset if no bundle
+                  has been transmitted since the CLA was last
+                  enabled.
+
+                  This leaf is complementary to 'bundles-tx': where
+                  the counter shows volume, this timestamp answers
+                  the operator question 'is this link actually
+                  being used?' without requiring counter arithmetic
+                  or polling intervals.";
+             }
+
+             leaf last-bundle-rx-time {
+               type yang:date-and-time;
+               description
+                 "Timestamp of the most recent bundle successfully
+                  received via this CLA.  Unset if no bundle has
+                  been received since the CLA was last enabled.
+
+                  This leaf is complementary to 'bundles-rx': where
+                  the counter shows volume, this timestamp answers
+                  the operator question 'is this link actually
+                  being used?' without requiring counter arithmetic
+                  or polling intervals.";
              }
 
              container active-contact-info {
