@@ -241,15 +241,14 @@ EID patterns, used to specify the set of EIDs matched by a route,
 are defined as a separate `eid-pattern` typedef.  The grammar and
 semantics of EID patterns are defined in {{I-D.ietf-dtn-eid-pattern}}.
 
-A BPA's node IDs, exposed via the `/bp:bp/node-id` leaf-list, also
-identify the BPA's administrative endpoints per Section 6.1 of
-{{RFC9171}}.  For the `dtn` scheme, the node ID and the
-administrative endpoint EID are identical.  For the `ipn` scheme,
-the administrative endpoint is the EID with service number 0 sharing
-the same node component (per {{RFC9758}}).  Any EID whose
-scheme-specific node component matches the node component of an
-entry in the `node-id` list is considered local to the BPA and is
-subject to local delivery rather than forwarding.
+A BPA's administrative endpoint EIDs are listed in
+`/bp:bp/admin-endpoint-eid`.  Each entry MUST be an Administrative
+Endpoint EID as defined in Section 4.2.5.2 of {{RFC9171}}: for the `dtn`
+scheme this is the node ID itself; for the `ipn` scheme this is the
+EID with service number 0 (e.g., `ipn:974848.5.0`), per {{RFC9758}}.
+Any EID whose scheme-specific node component matches the node
+component of an entry in this list is considered local to the BPA
+and is subject to local delivery rather than forwarding.
 
 ## Relationship to RFC 8349
 
@@ -280,7 +279,16 @@ The routing module diverges from {{RFC8349}} in three ways:
    defines a single criterion (`destination-eid-pattern`); further
    augmentation of the `match` container is deferred to future work.
 
-3. **Explicit FIB.**  A `fib` container is provided as operational
+3. **Next-hop types.**  Five next-hop types are defined:
+   `nh-type-eid` (resolve peer EID to CLA at forwarding time),
+   `nh-type-cla` (direct CLA binding), `nh-type-multicast`
+   (replicate to a set of peer EIDs), `nh-type-discard` (silently
+   drop the bundle), and `nh-type-reflect` (forward back toward
+   the bundle's source EID).  EID resolution is single-level;
+   recursive chaining through other `nh-type-eid` routes is not
+   defined by this document.
+
+4. **Explicit FIB.**  A `fib` container is provided as operational
    state separate from the RIB.  The BPA's route selection
    algorithm (see {{route-selection}}) determines FIB membership
    from RIB content; this can differ from per-RIB best-route
@@ -319,7 +327,10 @@ follows.
 
    * `mode-ecmp`: the BPA distributes bundles across the routes in
      the group by hashing the tuple specified by `hash-input`
-     (defaulting to `(source EID, destination EID)`).
+     (defaulting to `(primary-block source node EID, destination EID)`).
+     The source component is always taken from the primary block
+     source node EID field ({{RFC9171}} Section 4.2.3); the
+     Previous Node EID MUST NOT be used.
 
    * `mode-ucmp`: the BPA distributes bundles across the routes in
      the group in proportion to their configured `weight` values,
@@ -366,8 +377,8 @@ hooks for future work:
 ~~~~
 module: ietf-dtn-bp
   +--rw bp
-     +--rw node-id*           dtn-types:eid
-     +--rw primary-node-id?   -> ../node-id
+     +--rw admin-endpoint-eid*    dtn-types:eid
+     +--rw primary-admin-eid?     -> ../admin-endpoint-eid
 ~~~~
 
 ## ietf-dtn-bp-routing
@@ -399,7 +410,11 @@ module: ietf-dtn-bp-routing
        |           |     |          -> /bp:bp/cla:convergence-layers
        |           |     |             /cla:cla/cla:name
        |           |     +--:(multicast)
-       |           |        +--rw multicast-member*  dtn-types:eid
+       |           |     |  +--rw multicast-member*  dtn-types:eid
+       |           |     +--:(discard)
+       |           |     |  +--rw discard?           empty
+       |           |     +--:(reflect)
+       |           |        +--rw reflect?           empty
        |           +--rw forwarding-policy
        |              +--rw mode?              identityref
        |              +--rw (mode-parameters)?
@@ -424,6 +439,7 @@ module: ietf-dtn-bp-routing
              +--ro name                       string
              +--ro rib?                       leafref
              +--ro destination-eid-pattern?   dtn-types:eid-pattern
+             +--ro next-hop-type?             identityref
              +--ro next-hop-eid?              dtn-types:eid
              +--ro cla-binding?               leafref
              +--ro selected-at?               yang:date-and-time
@@ -445,7 +461,7 @@ module: ietf-dtn-cla
           +--rw type                  identityref
           +--rw enabled?              boolean
           +--rw direction?            identityref
-          +--rw local-eid?            -> /bp:bp/node-id
+          +--rw local-eid?            -> /bp:bp/admin-endpoint-eid
           +--rw bound-interface*      if:interface-ref
           +--rw mtu?                  uint64
           +--rw peer* [peer-eid]
@@ -563,7 +579,7 @@ module ietf-dtn-types {
 
   typedef eid {
     type string {
-      length "1..1024";
+      length "1..max";
       pattern '[a-zA-Z][a-zA-Z0-9+\-.]*:.*';
     }
     description
@@ -594,7 +610,7 @@ module ietf-dtn-types {
 
   typedef eid-pattern {
     type string {
-      length "1..1024";
+      length "1..max";
     }
     description
       "A pattern that matches one or more Bundle Protocol
@@ -680,49 +696,53 @@ module ietf-dtn-bp {
        this container to add routing, convergence-layer, and
        related subtrees.";
 
-    leaf-list node-id {
+    leaf-list admin-endpoint-eid {
       type dtn-types:eid;
       description
-        "A node identifier of this Bundle Protocol Agent (BPA),
-         expressed as an Endpoint Identifier (EID).
+        "An Administrative Endpoint EID of this Bundle Protocol
+         Agent (BPA), as defined in Section 4.2.5.2 of RFC 9171.
 
-         Per Section 6.1 of RFC 9171, each node ID also
-         identifies an administrative endpoint at which this BPA
-         receives administrative records (status reports and
-         other control bundles).  For the 'dtn' scheme the node
-         ID and the administrative endpoint EID are identical;
-         for the 'ipn' scheme the administrative endpoint is the
-         EID with service number 0 sharing the same node
-         component, per RFC 9758.
+         Each entry MUST be an Administrative Endpoint EID for
+         its scheme.  For the 'dtn' scheme, the administrative
+         endpoint EID is the node ID itself (the URI with an
+         authority component and an empty path, e.g.,
+         'dtn://example/').  For the 'ipn' scheme, the
+         administrative endpoint EID is the EID with service
+         number 0 (e.g., 'ipn:974848.5.0'), per RFC 9758.
+         This module cannot enforce scheme-specific format
+         constraints in YANG; implementations MUST validate
+         that each configured EID satisfies the administrative
+         endpoint form for its scheme.
 
-         Any EID whose scheme-specific node component matches the
-         node component of an entry in this list is considered
-         local to this BPA and is subject to local delivery
-         processing rather than forwarding.
+         Any EID whose scheme-specific node component matches
+         the node component of an entry in this list is
+         considered local to this BPA and is subject to local
+         delivery processing rather than forwarding.
 
-         A BPA typically has one node ID per EID scheme it
-         supports.  Multiple node IDs within the same scheme are
-         permitted but unusual; their use is implementation-
-         defined.
+         A BPA typically has one administrative endpoint EID
+         per EID scheme it supports.  Multiple entries within
+         the same scheme are permitted but unusual; their use
+         is implementation-defined.
 
-         At least one node ID SHOULD be configured for any BPA
+         At least one entry SHOULD be configured for any BPA
          that originates or accepts bundles.  This module does
-         not impose a 'min-elements 1' constraint on the
-         leaf-list so as to permit a configured-but-disabled BPA
-         to exist transiently with no node IDs declared.";
+         not impose a 'min-elements 1' constraint so as to
+         permit a configured-but-disabled BPA to exist
+         transiently with no entries declared.";
       reference
-        "RFC 9171, Section 4.2.5.1 and Section 6.1;
+        "RFC 9171, Section 4.2.5.1 and Section 4.2.5.2;
          RFC 9758";
     }
 
-    leaf primary-node-id {
+    leaf primary-admin-eid {
       type leafref {
-        path "../node-id";
+        path "../admin-endpoint-eid";
       }
       description
-        "Designates one entry in the 'node-id' leaf-list as the
-         primary node ID of this BPA.  The primary node ID is
-         used as the source EID for bundles originated by this
+        "Designates one entry in the 'admin-endpoint-eid'
+         leaf-list as the primary administrative endpoint EID
+         of this BPA.  The primary administrative endpoint EID
+         is used as the source EID for bundles originated by this
          BPA when no source EID is specified by the originating
          application, and as the default 'local-eid' for CLA
          instances that do not explicitly configure one.
@@ -808,8 +828,21 @@ module ietf-dtn-bp-routing {
     base routing-protocol-type;
     description
       "Direct routes derived from local CLA peer configuration.
-       Implementations MAY automatically install direct routes
-       for each peer EID configured on an active CLA.";
+
+       An implementation that supports direct routes MUST
+       instantiate a 'control-plane-protocol' list entry of this
+       type and MUST surface each installed direct route as an
+       entry in the corresponding 'ribs/rib/routes' list, with
+       'source-protocol' referencing that instance.  Direct
+       routes MUST NOT remain implicit (i.e., affect the FIB
+       without appearing in any RIB), as doing so would make
+       them invisible to the route selection algorithm and to
+       operators.
+
+       An implementation that does not support direct routes
+       need not instantiate this protocol type.  Support for
+       'proto-direct' is therefore optional; its absence does
+       not constitute a protocol violation.";
   }
 
   identity next-hop-type {
@@ -823,7 +856,17 @@ module ietf-dtn-bp-routing {
     description
       "Next hop is identified by the EID of a peer BPA.  The
        local BPA resolves the peer EID to one or more convergence
-       layer adapters at forwarding time.";
+       layer adapters at forwarding time.
+
+       Resolution is single-level: the BPA maps the peer EID
+       directly to a CLA (e.g., via the CLA peer list or an
+       implementation-defined neighbor table).  The BPA MUST NOT
+       chain resolution through other nh-type-eid routes (i.e.,
+       recursive EID resolution is not defined by this
+       document).  Implementations that support recursive
+       resolution MUST implement cycle detection and MUST treat
+       a resolution cycle as a forwarding failure for the
+       affected bundle.";
   }
 
   identity nh-type-cla {
@@ -840,6 +883,42 @@ module ietf-dtn-bp-routing {
       "Next hop is a set of peer EIDs representing the recipients
        of a multicast bundle.  The local BPA replicates the
        bundle and forwards one copy to each listed member.";
+  }
+
+  identity nh-type-discard {
+    base next-hop-type;
+    description
+      "Discard (blackhole) route.  Bundles matching this route
+       are silently dropped; no status report is generated
+       unless the bundle's 'request deletion status report'
+       flag is set, in which case normal deletion reporting
+       applies.
+
+       This next-hop type carries no value: no 'next-hop-eid',
+       'cla-binding', or other resolution leaf is present.
+       It is incompatible with 'mode-ecmp' and 'mode-ucmp'
+       forwarding-policy modes; 'mode-none' MUST be used.";
+  }
+
+  identity nh-type-reflect {
+    base next-hop-type;
+    description
+      "Reflect route.  Bundles matching this route are
+       forwarded back toward their source: the BPA uses the
+       bundle's source EID (from the primary block) as the
+       forwarding destination and performs normal next-hop
+       resolution for that EID.
+
+       This is primarily useful for hop-by-hop testing and
+       loopback diagnostics.  Implementations MUST NOT reflect
+       a bundle whose source EID matches one of the local BPA's
+       own administrative endpoint EIDs, to prevent trivial
+       forwarding loops; such bundles MUST be treated as a
+       forwarding failure.
+
+       This next-hop type carries no value.  It is incompatible
+       with 'mode-ecmp' and 'mode-ucmp' forwarding-policy modes;
+       'mode-none' MUST be used.";
   }
 
   identity forwarding-policy-mode {
@@ -897,19 +976,35 @@ module ietf-dtn-bp-routing {
   identity hash-per-flow-eid-pair {
     base hash-input;
     description
-      "Bundles are assigned to routes by hashing the tuple
-       (source EID, destination EID).  All bundles in the same
-       (source, destination) flow take the same path within an
+      "Bundles are assigned to routes by hashing the 2-tuple
+       (primary-block source node EID, destination EID).
+       'Source EID' here means the source node EID field of
+       the bundle's primary block (RFC 9171, Section 4.2.3),
+       which identifies the bundle's originator and is stable
+       across all forwarding hops.  It does NOT refer to the
+       Previous Node EID (RFC 9171, Section 4.4.4), which
+       changes at every hop and MUST NOT be used for this
+       purpose.
+
+       All bundles sharing the same (primary-block source node
+       EID, destination EID) pair take the same path within an
        equal-preference group.";
   }
 
   identity hash-per-flow-with-creation-ts {
     base hash-input;
     description
-      "Bundles are assigned to routes by hashing the tuple
-       (source EID, destination EID, creation timestamp).
+      "Bundles are assigned to routes by hashing the 3-tuple
+       (primary-block source node EID, destination EID,
+       creation timestamp).  'Source EID' has the same meaning
+       as in 'hash-per-flow-eid-pair': the source node EID
+       field of the primary block (RFC 9171, Section 4.2.3),
+       not the Previous Node EID.
+
        Provides flow stickiness with looser grouping than
-       'hash-per-flow-eid-pair'.";
+       'hash-per-flow-eid-pair': bundles from the same
+       originator to the same destination are spread across
+       the group if they carry different creation timestamps.";
   }
 
   /* -------------------- Augmentation -------------------- */
@@ -1084,6 +1179,30 @@ module ietf-dtn-bp-routing {
                          one copy to each listed member.";
                     }
                   }
+
+                  case discard {
+                    when "derived-from-or-self(../next-hop-type,"
+                       + " 'bp-rt:nh-type-discard')";
+                    leaf discard {
+                      type empty;
+                      description
+                        "Presence of this leaf confirms the
+                         discard action.  Bundles are silently
+                         dropped.";
+                    }
+                  }
+
+                  case reflect {
+                    when "derived-from-or-self(../next-hop-type,"
+                       + " 'bp-rt:nh-type-reflect')";
+                    leaf reflect {
+                      type empty;
+                      description
+                        "Presence of this leaf confirms the
+                         reflect action.  Bundles are forwarded
+                         back toward their source EID.";
+                    }
+                  }
                 }
               }
 
@@ -1110,6 +1229,32 @@ module ietf-dtn-bp-routing {
                     "Multicast next-hops already implement
                      replication semantics; combining them with
                      ECMP or UCMP is not defined.";
+                }
+
+                must "not(derived-from-or-self("
+                   + "../next-hop/next-hop-type,"
+                   + " 'bp-rt:nh-type-discard'))"
+                   + " or derived-from-or-self(mode,"
+                   + " 'bp-rt:mode-none')" {
+                  error-message
+                    "A discard next-hop is incompatible with "
+                  + "non-trivial forwarding-policy modes.";
+                  description
+                    "Discard routes have no peer to distribute
+                     across; ECMP and UCMP are not meaningful.";
+                }
+
+                must "not(derived-from-or-self("
+                   + "../next-hop/next-hop-type,"
+                   + " 'bp-rt:nh-type-reflect'))"
+                   + " or derived-from-or-self(mode,"
+                   + " 'bp-rt:mode-none')" {
+                  error-message
+                    "A reflect next-hop is incompatible with "
+                  + "non-trivial forwarding-policy modes.";
+                  description
+                    "Reflect routes have no peer to distribute
+                     across; ECMP and UCMP are not meaningful.";
                 }
 
                 leaf mode {
@@ -1283,6 +1428,18 @@ module ietf-dtn-bp-routing {
             type dtn-types:eid-pattern;
             description
               "Destination EID pattern of the selected route.";
+          }
+
+          leaf next-hop-type {
+            type identityref {
+              base bp-rt:next-hop-type;
+            }
+            description
+              "The next-hop type of the selected route.
+               Distinguishes forwarding entries (nh-type-eid,
+               nh-type-cla, nh-type-multicast) from special
+               entries (nh-type-discard, nh-type-reflect) that
+               carry no CLA binding or peer EID.";
           }
 
           leaf next-hop-eid {
@@ -1877,7 +2034,8 @@ static route directing all `ipn:974848.42.*` traffic to peer
 
 Two static routes at the same preference, each bound directly to a
 different CLA, forming an equal-preference group distributed across
-the two CLAs by hashing per (source EID, destination EID) flow:
+the two CLAs by hashing per (primary-block source node EID,
+destination EID) flow:
 
 ~~~~
 /bp:bp/node-id = ["ipn:974848.5.0"]
