@@ -269,11 +269,14 @@ Table of Contents
    A BPA's administrative endpoint EIDs are listed in /bp:bp/admin-
    endpoint-eid.  Each entry MUST be an Administrative Endpoint EID as
    defined in Sections 3.2 and 4.2.5.2 of [RFC9171]: for the dtn scheme
-   this is the node ID itself; for the ipn scheme this is the EID with
-   service number 0 (e.g., ipn:974848.5.0), per [RFC9758] Sections 5.3
-   and 5.7.  Any EID whose scheme-specific node component matches the
-   node component of an entry in this list is considered local to the
-   BPA and is subject to local delivery rather than forwarding.
+   this is the node ID itself (e.g., dtn://example/); for the ipn scheme
+   this is the FQNN with service number 0 (e.g., ipn:974848.5.0), per
+   [RFC9758] Sections 5.3 and 5.7.  At most one entry per EID scheme is
+   permitted: each dtn authority and each ipn FQNN identifies a distinct
+   BP node ([RFC9758] Section 5.1), and this module models exactly one
+   BPA.  Any EID whose scheme-specific node component matches the node
+   component of an entry in this list is considered local to the BPA and
+   is subject to local delivery rather than forwarding.
 
 2.3.  Relationship to RFC 8349
 
@@ -398,8 +401,8 @@ Table of Contents
 
    module: ietf-dtn-bp
      +--rw bp
-        +--rw admin-endpoint-eid*    dtn-types:eid
-        +--rw primary-admin-eid?     -> ../admin-endpoint-eid
+        +--rw admin-endpoint-eid*       dtn-types:eid
+        +--rw primary-admin-endpoint?   -> ../admin-endpoint-eid
 
 3.2.  ietf-dtn-bp-routing
 
@@ -479,7 +482,7 @@ Table of Contents
              +--rw type                  identityref
              +--rw enabled?              boolean
              +--rw direction?            identityref
-             +--rw local-eid?            -> /bp:bp/admin-endpoint-eid
+             +--rw local-eid?            -> /bp:bp/bp:admin-endpoint-eid
              +--rw bound-interface*      if:interface-ref
              +--rw mtu?                  uint64
              +--rw peer* [peer-eid]
@@ -712,34 +715,54 @@ Table of Contents
 
        leaf-list admin-endpoint-eid {
          type dtn-types:eid;
+         must "count(../admin-endpoint-eid[starts-with(., 'dtn://')]) <= 1" {
+           error-message
+             "At most one dtn-scheme administrative endpoint EID "
+           + "per BPA.  Multi-node deployments use multiple module "
+           + "instances (one per BPA), not multiple entries here.";
+           description
+             "Each dtn-scheme authority identifies a distinct BP
+              node (RFC 9171 Section 4.2.5.1.1); this module
+              models one BPA, which is one BP node.";
+         }
+         must "count(../admin-endpoint-eid[starts-with(., 'ipn:')]) <= 1" {
+           error-message
+             "At most one ipn-scheme administrative endpoint EID "
+           + "per BPA.  Multi-FQNN deployments use multiple module "
+           + "instances (one per BPA), not multiple entries here.";
+           description
+             "Each ipn FQNN identifies a distinct BP node
+              (RFC 9758 Section 5.1); this module models one
+              BPA, which is one BP node.";
+         }
          description
-           "An Administrative Endpoint EID of this Bundle Protocol
-            Agent (BPA), as defined in Sections 3.2 and 4.2.5.2 of
-            RFC 9171.
+           "An EID at which this BPA receives administrative
+            records (status reports and other control bundles),
+            as defined in Sections 3.2 and 4.2.5.2 of RFC 9171.
 
             Each entry MUST be an Administrative Endpoint EID for
             its scheme.  For the 'dtn' scheme, the administrative
             endpoint EID is the node ID itself (the URI with an
             authority component and an empty path, e.g.,
-            'dtn://example/').  For the 'ipn' scheme, the
-            administrative endpoint EID is the EID with service
-            number 0 (e.g., 'ipn:974848.5.0'), per RFC 9758
-            Sections 5.3 (ipn node-number semantics) and 5.7
-            (administrative endpoint determinism).
-            This module cannot enforce scheme-specific format
-            constraints in YANG; implementations MUST validate
-            that each configured EID satisfies the administrative
-            endpoint form for its scheme.
+            'dtn://example/'), per RFC 9171 Section 4.2.5.1.1.
+            For the 'ipn' scheme, the administrative endpoint EID
+            is the FQNN with service number 0 (e.g.,
+            'ipn:974848.5.0'), per RFC 9758 Sections 5.3 and 5.7.
+
+            At most one entry per EID scheme is permitted.  Each
+            dtn authority and each ipn FQNN identifies a distinct
+            BP node (RFC 9758 Section 5.1); since this module
+            models exactly one BPA (= one BP node), multiple
+            entries under the same scheme would imply multiple
+            distinct nodes.  Multi-node deployments are
+            represented as multiple instances of this module,
+            typically one BPA process per instance under
+            orchestration.
 
             Any EID whose scheme-specific node component matches
             the node component of an entry in this list is
             considered local to this BPA and is subject to local
             delivery processing rather than forwarding.
-
-            A BPA typically has one administrative endpoint EID
-            per EID scheme it supports.  Multiple entries within
-            the same scheme are permitted but unusual; their use
-            is implementation-defined.
 
             At least one entry SHOULD be configured for any BPA
             that originates or accepts bundles.  This module does
@@ -748,26 +771,31 @@ Table of Contents
             transiently with no entries declared.";
          reference
            "RFC 9171, Sections 3.2 and 4.2.5.2;
-            RFC 9758, Sections 5.3 and 5.7";
+            RFC 9758, Sections 5.1, 5.3, and 5.7";
        }
 
-       leaf primary-admin-eid {
+       leaf primary-admin-endpoint {
          type leafref {
            path "../admin-endpoint-eid";
          }
          description
-           "Designates one entry in the 'admin-endpoint-eid'
-            leaf-list as the primary administrative endpoint EID
-            of this BPA.  The primary administrative endpoint EID
-            is used as the source EID for bundles originated by this
-            BPA when no source EID is specified by the originating
-            application, and as the default 'local-eid' for CLA
-            instances that do not explicitly configure one.
+           "The administrative endpoint EID to use as the default
+            'local-eid' for CLA instances that do not explicitly
+            configure one, and as the source EID for bundles
+            originated by this BPA when no source EID is specified
+            by the originating application.
 
-            If this leaf is unset, the BPA selects a primary node
-            ID in an implementation-defined manner, typically by
-            choosing the first entry in 'node-id' in declaration
-            order.";
+            This leaf is optional.  Implementations that derive
+            the appropriate administrative endpoint from per-
+            request context (e.g., by matching the destination
+            scheme or the outgoing CLA type) may leave it unset.
+            Implementations that prefer a configured default
+            should set it to one of the entries in
+            'admin-endpoint-eid'.
+
+            When unset and no per-request context is available,
+            the BPA selects an administrative endpoint in an
+            implementation-defined manner.";
        }
      }
    }
@@ -1747,17 +1775,21 @@ Table of Contents
 
            leaf local-eid {
              type leafref {
-               path "/bp:bp/bp:node-id";
+               path "/bp:bp/bp:admin-endpoint-eid";
              }
              description
-               "The local node ID this CLA advertises to peers.
+               "The administrative endpoint EID this CLA advertises
+                to peers as the local node identity.
 
-                If unset, the CLA defaults to the BPA's primary
-                node ID (see '/bp:bp/bp:primary-node-id').  Setting
-                this leaf is useful in multi-persona deployments
-                where different CLAs advertise different node IDs
-                of the same BPA (e.g., a 'dtn:' identity on one
-                network and an 'ipn:' identity on another).";
+                If unset, the CLA defaults to the BPA's
+                'primary-admin-endpoint'
+                (see '/bp:bp/bp:primary-admin-endpoint'), or to
+                an implementation-selected administrative endpoint
+                if that leaf is also unset.  Setting this leaf is
+                useful in multi-persona deployments where different
+                CLAs advertise different administrative endpoint
+                EIDs of the same BPA (e.g., a 'dtn:' identity on
+                one network and an 'ipn:' identity on another).";
            }
 
            leaf-list bound-interface {
@@ -2074,8 +2106,8 @@ Table of Contents
    ipn:974848.7.0 by EID.  The CLA carries a static peer entry for
    ipn:974848.7.0 giving its transport address:
 
- /bp:bp/node-id = ["ipn:974848.5.0"]
- /bp:bp/primary-node-id = "ipn:974848.5.0"
+ /bp:bp/admin-endpoint-eid = ["ipn:974848.5.0"]
+ /bp:bp/primary-admin-endpoint = "ipn:974848.5.0"
 
  /bp:bp/cla:convergence-layers/cla:cla[name="tcpcl-public"]:
    type             = cla:cla-tcpclv4
@@ -2103,8 +2135,8 @@ Table of Contents
    the two CLAs by hashing per (primary-block source node EID,
    destination EID) flow:
 
-/bp:bp/node-id = ["ipn:974848.5.0"]
-/bp:bp/primary-node-id = "ipn:974848.5.0"
+/bp:bp/admin-endpoint-eid = ["ipn:974848.5.0"]
+/bp:bp/primary-admin-endpoint = "ipn:974848.5.0"
 
 /bp:bp/cla:convergence-layers/cla:cla[name="cla-a"]:
   type             = cla:cla-tcpclv4
@@ -2161,11 +2193,12 @@ Table of Contents
    data nodes can have a negative effect on network operations.
    Specifically:
 
-   *  /bp:bp/node-id, /bp:bp/primary-node-id: Modifying a BPA's node
-      identifiers changes the identity it presents to peers and may
-      invalidate authentication state, contact plan entries, and static
-      routes configured by peers.  Unauthorized modification can also
-      enable identity spoofing.
+   *  /bp:bp/admin-endpoint-eid, /bp:bp/primary-admin-endpoint:
+      Modifying a BPA's administrative endpoint EIDs changes the
+      identity it presents to peers and may invalidate authentication
+      state, contact plan entries, and static routes configured by
+      peers.  Unauthorized modification can also enable identity
+      spoofing.
 
    *  /bp:bp/bp-rt:routing/forwarding-retry-count: Setting this value
       pathologically high could cause a BPA to hold bundles in storage
@@ -2374,11 +2407,11 @@ Open Issues
 
    The following issues are flagged for working group discussion:
 
-   1.  *'min-elements 1' on '/bp:bp/node-id'.* The leaf-list is
-       currently unconstrained to permit transient configurations
-       without node IDs.  Whether to require at least one node ID via
-       YANG (with an associated must or min-elements constraint) versus
-       leaving this to operator discipline is open.
+   1.  *'min-elements 1' on '/bp:bp/admin-endpoint-eid'.* The leaf-list
+       is currently unconstrained to permit transient configurations
+       without any administrative endpoint EIDs.  Whether to require at
+       least one entry via YANG (with a min-elements 1 constraint)
+       versus leaving this to operator discipline is open.
 
    2.  *CLA peer 'address' format.* This document treats the generic
        peer 'address' leaf as an opaque string, with CLA- specific
