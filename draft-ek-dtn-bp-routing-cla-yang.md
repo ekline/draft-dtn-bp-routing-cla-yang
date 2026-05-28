@@ -61,9 +61,9 @@ CLA modules.
 A complete YANG data model for a Bundle Protocol Agent (covering
 fragmentation, reassembly, status report generation, endpoint
 registration, storage management, CRC handling, and BPSec policy) is
-explicitly out of scope for this document and is expected to be
-addressed by a forthcoming companion document, structured as an
-additive revision of the minimal BPA module defined here.
+explicitly out of scope for this document and is deferred to future
+work.  The minimal BPA module defined here is structured to admit
+such additions without requiring changes to the routing or CLA modules.
 
 --- middle
 
@@ -79,19 +79,13 @@ information base (FIB) derived from that RIB, and handing matching
 bundles to a convergence layer adapter (CLA) that implements bundle
 transfer over an underlying transport.
 
-To date, the IETF has produced numerous specifications describing how
-BPAs interoperate, but no standardized YANG {{RFC7950}} data model
-exists for managing BPAs through NETCONF {{RFC6241}}, RESTCONF
-{{RFC8040}}, or other YANG-driven mechanisms.  Operators deploying
-BPAs across diverse hardware and software platforms have therefore
-relied on implementation-specific configuration interfaces, hindering
-multi-vendor interoperability and operational uniformity.
-
-This document begins addressing that gap by defining YANG models for
-the routing and convergence-layer aspects of a BPA.  These are the
-two subsystems most directly involved in determining how bundles flow
-through a DTN, and they are also the two subsystems where
-multi-vendor operational consistency is most urgently needed.
+While the IETF has produced numerous specifications describing how
+BPAs interoperate, standardized YANG {{RFC7950}} data models for
+managing BPAs through NETCONF {{RFC6241}}, RESTCONF {{RFC8040}}, or
+other YANG-driven mechanisms have not yet emerged.  This document
+takes a step toward filling that gap by defining YANG models for the
+routing and convergence-layer aspects of a BPA — the two subsystems
+most directly involved in determining how bundles flow through a DTN.
 
 ## Scope
 
@@ -133,17 +127,16 @@ The following are explicitly out of scope for this document:
   protocols.**  This document defines static routing only.  The
   `routing-protocol-type` identity defined herein is the
   extensibility hook for future routing protocol modules.  A
-  companion CGR YANG module, including contact plan modeling, is
-  envisioned as separate future work.
+  CGR and other dynamic routing protocol modules are deferred to
+  future work.
 
 * **Policy-based routing on criteria other than destination EID.**
   Source-EID matching, extension-block matching (e.g., for QoS
-  blocks), and other policy criteria are anticipated as future
-  augmentations of the route `match` container defined here.  The
-  schema is structured to make such extensions purely additive.
+  blocks), and other policy criteria are deferred to future work.
+  The schema is structured to make such extensions purely additive.
 
 * **Endpoint registration and local delivery configuration.**  These
-  are anticipated for a companion delivery-management module.
+  are deferred to future work.
 
 * **Application-level interfaces.**  Application-to-BPA APIs are
   outside the IETF YANG modeling scope.
@@ -169,14 +162,14 @@ Route:
   (described by match criteria) and a forwarding action (described
   by a next hop and optional forwarding policy).
 
-Equal-cost group:
+Equal-preference group:
 : The set of routes that are applicable to a given bundle and that
-  share the same preference value.  Selection within an equal-cost
+  share the same preference value.  Selection within an equal-preference
   group is governed by the routes' forwarding-policy mode.
 
 Forwarding-policy mode:
 : A property of a route describing how the BPA selects among
-  multiple applicable routes in the same equal-cost group.  Modes
+  multiple applicable routes in the same equal-preference group.  Modes
   defined here include `mode-none` (deterministic selection),
   `mode-ecmp` (equal-cost multipath), and `mode-ucmp` (weighted
   multipath).
@@ -230,10 +223,10 @@ augment individual CLA list entries.
                       +----------------+
 ~~~~
 
-This structure allows the future BPA-completion document to revise
-`ietf-dtn-bp` additively (introducing fragmentation, reassembly,
-storage, etc., as new children of `/bp:bp` or as new sibling
-containers) without disturbing the routing or CLA modules.
+This structure is intentionally minimal.  Additions such as
+fragmentation, reassembly, and storage management are deferred to
+future work and can be introduced as new children of `/bp:bp` or as
+new sibling containers without disturbing the routing or CLA modules.
 
 ## Endpoint Identifiers
 
@@ -264,8 +257,8 @@ The routing module follows the broad structure of {{RFC8349}}:
 
 * A `control-plane-protocols/control-plane-protocol` list keyed by
   protocol type and instance name, providing the extensibility
-  point for adding routing protocols (static routing here; CGR and
-  others in future modules).
+  point for adding routing protocols (static routing here; other
+  protocol types are deferred to future work).
 
 * A `ribs/rib` list for the RIBs maintained by configured
   protocols, with operational `routes` lists populated from each
@@ -277,16 +270,15 @@ The routing module follows the broad structure of {{RFC8349}}:
 The routing module diverges from {{RFC8349}} in three ways:
 
 1. **Route keying.**  Static routes are keyed by an administrative
-   `name`, not by destination prefix.  This admits future
-   augmentations that match on criteria other than destination
-   (source EID, extension blocks, etc.) without disturbing the
-   schema.
+   `name`, not by destination prefix.  This allows augmentations
+   that match on criteria other than destination (source EID,
+   extension blocks, etc.) to be added without disturbing the schema;
+   such extensions are deferred to future work.
 
 2. **Match expressed as a container.**  Each static route contains
    a `match` container holding match criteria.  This revision
-   defines a single criterion (`destination-eid-pattern`); future
-   companion documents are expected to augment the `match`
-   container additively.
+   defines a single criterion (`destination-eid-pattern`); further
+   augmentation of the `match` container is deferred to future work.
 
 3. **Explicit FIB.**  A `fib` container is provided as operational
    state separate from the RIB.  The BPA's route selection
@@ -310,14 +302,14 @@ follows.
    container against the bundle.  A route is *applicable* if and
    only if every match criterion is satisfied.
 
-3. The BPA locates the *equal-cost group*: the maximal set of
+3. The BPA locates the *equal-preference group*: the maximal set of
    applicable routes that share the same `preference` value,
    beginning at the first applicable route found in step 2.
 
-4. If the equal-cost group contains exactly one route, the BPA
+4. If the equal-preference group contains exactly one route, the BPA
    forwards the bundle via that route's `next-hop`.
 
-5. If the equal-cost group contains more than one route, the BPA
+5. If the equal-preference group contains more than one route, the BPA
    selects among them according to the `forwarding-policy/mode` of
    the routes in the group:
 
@@ -333,7 +325,7 @@ follows.
      the group in proportion to their configured `weight` values,
      normalized within the group.
 
-   Routes in the same equal-cost group SHOULD have identical
+   Routes in the same equal-preference group SHOULD have identical
    `forwarding-policy` configuration.  If they differ, the BPA MUST
    treat the group as if `mode-none` were in effect and select the
    first applicable route by `name`.
@@ -342,29 +334,30 @@ follows.
    Operators are responsible for ordering routes by `preference`
    such that the intended forwarding policy is expressed by step 2.
 
-Future companion documents defining new forwarding-policy modes
-(notably modes that replicate a bundle across multiple routes in a
-group) MUST specify the interaction of the new mode with primary-
-block flags (custody transfer, deletion-on-forward, do-not-fragment)
-and with BPSec security blocks.
+Any future work defining new forwarding-policy modes (notably modes
+that replicate a bundle across multiple routes in a group) would
+need to specify the interaction of the new mode with primary-block
+flags (custody transfer, deletion-on-forward, do-not-fragment) and
+with BPSec security blocks.
 
 ## Forward Compatibility
 
 Three points in the schema are explicitly reserved as augmentation
 hooks for future work:
 
-* The `match` container under each static route.  Future modules
-  add policy criteria (source EID, extension block matching, etc.)
-  by augmenting `match` additively.
+* The `match` container under each static route.  Additional
+  policy criteria (source EID, extension block matching, etc.)
+  are deferred to future work; the `match` container is the
+  augmentation point for such extensions.
 
 * The `mode-parameters` choice under each route's
   `forwarding-policy` container.  New forwarding modes derived
   from `forwarding-policy-mode` add their parameters as new cases.
 
 * The `active-contact-info` container under each CLA's `state`
-  container.  Future contact-plan modules augment this container
-  with operational state describing the currently-active contact
-  bound to the CLA, if any.
+  container.  Operational state for contact-plan integration is
+  deferred to future work; this container is the augmentation
+  point for such extensions.
 
 # Module Tree Diagrams
 
@@ -656,8 +649,8 @@ module ietf-dtn-bp {
      reassembly, status report generation, endpoint registration,
      storage management, CRC handling, and BPSec policy) is out
      of scope for the document defining the initial revision of
-     this module and is expected to be addressed by a future
-     revision that adds child nodes to '/bp:bp' additively.
+     this module; such modeling is deferred to future work.  The
+     module is structured so that additions are purely additive.
 
      Copyright (c) 2026 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
@@ -787,10 +780,9 @@ module ietf-dtn-bp-routing {
 
      This revision supports static routing only.  Additional
      routing protocols (notably Contact Graph Routing) are
-     expected to be addressed by future companion documents that
-     define new identities derived from 'routing-protocol-type'
-     and augment the corresponding 'control-plane-protocol' list
-     entries.
+     deferred to future work.  The 'routing-protocol-type' identity
+     and 'control-plane-protocol' list provide the augmentation
+     points for such extensions.
 
      Copyright (c) 2026 IETF Trust ...";
 
@@ -853,15 +845,14 @@ module ietf-dtn-bp-routing {
   identity forwarding-policy-mode {
     description
       "Base identity for forwarding-policy modes governing
-       selection among routes in an equal-cost group.
+       selection among routes in an equal-preference group.
 
-       Future modules MAY derive additional modes from this
-       identity, including modes that replicate a bundle across
-       multiple routes within a group.  Such modules MUST
-       specify the interaction of the new mode with primary-
-       block flags (notably custody transfer, deletion-on-
-       forward, and do-not-fragment) and with BPSec security
-       blocks.";
+       Additional modes (including modes that replicate a bundle
+       across multiple routes within a group) are deferred to
+       future work.  Any such work would need to address the
+       interaction of the new mode with primary-block flags
+       (notably custody transfer, deletion-on-forward, and
+       do-not-fragment) and with BPSec security blocks.";
   }
 
   identity mode-none {
@@ -876,7 +867,7 @@ module ietf-dtn-bp-routing {
   identity mode-ecmp {
     base forwarding-policy-mode;
     description
-      "Equal-Cost Multi-Path.  Bundles matching the equal-cost
+      "Equal-Cost Multi-Path.  Bundles in the equal-preference
        group are distributed across applicable routes by hash,
        according to the 'hash-input' parameter.";
   }
@@ -884,7 +875,7 @@ module ietf-dtn-bp-routing {
   identity mode-ucmp {
     base forwarding-policy-mode;
     description
-      "Unequal-Cost Multi-Path.  Bundles matching the equal-cost
+      "Unequal-Cost Multi-Path.  Bundles in the equal-preference
        group are distributed across applicable routes in
        proportion to their configured weights.";
   }
@@ -909,7 +900,7 @@ module ietf-dtn-bp-routing {
       "Bundles are assigned to routes by hashing the tuple
        (source EID, destination EID).  All bundles in the same
        (source, destination) flow take the same path within an
-       equal-cost group.";
+       equal-preference group.";
   }
 
   identity hash-per-flow-with-creation-ts {
@@ -981,11 +972,10 @@ module ietf-dtn-bp-routing {
                 "A statically configured route.
 
                  Routes are keyed by an administrative 'name'
-                 rather than by destination, to permit future
-                 extensions that match on criteria other than
-                 destination (notably source EID and extension
-                 block matching, defined in companion
-                 documents).";
+                 rather than by destination, so that extensions
+                 matching on other criteria (such as source EID
+                 or extension blocks) can be added additively;
+                 such extensions are deferred to future work.";
 
               leaf name {
                 type string {
@@ -1015,13 +1005,13 @@ module ietf-dtn-bp-routing {
                    eligible for forwarding via this route.
 
                    This revision defines a single match
-                   criterion: destination EID pattern.  Future
-                   companion documents are expected to augment
-                   this container to add source EID matching,
+                   criterion: destination EID pattern.
+                   Additional match criteria (source EID,
                    extension block matching, and other
-                   policy-based matching criteria.  Such
-                   augmentations are purely additive: existing
-                   leaves and their semantics are preserved.";
+                   policy-based criteria) are deferred to
+                   future work.  This container is the
+                   designated augmentation point for such
+                   extensions, which are purely additive.";
 
                 leaf destination-eid-pattern {
                   type dtn-types:eid-pattern;
@@ -1100,7 +1090,7 @@ module ietf-dtn-bp-routing {
               container forwarding-policy {
                 description
                   "Forwarding-policy parameters governing
-                   selection within an equal-cost group of
+                   selection within an equal-preference group of
                    routes (those sharing the same preference and
                    matching the same bundle).
 
@@ -1148,7 +1138,7 @@ module ietf-dtn-bp-routing {
                       description
                         "Selects the tuple over which the BPA
                          hashes to assign bundles to routes
-                         within the equal-cost group.";
+                         within the equal-preference group.";
                     }
                   }
 
@@ -1162,7 +1152,7 @@ module ietf-dtn-bp-routing {
                       mandatory true;
                       description
                         "Relative weight of this route within
-                         the equal-cost group.  Weights are
+                         the equal-preference group.  Weights are
                          normalized across all members of the
                          group.";
                     }
@@ -1180,9 +1170,9 @@ module ietf-dtn-bp-routing {
            BPA.
 
            This revision defines RIBs only as operational state
-           populated by control-plane protocols.  A future
-           revision MAY introduce configuration controls for
-           RIB selection and filtering.";
+           populated by control-plane protocols.  Configuration
+           controls for RIB selection and filtering are deferred
+           to future work.";
 
         list rib {
           key "name";
@@ -1266,8 +1256,8 @@ module ietf-dtn-bp-routing {
 
            FIB entries are keyed by route name (matching the
            installing route) rather than by destination,
-           because future policy extensions may produce
-           multiple selected routes whose destinations
+           because policy extensions (deferred to future work)
+           may produce multiple selected routes whose destinations
            overlap.";
 
         list entry {
@@ -1488,17 +1478,15 @@ module ietf-dtn-cla {
     base peer-source;
     description
       "Peer was learned via a neighbor-discovery mechanism.
-       Specific discovery mechanisms are defined by future
-       documents.";
+       Specific discovery mechanisms are deferred to future work.";
   }
 
   identity peer-source-contact-plan {
     base peer-source;
     description
       "Peer was instantiated by a contact-plan-driven routing
-       protocol.  Defined here as a placeholder; the contact
-       plan data model is expected to be specified in a future
-       companion document.";
+       protocol.  Contact-plan data modeling is deferred to
+       future work.";
   }
 
   /* -------------------- Augmentation -------------------- */
@@ -1530,8 +1518,8 @@ module ietf-dtn-cla {
 
              Implementations SHOULD NOT change a CLA's name
              during its lifetime; external references to a CLA
-             (notably from the routing module and from future
-             contact-plan modules) depend on name stability.";
+             (notably from the routing module and from any
+             future contact-plan work) depend on name stability.";
         }
 
         leaf type {
@@ -1676,14 +1664,11 @@ module ietf-dtn-cla {
 
           container active-contact-info {
             description
-              "Container reserved for future augmentation by
-               modules that bind CLAs to scheduled contacts.
+              "Container reserved for augmentation by modules
+               that bind CLAs to scheduled contacts; such
+               contact-plan modeling is deferred to future work.
 
-               This revision defines no child nodes; a future
-               contact-plan YANG module is expected to augment
-               this container with operational state describing
-               the currently-active contact bound to this CLA,
-               if any.";
+               This revision defines no child nodes.";
           }
         }
       }
@@ -1972,8 +1957,8 @@ It is thus important to control read access to these data nodes:
 
 The models defined here do not themselves provide bundle-level
 security; bundle confidentiality, integrity, and authentication
-are provided by BPSec {{RFC9172}}.  A future YANG module for
-BPSec policy configuration is anticipated.
+are provided by BPSec {{RFC9172}}.  YANG modeling of BPSec policy
+configuration is deferred to future work.
 
 # IANA Considerations
 
@@ -2045,33 +2030,28 @@ discussions that shaped this work.
 
 The following issues are flagged for working group discussion:
 
-1. **Author identification.**  Author full name and email address
-   are placeholders in this -00 revision and require update before
-   working group adoption.
-
-2. **'min-elements 1' on '/bp:bp/node-id'.**  The leaf-list is
+1. **'min-elements 1' on '/bp:bp/node-id'.**  The leaf-list is
    currently unconstrained to permit transient configurations
    without node IDs.  Whether to require at least one node ID via
    YANG (with an associated `must` or `min-elements` constraint)
    versus leaving this to operator discipline is open.
 
-3. **CLA peer 'address' format.**  This document treats the
+2. **CLA peer 'address' format.**  This document treats the
    generic peer 'address' leaf as an opaque string, with CLA-
    specific augmentations expected to provide typed alternatives.
    An alternative is to forbid the generic leaf entirely and
    require typed addresses; this is more rigorous but precludes
    minimal CLA configurations.
 
-4. **FIB selection visibility.**  The current FIB does not surface
+3. **FIB selection visibility.**  The current FIB does not surface
    which RIB routes were considered but not selected.  Operators
    may wish for diagnostic state describing rejection reasons
    (e.g., "route X rejected because next-hop CLA is down").  This
    could be added under each FIB entry without disrupting the
    schema.
 
-5. **Multiple RIBs.**  The schema supports multiple named RIBs but
+4. **Multiple RIBs.**  The schema supports multiple named RIBs but
    does not specify how routes from different RIBs interact during
    FIB construction.  Real deployments will need explicit
    semantics; whether to define these in this document or defer to
    a companion document is open.
-
