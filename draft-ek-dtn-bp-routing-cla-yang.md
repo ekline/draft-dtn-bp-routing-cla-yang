@@ -473,10 +473,12 @@ module: ietf-dtn-cla
              +--ro oper-status?         identityref
              +--ro last-state-change?   yang:date-and-time
              +--ro active-peers?        yang:gauge32
-             +--ro bundles-tx?          yang:counter64
-             +--ro bundles-rx?          yang:counter64
-             +--ro bytes-tx?            yang:counter64
-             +--ro bytes-rx?            yang:counter64
+             +--ro bundles-tx?             yang:counter64
+             +--ro bundles-rx?             yang:counter64
+             +--ro bytes-tx?              yang:counter64
+             +--ro bytes-rx?              yang:counter64
+             +--ro last-bundle-tx-time?   yang:date-and-time
+             +--ro last-bundle-rx-time?   yang:date-and-time
              +--ro active-contact-info
 ~~~~
 
@@ -1847,6 +1849,35 @@ module ietf-dtn-cla {
           leaf bytes-rx {
             type yang:counter64;
             description "Total bytes received.";
+          }
+
+          leaf last-bundle-tx-time {
+            type yang:date-and-time;
+            description
+              "Timestamp of the most recent bundle successfully
+               transmitted via this CLA.  Unset if no bundle
+               has been transmitted since the CLA was last
+               enabled.
+
+               This leaf is complementary to 'bundles-tx': where
+               the counter shows volume, this timestamp answers
+               the operator question 'is this link actually
+               being used?' without requiring counter arithmetic
+               or polling intervals.";
+          }
+
+          leaf last-bundle-rx-time {
+            type yang:date-and-time;
+            description
+              "Timestamp of the most recent bundle successfully
+               received via this CLA.  Unset if no bundle has
+               been received since the CLA was last enabled.
+
+               This leaf is complementary to 'bundles-rx': where
+               the counter shows volume, this timestamp answers
+               the operator question 'is this link actually
+               being used?' without requiring counter arithmetic
+               or polling intervals.";
           }
 
           container active-contact-info {
