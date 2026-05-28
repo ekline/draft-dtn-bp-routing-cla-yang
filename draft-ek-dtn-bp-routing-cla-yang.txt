@@ -407,6 +407,7 @@ Table of Contents
 
     augment /bp:bp:
       +--rw routing
+         +--rw forwarding-retry-count?   uint32
          +--rw control-plane-protocols
          |  +--rw control-plane-protocol* [type name]
          |     +--rw type           identityref
@@ -889,9 +890,16 @@ Table of Contents
      identity nh-type-multicast {
        base next-hop-type;
        description
-         "Next hop is a set of peer EIDs representing the recipients
-          of a multicast bundle.  The local BPA replicates the
-          bundle and forwards one copy to each listed member.";
+         "Next hop is an explicit set of peer BPA EIDs to which
+          the local BPA replicates and individually forwards the
+          bundle.
+
+          Note: this identity is distinct from the RFC 9171
+          concept of a 'non-singleton endpoint' (Section 3.2),
+          which is a group EID shared among multiple BPAs and
+          resolved by the network.  Here the sender explicitly
+          enumerates the recipients and performs the replication
+          itself; no group-EID resolution is involved.";
      }
 
      identity nh-type-discard {
@@ -914,9 +922,10 @@ Table of Contents
        description
          "Reflect route.  Bundles matching this route are
           forwarded back toward their source: the BPA uses the
-          bundle's source EID (from the primary block) as the
-          forwarding destination and performs normal next-hop
-          resolution for that EID.
+          bundle's primary-block source node EID as the forwarding
+          destination and performs normal next-hop resolution for
+          that EID, following the forwarding procedure of
+          RFC 9171 Section 5.4.
 
           This is primarily useful for hop-by-hop testing and
           loopback diagnostics.  Implementations MUST NOT reflect
@@ -928,6 +937,8 @@ Table of Contents
           This next-hop type carries no value.  It is incompatible
           with 'mode-ecmp' and 'mode-ucmp' forwarding-policy modes;
           'mode-none' MUST be used.";
+       reference
+         "RFC 9171, Section 5.4";
      }
 
      identity forwarding-policy-mode {
@@ -1026,6 +1037,25 @@ Table of Contents
        container routing {
          description
            "Top-level container for Bundle Protocol routing.";
+
+         leaf forwarding-retry-count {
+           type uint32;
+           default "0";
+           description
+             "Maximum number of additional forwarding attempts
+              to make for a bundle after the first attempt fails,
+              before the bundle is considered unforwardable.
+              A value of 0 means no retries: if the first
+              forwarding attempt fails, the bundle is immediately
+              considered unforwardable and processed accordingly
+              (per RFC 9171 Section 5.4, Step 5).
+
+              RFC 9171 Section 5.4 explicitly identifies the
+              retry count as a node configuration parameter;
+              this leaf exposes it for management.";
+           reference
+             "RFC 9171, Section 5.4";
+         }
 
          container control-plane-protocols {
            description
@@ -2103,6 +2133,13 @@ Table of Contents
       routes configured by peers.  Unauthorized modification can also
       enable identity spoofing.
 
+   *  /bp:bp/bp-rt:routing/forwarding-retry-count: Setting this value
+      pathologically high could cause a BPA to hold bundles in storage
+      for extended periods during link outages, exhausting storage and
+      delaying custody transfer.  Setting it to zero could cause
+      premature bundle deletion in intermittently connected
+      environments.
+
    *  /bp:bp/bp-rt:routing/.../static-routes/route: Unauthorized
       creation, modification, or deletion of static routes can cause
       bundles to be misforwarded, replayed, dropped, or delivered to
@@ -2327,6 +2364,14 @@ Open Issues
        construction.  Real deployments will need explicit semantics;
        whether to define these in this document or defer to a companion
        document is open.
+
+   5.  *Previous Node Block attachment policy.* RFC 9171 Section 4.4.4
+       defines the Previous Node Block, whose attachment is a node
+       configuration decision (a BPA MAY attach it to forwarded
+       bundles).  This policy parameter is not modeled in the current
+       ietf-dtn-bp module and is deferred to future work alongside other
+       BPA-completion items (see Non-Goals).  It is recorded here so it
+       is not overlooked when the full BPA module is developed.
 
 Author's Address
 
