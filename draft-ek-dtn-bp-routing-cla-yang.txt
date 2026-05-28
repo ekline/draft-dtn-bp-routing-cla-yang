@@ -2075,9 +2075,38 @@ Table of Contents
          leaf idle-timeout {
            type uint16;
            units "seconds";
-           default "600";
+           default "120";
+           must "../keepalive-interval = 0"
+              + " or . = 0"
+              + " or . >= 2 * ../keepalive-interval" {
+             error-message
+               "idle-timeout must be at least twice the "
+             + "keepalive-interval (or zero to disable, or "
+             + "keepalive-interval must be zero).  "
+             + "RFC 9174 Section 5.1.1 requires the idle timer "
+             + "to allow at least two missed keepalives before "
+             + "tearing down the session.";
+             description
+               "Enforces the RFC 9174 Section 5.1.1 requirement
+                that the idle timeout is long enough to survive
+                at least two missed keepalive intervals before
+                the session is considered idle.  When
+                keepalive-interval is 0 (keepalives disabled)
+                or idle-timeout is 0 (idle timeout disabled)
+                this constraint does not apply.";
+           }
            description
-             "Idle session timeout.  Zero disables the timeout.";
+             "Idle session timeout.  Zero disables the timeout.
+
+              When keepalives are enabled, this value SHOULD be
+              at least twice the keepalive-interval so that a
+              single missed keepalive does not immediately
+              trigger session teardown, per RFC 9174
+              Section 5.1.1.  The default of 120 s is
+              consistent with the default keepalive-interval
+              of 60 s.";
+           reference
+             "RFC 9174, Section 5.1.1";
          }
 
          container tls {
