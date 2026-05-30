@@ -1066,7 +1066,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Kline</td>
-<td class="center">Expires 29 November 2026</td>
+<td class="center">Expires 1 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1079,12 +1079,12 @@ svg {
 <dd class="internet-draft">draft-ek-dtn-bp-routing-cla-yang-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-05-28" class="published">28 May 2026</time>
+<time datetime="2026-05-30" class="published">30 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-29">29 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-01">1 December 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1130,7 +1130,7 @@ such additions without requiring changes to the routing or CLA modules.<a href="
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 29 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1200,10 +1200,10 @@ such additions without requiring changes to the routing or CLA modules.<a href="
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-module-tree-diagrams" class="internal xref">Module Tree Diagrams</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-ietf-dtn-bp" class="internal xref">ietf-dtn-bp</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-ietf-dtn-bpa" class="internal xref">ietf-dtn-bpa</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-ietf-dtn-bp-routing" class="internal xref">ietf-dtn-bp-routing</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-ietf-dtn-bpa-routing" class="internal xref">ietf-dtn-bpa-routing</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
                 <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-ietf-dtn-cla" class="internal xref">ietf-dtn-cla</a></p>
@@ -1220,10 +1220,10 @@ such additions without requiring changes to the routing or CLA modules.<a href="
                 <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-ietf-dtn-types" class="internal xref">ietf-dtn-types</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
-                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-ietf-dtn-bp-2" class="internal xref">ietf-dtn-bp</a></p>
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-ietf-dtn-bpa-2" class="internal xref">ietf-dtn-bpa</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
-                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-ietf-dtn-bp-routing-2" class="internal xref">ietf-dtn-bp-routing</a></p>
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-ietf-dtn-bpa-routing-2" class="internal xref">ietf-dtn-bpa-routing</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
                 <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="auto internal xref">4.4</a>.  <a href="#name-ietf-dtn-cla-2" class="internal xref">ietf-dtn-cla</a></p>
@@ -1308,12 +1308,12 @@ modules, including the Endpoint Identifier (EID) type and the EID
 scheme identity hierarchy.<a href="#section-1.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.1-2.2">
-            <p id="section-1.1-2.2.1"><code>ietf-dtn-bp</code> — a minimal BPA model containing only the BPA's node
-identifiers, providing a common augmentation point (<code>/bp:bp</code>) for
+            <p id="section-1.1-2.2.1"><code>ietf-dtn-bpa</code> — a minimal BPA model containing only the BPA's node
+identifiers, providing a common augmentation point (<code>/bpa:bpa</code>) for
 other DTN YANG modules.<a href="#section-1.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.1-2.3">
-            <p id="section-1.1-2.3.1"><code>ietf-dtn-bp-routing</code> — the routing information base (RIB) and
+            <p id="section-1.1-2.3.1"><code>ietf-dtn-bpa-routing</code> — the routing information base (RIB) and
 forwarding information base (FIB), structured along the lines of
 <span>[<a href="#RFC8349" class="cite xref">RFC8349</a>]</span> but adapted to the EID-based naming and CLA-based
 next-hop resolution of the Bundle Protocol.<a href="#section-1.1-2.3.1" class="pilcrow">¶</a></p>
@@ -1342,7 +1342,7 @@ Analogous augmentation modules can be defined for other CLA types.<a href="#sect
             <p id="section-1.2-2.1.1"><strong>Complete BPA modeling.</strong>  Configuration of fragmentation,
 reassembly, status report generation, endpoint registration,
 storage management, CRC handling, and BPSec policy are deferred
-to a future revision of the <code>ietf-dtn-bp</code> module.  The skeleton
+to a future revision of the <code>ietf-dtn-bpa</code> module.  The skeleton
 defined here is intentionally minimal so that the future revision
 can be purely additive.<a href="#section-1.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
@@ -1441,9 +1441,9 @@ multipath).<a href="#section-1.3-4.8.1" class="pilcrow">¶</a></p>
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-module-structure" class="section-name selfRef">Module Structure</a>
         </h3>
 <p id="section-2.1-1">The five modules defined here are organized around a common
-augmentation point.  The minimal <code>ietf-dtn-bp</code> module defines the
-top-level <code>/bp:bp</code> container with only the BPA's node identifiers as
-direct children.  The routing and CLA modules each augment <code>/bp:bp</code>
+augmentation point.  The minimal <code>ietf-dtn-bpa</code> module defines the
+top-level <code>/bpa:bpa</code> container with only the BPA's node identifiers as
+direct children.  The routing and CLA modules each augment <code>/bpa:bpa</code>
 with their respective subtrees.  CLA-type-specific modules in turn
 augment individual CLA list entries.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-2.1-2">
@@ -1456,8 +1456,8 @@ augment individual CLA list entries.<a href="#section-2.1-1" class="pilcrow">¶<
    +--------+  |  +---------+
    |           |            |
 +--+-------------+   +------+------+
-| ietf-dtn-bp    |   | (others)    |
-| /bp:bp         |   |             |
+| ietf-dtn-bpa   |   | (others)    |
+| /bpa:bpa       |   |             |
 +----------------+   +-------------+
         ^
         | augment
@@ -1465,7 +1465,7 @@ augment individual CLA list entries.<a href="#section-2.1-1" class="pilcrow">¶<
    +----+------------------+
    |                       |
 +--+-------------+    +----+-----------+
-| ietf-dtn-bp-   |    | ietf-dtn-cla   |
+| ietf-dtn-bpa-  |    | ietf-dtn-cla   |
 | routing        |    |                |
 +----------------+    +----------------+
                               ^
@@ -1482,7 +1482,7 @@ augment individual CLA list entries.<a href="#section-2.1-1" class="pilcrow">¶<
 </div>
 <p id="section-2.1-3">This structure is intentionally minimal.  Additions such as
 fragmentation, reassembly, and storage management are deferred to
-future work and can be introduced as new children of <code>/bp:bp</code> or as
+future work and can be introduced as new children of <code>/bpa:bpa</code> or as
 new sibling containers without disturbing the routing or CLA modules.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1501,7 +1501,7 @@ implementations.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 are defined as a separate <code>eid-pattern</code> typedef.  The grammar and
 semantics of EID patterns are defined in <span>[<a href="#I-D.ietf-dtn-eid-pattern" class="cite xref">I-D.ietf-dtn-eid-pattern</a>]</span>.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">A BPA's administrative endpoint EIDs are listed in
-<code>/bp:bp/admin-endpoint-eid</code>.  Each entry <span class="bcp14">MUST</span> be an Administrative
+<code>/bpa:bpa/admin-eid</code>.  Each entry <span class="bcp14">MUST</span> be an Administrative
 Endpoint EID as defined in Sections 3.2 and 4.2.5.2 of <span>[<a href="#RFC9171" class="cite xref">RFC9171</a>]</span>:
 for the <code>dtn</code> scheme this is the node ID itself (e.g.,
 <code>dtn://example/</code>); for the <code>ipn</code> scheme this is the FQNN with service
@@ -1685,31 +1685,31 @@ point for such extensions.<a href="#section-2.5-2.3.1" class="pilcrow">¶</a></p
       <h2 id="name-module-tree-diagrams">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-module-tree-diagrams" class="section-name selfRef">Module Tree Diagrams</a>
       </h2>
-<div id="ietf-dtn-bp">
+<div id="ietf-dtn-bpa">
 <section id="section-3.1">
-        <h3 id="name-ietf-dtn-bp">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-ietf-dtn-bp" class="section-name selfRef">ietf-dtn-bp</a>
+        <h3 id="name-ietf-dtn-bpa">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-ietf-dtn-bpa" class="section-name selfRef">ietf-dtn-bpa</a>
         </h3>
 <div class="alignLeft art-text artwork" id="section-3.1-1">
 <pre>
-module: ietf-dtn-bp
-  +--rw bp
-     +--rw admin-endpoint-eid*       dtn-types:eid
-     +--rw primary-admin-endpoint?   -&gt; ../admin-endpoint-eid
+module: ietf-dtn-bpa
+  +--rw bpa
+     +--rw admin-eid*               dtn-types:eid
+     +--rw primary-admin-endpoint?   -&gt; ../admin-eid
 </pre><a href="#section-3.1-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
-<div id="ietf-dtn-bp-routing">
+<div id="ietf-dtn-bpa-routing">
 <section id="section-3.2">
-        <h3 id="name-ietf-dtn-bp-routing">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-ietf-dtn-bp-routing" class="section-name selfRef">ietf-dtn-bp-routing</a>
+        <h3 id="name-ietf-dtn-bpa-routing">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-ietf-dtn-bpa-routing" class="section-name selfRef">ietf-dtn-bpa-routing</a>
         </h3>
 <div class="alignLeft art-text artwork" id="section-3.2-1">
 <pre>
-module: ietf-dtn-bp-routing
+module: ietf-dtn-bpa-routing
 
-  augment /bp:bp:
+  augment /bpa:bpa:
     +--rw routing
        +--rw forwarding-retry-count?   uint32
        +--rw control-plane-protocols
@@ -1731,7 +1731,7 @@ module: ietf-dtn-bp-routing
        |           |     |  +--rw next-hop-eid       dtn-types:eid
        |           |     +--:(cla)
        |           |     |  +--rw cla-binding
-       |           |     |          -&gt; /bp:bp/cla:convergence-layers
+       |           |     |          -&gt; /bpa:bpa/cla:convergence-layers
        |           |     |             /cla:cla/cla:name
        |           |     +--:(multicast)
        |           |     |  +--rw multicast-member*  dtn-types:eid
@@ -1785,14 +1785,14 @@ module: ietf-dtn-bp-routing
 <pre>
 module: ietf-dtn-cla
 
-  augment /bp:bp:
+  augment /bpa:bpa:
     +--rw convergence-layers
        +--rw cla* [name]
           +--rw name                  string
           +--rw type                  identityref
           +--rw enabled?              boolean
           +--rw direction?            identityref
-          +--rw local-eid?            -&gt; /bp:bp/bp:admin-endpoint-eid
+          +--rw local-eid?            -&gt; /bpa:bpa/bpa:admin-eid
           +--rw bound-interface*      if:interface-ref
           +--rw mtu?                  uint64
           +--rw peer* [peer-eid]
@@ -1823,7 +1823,7 @@ module: ietf-dtn-cla
 <pre>
 module: ietf-dtn-cla-tcpclv4
 
-  augment /bp:bp/cla:convergence-layers/cla:cla:
+  augment /bpa:bpa/cla:convergence-layers/cla:cla:
     +--rw tcpclv4
        +--rw listener* [local-address local-port]
        |  +--rw local-address    inet:ip-address
@@ -1985,18 +1985,18 @@ module ietf-dtn-types {
 </div>
 </section>
 </div>
-<div id="ietf-dtn-bp-1">
+<div id="ietf-dtn-bpa-1">
 <section id="section-4.2">
-        <h3 id="name-ietf-dtn-bp-2">
-<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-ietf-dtn-bp-2" class="section-name selfRef">ietf-dtn-bp</a>
+        <h3 id="name-ietf-dtn-bpa-2">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-ietf-dtn-bpa-2" class="section-name selfRef">ietf-dtn-bpa</a>
         </h3>
 <div class="breakable lang-yang sourcecode" id="section-4.2-1">
 <pre>
-&lt;CODE BEGINS&gt; file "ietf-dtn-bp@2026-05-27.yang"
-module ietf-dtn-bp {
+&lt;CODE BEGINS&gt; file "ietf-dtn-bpa@2026-05-27.yang"
+module ietf-dtn-bpa {
   yang-version 1.1;
-  namespace "urn:ietf:params:xml:ns:yang:ietf-dtn-bp";
-  prefix bp;
+  namespace "urn:ietf:params:xml:ns:yang:ietf-dtn-bpa";
+  prefix bpa;
 
   import ietf-dtn-types {
     prefix dtn-types;
@@ -2014,7 +2014,7 @@ module ietf-dtn-bp {
     "This module defines a minimal YANG data model for a Bundle
      Protocol Agent (BPA), comprising only the BPA's set of node
      identifiers.  It provides a common augmentation point
-     ('/bp:bp') for other DTN YANG modules, including those for
+     ('/bpa:bpa') for other DTN YANG modules, including those for
      routing and convergence-layer management.
 
      A complete YANG data model for a BPA (covering fragmentation,
@@ -2045,16 +2045,16 @@ module ietf-dtn-bp {
       "RFC XXXX";
   }
 
-  container bp {
+  container bpa {
     description
       "Top-level container for Bundle Protocol Agent configuration
        and operational state.  Other DTN YANG modules augment
        this container to add routing, convergence-layer, and
        related subtrees.";
 
-    leaf-list admin-endpoint-eid {
+    leaf-list admin-eid {
       type dtn-types:eid;
-      must "count(../admin-endpoint-eid[starts-with(., 'dtn://')]) &lt;= 1" {
+      must "count(../admin-eid[starts-with(., 'dtn://')]) &lt;= 1" {
         error-message
           "At most one dtn-scheme administrative endpoint EID "
         + "per BPA.  Multi-node deployments use multiple module "
@@ -2064,7 +2064,7 @@ module ietf-dtn-bp {
            node (RFC 9171 Section 4.2.5.1.1); this module
            models one BPA, which is one BP node.";
       }
-      must "count(../admin-endpoint-eid[starts-with(., 'ipn:')]) &lt;= 1" {
+      must "count(../admin-eid[starts-with(., 'ipn:')]) &lt;= 1" {
         error-message
           "At most one ipn-scheme administrative endpoint EID "
         + "per BPA.  Multi-FQNN deployments use multiple module "
@@ -2115,7 +2115,7 @@ module ietf-dtn-bp {
 
     leaf primary-admin-endpoint {
       type leafref {
-        path "../admin-endpoint-eid";
+        path "../admin-eid";
       }
       description
         "The administrative endpoint EID to use as the default
@@ -2130,7 +2130,7 @@ module ietf-dtn-bp {
          scheme or the outgoing CLA type) may leave it unset.
          Implementations that prefer a configured default
          should set it to one of the entries in
-         'admin-endpoint-eid'.
+         'admin-eid'.
 
          When unset and no per-request context is available,
          the BPA selects an administrative endpoint in an
@@ -2143,25 +2143,25 @@ module ietf-dtn-bp {
 </div>
 </section>
 </div>
-<div id="ietf-dtn-bp-routing-1">
+<div id="ietf-dtn-bpa-routing-1">
 <section id="section-4.3">
-        <h3 id="name-ietf-dtn-bp-routing-2">
-<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-ietf-dtn-bp-routing-2" class="section-name selfRef">ietf-dtn-bp-routing</a>
+        <h3 id="name-ietf-dtn-bpa-routing-2">
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-ietf-dtn-bpa-routing-2" class="section-name selfRef">ietf-dtn-bpa-routing</a>
         </h3>
 <div class="breakable lang-yang sourcecode" id="section-4.3-1">
 <pre>
-&lt;CODE BEGINS&gt; file "ietf-dtn-bp-routing@2026-05-27.yang"
-module ietf-dtn-bp-routing {
+&lt;CODE BEGINS&gt; file "ietf-dtn-bpa-routing@2026-05-27.yang"
+module ietf-dtn-bpa-routing {
   yang-version 1.1;
-  namespace "urn:ietf:params:xml:ns:yang:ietf-dtn-bp-routing";
-  prefix bp-rt;
+  namespace "urn:ietf:params:xml:ns:yang:ietf-dtn-bpa-routing";
+  prefix bpa-rt;
 
   import ietf-dtn-types {
     prefix dtn-types;
     reference "RFC XXXX";
   }
-  import ietf-dtn-bp {
-    prefix bp;
+  import ietf-dtn-bpa {
+    prefix bpa;
     reference "RFC XXXX";
   }
   import ietf-dtn-cla {
@@ -2409,7 +2409,7 @@ module ietf-dtn-bp-routing {
 
   /* -------------------- Augmentation -------------------- */
 
-  augment "/bp:bp" {
+  augment "/bpa:bpa" {
     description
       "Augments the Bundle Protocol Agent with routing
        configuration and operational state.";
@@ -2474,7 +2474,7 @@ module ietf-dtn-bp-routing {
 
           container static-routes {
             when "derived-from-or-self(../type, "
-               + "'bp-rt:proto-static')";
+               + "'bpa-rt:proto-static')";
             description
               "Static routes configured under this protocol
                instance.  Present only when 'type' is
@@ -2559,7 +2559,7 @@ module ietf-dtn-bp-routing {
 
                   case eid {
                     when "derived-from-or-self(../next-hop-type,"
-                       + " 'bp-rt:nh-type-eid')";
+                       + " 'bpa-rt:nh-type-eid')";
                     leaf next-hop-eid {
                       type dtn-types:eid;
                       mandatory true;
@@ -2571,10 +2571,10 @@ module ietf-dtn-bp-routing {
 
                   case cla {
                     when "derived-from-or-self(../next-hop-type,"
-                       + " 'bp-rt:nh-type-cla')";
+                       + " 'bpa-rt:nh-type-cla')";
                     leaf cla-binding {
                       type leafref {
-                        path "/bp:bp/cla:convergence-layers"
+                        path "/bpa:bpa/cla:convergence-layers"
                            + "/cla:cla/cla:name";
                       }
                       mandatory true;
@@ -2587,7 +2587,7 @@ module ietf-dtn-bp-routing {
 
                   case multicast {
                     when "derived-from-or-self(../next-hop-type,"
-                       + " 'bp-rt:nh-type-multicast')";
+                       + " 'bpa-rt:nh-type-multicast')";
                     leaf-list multicast-member {
                       type dtn-types:eid;
                       min-elements 1;
@@ -2601,7 +2601,7 @@ module ietf-dtn-bp-routing {
 
                   case discard {
                     when "derived-from-or-self(../next-hop-type,"
-                       + " 'bp-rt:nh-type-discard')";
+                       + " 'bpa-rt:nh-type-discard')";
                     leaf discard {
                       type empty;
                       description
@@ -2613,7 +2613,7 @@ module ietf-dtn-bp-routing {
 
                   case reflect {
                     when "derived-from-or-self(../next-hop-type,"
-                       + " 'bp-rt:nh-type-reflect')";
+                       + " 'bpa-rt:nh-type-reflect')";
                     leaf reflect {
                       type empty;
                       description
@@ -2638,9 +2638,9 @@ module ietf-dtn-bp-routing {
 
                 must "not(derived-from-or-self("
                    + "../next-hop/next-hop-type,"
-                   + " 'bp-rt:nh-type-multicast'))"
+                   + " 'bpa-rt:nh-type-multicast'))"
                    + " or derived-from-or-self(mode,"
-                   + " 'bp-rt:mode-none')" {
+                   + " 'bpa-rt:mode-none')" {
                   error-message
                     "A multicast next-hop is incompatible with "
                   + "non-trivial forwarding-policy modes.";
@@ -2652,9 +2652,9 @@ module ietf-dtn-bp-routing {
 
                 must "not(derived-from-or-self("
                    + "../next-hop/next-hop-type,"
-                   + " 'bp-rt:nh-type-discard'))"
+                   + " 'bpa-rt:nh-type-discard'))"
                    + " or derived-from-or-self(mode,"
-                   + " 'bp-rt:mode-none')" {
+                   + " 'bpa-rt:mode-none')" {
                   error-message
                     "A discard next-hop is incompatible with "
                   + "non-trivial forwarding-policy modes.";
@@ -2665,9 +2665,9 @@ module ietf-dtn-bp-routing {
 
                 must "not(derived-from-or-self("
                    + "../next-hop/next-hop-type,"
-                   + " 'bp-rt:nh-type-reflect'))"
+                   + " 'bpa-rt:nh-type-reflect'))"
                    + " or derived-from-or-self(mode,"
-                   + " 'bp-rt:mode-none')" {
+                   + " 'bpa-rt:mode-none')" {
                   error-message
                     "A reflect next-hop is incompatible with "
                   + "non-trivial forwarding-policy modes.";
@@ -2680,7 +2680,7 @@ module ietf-dtn-bp-routing {
                   type identityref {
                     base forwarding-policy-mode;
                   }
-                  default "bp-rt:mode-none";
+                  default "bpa-rt:mode-none";
                   description
                     "The forwarding-policy mode for this route.";
                 }
@@ -2693,12 +2693,12 @@ module ietf-dtn-bp-routing {
 
                   case ecmp {
                     when "derived-from-or-self(../mode,"
-                       + " 'bp-rt:mode-ecmp')";
+                       + " 'bpa-rt:mode-ecmp')";
                     leaf hash-input {
                       type identityref {
                         base hash-input;
                       }
-                      default "bp-rt:hash-per-flow-eid-pair";
+                      default "bpa-rt:hash-per-flow-eid-pair";
                       description
                         "Selects the tuple over which the BPA
                          hashes to assign bundles to routes
@@ -2708,7 +2708,7 @@ module ietf-dtn-bp-routing {
 
                   case ucmp {
                     when "derived-from-or-self(../mode,"
-                       + " 'bp-rt:mode-ucmp')";
+                       + " 'bpa-rt:mode-ucmp')";
                     leaf weight {
                       type uint32 {
                         range "1..max";
@@ -2851,7 +2851,7 @@ module ietf-dtn-bp-routing {
 
           leaf next-hop-type {
             type identityref {
-              base bp-rt:next-hop-type;
+              base bpa-rt:next-hop-type;
             }
             description
               "The next-hop type of the selected route.
@@ -2869,7 +2869,7 @@ module ietf-dtn-bp-routing {
 
           leaf cla-binding {
             type leafref {
-              path "/bp:bp/cla:convergence-layers/cla:cla"
+              path "/bpa:bpa/cla:convergence-layers/cla:cla"
                  + "/cla:name";
             }
             description
@@ -2880,7 +2880,7 @@ module ietf-dtn-bp-routing {
 
           leaf resolved-peer-eid {
             type leafref {
-              path "/bp:bp/cla:convergence-layers/cla:cla"
+              path "/bpa:bpa/cla:convergence-layers/cla:cla"
                  + "[cla:name = current()/../cla-binding]"
                  + "/cla:peer/cla:peer-eid";
             }
@@ -2963,8 +2963,8 @@ module ietf-dtn-cla {
     prefix dtn-types;
     reference "RFC XXXX";
   }
-  import ietf-dtn-bp {
-    prefix bp;
+  import ietf-dtn-bpa {
+    prefix bpa;
     reference "RFC XXXX";
   }
   import ietf-yang-types {
@@ -3102,7 +3102,7 @@ module ietf-dtn-cla {
 
   /* -------------------- Augmentation -------------------- */
 
-  augment "/bp:bp" {
+  augment "/bpa:bpa" {
     description
       "Augments the Bundle Protocol Agent with convergence-layer
        configuration and state.";
@@ -3159,7 +3159,7 @@ module ietf-dtn-cla {
 
         leaf local-eid {
           type leafref {
-            path "/bp:bp/bp:admin-endpoint-eid";
+            path "/bpa:bpa/bpa:admin-eid";
           }
           description
             "The administrative endpoint EID this CLA advertises
@@ -3167,7 +3167,7 @@ module ietf-dtn-cla {
 
              If unset, the CLA defaults to the BPA's
              'primary-admin-endpoint'
-             (see '/bp:bp/bp:primary-admin-endpoint'), or to
+             (see '/bpa:bpa/bpa:primary-admin-endpoint'), or to
              an implementation-selected administrative endpoint
              if that leaf is also unset.  Setting this leaf is
              useful in multi-persona deployments where different
@@ -3337,8 +3337,8 @@ module ietf-dtn-cla-tcpclv4 {
   namespace "urn:ietf:params:xml:ns:yang:ietf-dtn-cla-tcpclv4";
   prefix cla-tcpcl;
 
-  import ietf-dtn-bp {
-    prefix bp;
+  import ietf-dtn-bpa {
+    prefix bpa;
     reference "RFC XXXX";
   }
   import ietf-dtn-cla {
@@ -3373,7 +3373,7 @@ module ietf-dtn-cla-tcpclv4 {
     reference "RFC XXXX";
   }
 
-  augment "/bp:bp/cla:convergence-layers/cla:cla" {
+  augment "/bpa:bpa/cla:convergence-layers/cla:cla" {
     when "derived-from-or-self(cla:type, 'cla:cla-tcpclv4')";
     description
       "Adds TCPCLv4-specific configuration to a CLA instance.";
@@ -3538,10 +3538,10 @@ static route directing all <code>ipn:974848.42.*</code> traffic to peer
 <code>ipn:974848.7.0</code> giving its transport address:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.1-2">
 <pre>
-/bp:bp/admin-endpoint-eid = ["ipn:974848.5.0"]
-/bp:bp/primary-admin-endpoint = "ipn:974848.5.0"
+/bpa:bpa/admin-eid = ["ipn:974848.5.0"]
+/bpa:bpa/primary-admin-endpoint = "ipn:974848.5.0"
 
-/bp:bp/cla:convergence-layers/cla:cla[name="tcpcl-public"]:
+/bpa:bpa/cla:convergence-layers/cla:cla[name="tcpcl-public"]:
   type             = cla:cla-tcpclv4
   enabled          = true
   local-eid        = "ipn:974848.5.0"
@@ -3552,12 +3552,12 @@ static route directing all <code>ipn:974848.42.*</code> traffic to peer
   cla-tcpcl:tcpclv4/listener[local-address="0.0.0.0", local-port=4556]:
     (no additional leaves)
 
-/bp:bp/bp-rt:routing/control-plane-protocols/control-plane-protocol
-       [type="bp-rt:proto-static", name="default"]:
+/bpa:bpa/bpa-rt:routing/control-plane-protocols/control-plane-protocol
+       [type="bpa-rt:proto-static", name="default"]:
   static-routes/route[name="ipn-42-network"]:
     preference                            = 100
     match/destination-eid-pattern         = "ipn:974848.42.*"
-    next-hop/next-hop-type                = bp-rt:nh-type-eid
+    next-hop/next-hop-type                = bpa-rt:nh-type-eid
     next-hop/next-hop-eid                 = "ipn:974848.7.0"
 </pre><a href="#section-5.1-2" class="pilcrow">¶</a>
 </div>
@@ -3574,10 +3574,10 @@ the two CLAs by hashing per (primary-block source node EID,
 destination EID) flow:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.2-2">
 <pre>
-/bp:bp/admin-endpoint-eid = ["ipn:974848.5.0"]
-/bp:bp/primary-admin-endpoint = "ipn:974848.5.0"
+/bpa:bpa/admin-eid = ["ipn:974848.5.0"]
+/bpa:bpa/primary-admin-endpoint = "ipn:974848.5.0"
 
-/bp:bp/cla:convergence-layers/cla:cla[name="cla-a"]:
+/bpa:bpa/cla:convergence-layers/cla:cla[name="cla-a"]:
   type             = cla:cla-tcpclv4
   enabled          = true
   local-eid        = "ipn:974848.5.0"
@@ -3585,7 +3585,7 @@ destination EID) flow:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
   cla-tcpcl:tcpclv4/listener[local-address="198.51.100.1", local-port=4556]:
     (no additional leaves)
 
-/bp:bp/cla:convergence-layers/cla:cla[name="cla-b"]:
+/bpa:bpa/cla:convergence-layers/cla:cla[name="cla-b"]:
   type             = cla:cla-tcpclv4
   enabled          = true
   local-eid        = "ipn:974848.5.0"
@@ -3593,23 +3593,23 @@ destination EID) flow:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
   cla-tcpcl:tcpclv4/listener[local-address="203.0.113.1", local-port=4556]:
     (no additional leaves)
 
-/bp:bp/bp-rt:routing/control-plane-protocols/control-plane-protocol
-       [type="bp-rt:proto-static", name="default"]:
+/bpa:bpa/bpa-rt:routing/control-plane-protocols/control-plane-protocol
+       [type="bpa-rt:proto-static", name="default"]:
   static-routes/route[name="ipn-42-via-cla-a"]:
     preference                            = 100
     match/destination-eid-pattern         = "ipn:974848.42.*"
-    next-hop/next-hop-type                = bp-rt:nh-type-cla
+    next-hop/next-hop-type                = bpa-rt:nh-type-cla
     next-hop/cla-binding                  = "cla-a"
-    forwarding-policy/mode                = bp-rt:mode-ecmp
-    forwarding-policy/hash-input          = bp-rt:hash-per-flow-eid-pair
+    forwarding-policy/mode                = bpa-rt:mode-ecmp
+    forwarding-policy/hash-input          = bpa-rt:hash-per-flow-eid-pair
 
   static-routes/route[name="ipn-42-via-cla-b"]:
     preference                            = 100
     match/destination-eid-pattern         = "ipn:974848.42.*"
-    next-hop/next-hop-type                = bp-rt:nh-type-cla
+    next-hop/next-hop-type                = bpa-rt:nh-type-cla
     next-hop/cla-binding                  = "cla-b"
-    forwarding-policy/mode                = bp-rt:mode-ecmp
-    forwarding-policy/hash-input          = bp-rt:hash-per-flow-eid-pair
+    forwarding-policy/mode                = bpa-rt:mode-ecmp
+    forwarding-policy/hash-input          = bpa-rt:hash-per-flow-eid-pair
 </pre><a href="#section-5.2-2" class="pilcrow">¶</a>
 </div>
 </section>
@@ -3640,7 +3640,7 @@ operations to these data nodes can have a negative effect on
 network operations.  Specifically:<a href="#section-6-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6-4.1">
-          <p id="section-6-4.1.1"><code>/bp:bp/admin-endpoint-eid</code>, <code>/bp:bp/primary-admin-endpoint</code>:
+          <p id="section-6-4.1.1"><code>/bpa:bpa/admin-eid</code>, <code>/bpa:bpa/primary-admin-endpoint</code>:
 Modifying a BPA's administrative endpoint EIDs changes the
 identity it presents to peers and may invalidate authentication
 state, contact plan entries, and static routes configured by
@@ -3648,7 +3648,7 @@ peers.  Unauthorized modification can also enable identity
 spoofing.<a href="#section-6-4.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-6-4.2">
-          <p id="section-6-4.2.1"><code>/bp:bp/bp-rt:routing/forwarding-retry-count</code>: Setting this
+          <p id="section-6-4.2.1"><code>/bpa:bpa/bpa-rt:routing/forwarding-retry-count</code>: Setting this
 value pathologically high could cause a BPA to hold bundles
 in storage for extended periods during link outages, exhausting
 storage and delaying custody transfer.  Setting it to zero
@@ -3656,7 +3656,7 @@ could cause premature bundle deletion in intermittently
 connected environments.<a href="#section-6-4.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-6-4.3">
-          <p id="section-6-4.3.1"><code>/bp:bp/bp-rt:routing/.../static-routes/route</code>: Unauthorized
+          <p id="section-6-4.3.1"><code>/bpa:bpa/bpa-rt:routing/.../static-routes/route</code>: Unauthorized
 creation, modification, or deletion of static routes can cause
 bundles to be misforwarded, replayed, dropped, or delivered to
 attacker-controlled endpoints.  This is the most operationally
@@ -3664,7 +3664,7 @@ consequential subtree in the modules defined here and <span class="bcp14">SHOULD
 protected with the strictest NACM rules.<a href="#section-6-4.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-6-4.4">
-          <p id="section-6-4.4.1"><code>/bp:bp/cla:convergence-layers/cla:cla</code>: Modifying CLA
+          <p id="section-6-4.4.1"><code>/bpa:bpa/cla:convergence-layers/cla:cla</code>: Modifying CLA
 configuration can disable an entire transport path, alter the
 set of peers a CLA accepts, or change TLS or other security
 parameters (in CLA-specific augmentations).  Of particular
@@ -3712,11 +3712,11 @@ URI: urn:ietf:params:xml:ns:yang:ietf-dtn-types
 Registrant Contact: The IESG.
 XML: N/A; the requested URI is an XML namespace.
 
-URI: urn:ietf:params:xml:ns:yang:ietf-dtn-bp
+URI: urn:ietf:params:xml:ns:yang:ietf-dtn-bpa
 Registrant Contact: The IESG.
 XML: N/A; the requested URI is an XML namespace.
 
-URI: urn:ietf:params:xml:ns:yang:ietf-dtn-bp-routing
+URI: urn:ietf:params:xml:ns:yang:ietf-dtn-bpa-routing
 Registrant Contact: The IESG.
 XML: N/A; the requested URI is an XML namespace.
 
@@ -3738,14 +3738,14 @@ namespace:    urn:ietf:params:xml:ns:yang:ietf-dtn-types
 prefix:       dtn-types
 reference:    RFC XXXX
 
-name:         ietf-dtn-bp
-namespace:    urn:ietf:params:xml:ns:yang:ietf-dtn-bp
-prefix:       bp
+name:         ietf-dtn-bpa
+namespace:    urn:ietf:params:xml:ns:yang:ietf-dtn-bpa
+prefix:       bpa
 reference:    RFC XXXX
 
-name:         ietf-dtn-bp-routing
-namespace:    urn:ietf:params:xml:ns:yang:ietf-dtn-bp-routing
-prefix:       bp-rt
+name:         ietf-dtn-bpa-routing
+namespace:    urn:ietf:params:xml:ns:yang:ietf-dtn-bpa-routing
+prefix:       bpa-rt
 reference:    RFC XXXX
 
 name:         ietf-dtn-cla
@@ -3887,7 +3887,7 @@ discussions that shaped this work.<a href="#appendix-A-1" class="pilcrow">¶</a>
 <p id="appendix-B-1">The following issues are flagged for working group discussion:<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="appendix-B-2">
 <li id="appendix-B-2.1">
-          <p id="appendix-B-2.1.1"><strong>'min-elements 1' on '/bp:bp/admin-endpoint-eid'.</strong>  The
+          <p id="appendix-B-2.1.1"><strong>'min-elements 1' on '/bpa:bpa/admin-eid'.</strong>  The
 leaf-list is currently unconstrained to permit transient
 configurations without any administrative endpoint EIDs.
 Whether to require at least one entry via YANG (with a
@@ -3922,7 +3922,7 @@ a companion document is open.<a href="#appendix-B-2.4.1" class="pilcrow">¶</a><
 Section 4.4.4 defines the Previous Node Block, whose
 attachment is a node configuration decision (a BPA <span class="bcp14">MAY</span> attach
 it to forwarded bundles).  This policy parameter is not
-modeled in the current <code>ietf-dtn-bp</code> module and is deferred
+modeled in the current <code>ietf-dtn-bpa</code> module and is deferred
 to future work alongside other BPA-completion items (see
 Non-Goals).  It is recorded here so it is not overlooked
 when the full BPA module is developed.<a href="#appendix-B-2.5.1" class="pilcrow">¶</a></p>
