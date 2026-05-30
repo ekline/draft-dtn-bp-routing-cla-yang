@@ -242,7 +242,7 @@ are defined as a separate `eid-pattern` typedef.  The grammar and
 semantics of EID patterns are defined in {{I-D.ietf-dtn-eid-pattern}}.
 
 A BPA's administrative endpoint EIDs are listed in
-`/bpa:bpa/admin-endpoint-eid`.  Each entry MUST be an Administrative
+`/bpa:bpa/admin-eid`.  Each entry MUST be an Administrative
 Endpoint EID as defined in Sections 3.2 and 4.2.5.2 of {{RFC9171}}:
 for the `dtn` scheme this is the node ID itself (e.g.,
 `dtn://example/`); for the `ipn` scheme this is the FQNN with service
@@ -386,8 +386,8 @@ hooks for future work:
 ~~~~
 module: ietf-dtn-bpa
   +--rw bpa
-     +--rw admin-endpoint-eid*       dtn-types:eid
-     +--rw primary-admin-endpoint?   -> ../admin-endpoint-eid
+     +--rw admin-eid*               dtn-types:eid
+     +--rw primary-admin-endpoint?   -> ../admin-eid
 ~~~~
 
 ## ietf-dtn-bpa-routing
@@ -472,7 +472,7 @@ module: ietf-dtn-cla
           +--rw type                  identityref
           +--rw enabled?              boolean
           +--rw direction?            identityref
-          +--rw local-eid?            -> /bpa:bpa/bpa:admin-endpoint-eid
+          +--rw local-eid?            -> /bpa:bpa/bpa:admin-eid
           +--rw bound-interface*      if:interface-ref
           +--rw mtu?                  uint64
           +--rw peer* [peer-eid]
@@ -709,9 +709,9 @@ module ietf-dtn-bpa {
        this container to add routing, convergence-layer, and
        related subtrees.";
 
-    leaf-list admin-endpoint-eid {
+    leaf-list admin-eid {
       type dtn-types:eid;
-      must "count(../admin-endpoint-eid[starts-with(., 'dtn://')]) <= 1" {
+      must "count(../admin-eid[starts-with(., 'dtn://')]) <= 1" {
         error-message
           "At most one dtn-scheme administrative endpoint EID "
         + "per BPA.  Multi-node deployments use multiple module "
@@ -721,7 +721,7 @@ module ietf-dtn-bpa {
            node (RFC 9171 Section 4.2.5.1.1); this module
            models one BPA, which is one BP node.";
       }
-      must "count(../admin-endpoint-eid[starts-with(., 'ipn:')]) <= 1" {
+      must "count(../admin-eid[starts-with(., 'ipn:')]) <= 1" {
         error-message
           "At most one ipn-scheme administrative endpoint EID "
         + "per BPA.  Multi-FQNN deployments use multiple module "
@@ -772,7 +772,7 @@ module ietf-dtn-bpa {
 
     leaf primary-admin-endpoint {
       type leafref {
-        path "../admin-endpoint-eid";
+        path "../admin-eid";
       }
       description
         "The administrative endpoint EID to use as the default
@@ -787,7 +787,7 @@ module ietf-dtn-bpa {
          scheme or the outgoing CLA type) may leave it unset.
          Implementations that prefer a configured default
          should set it to one of the entries in
-         'admin-endpoint-eid'.
+         'admin-eid'.
 
          When unset and no per-request context is available,
          the BPA selects an administrative endpoint in an
@@ -1804,7 +1804,7 @@ module ietf-dtn-cla {
 
         leaf local-eid {
           type leafref {
-            path "/bpa:bpa/bpa:admin-endpoint-eid";
+            path "/bpa:bpa/bpa:admin-eid";
           }
           description
             "The administrative endpoint EID this CLA advertises
@@ -2168,7 +2168,7 @@ static route directing all `ipn:974848.42.*` traffic to peer
 `ipn:974848.7.0` giving its transport address:
 
 ~~~~
-/bpa:bpa/admin-endpoint-eid = ["ipn:974848.5.0"]
+/bpa:bpa/admin-eid = ["ipn:974848.5.0"]
 /bpa:bpa/primary-admin-endpoint = "ipn:974848.5.0"
 
 /bpa:bpa/cla:convergence-layers/cla:cla[name="tcpcl-public"]:
@@ -2199,7 +2199,7 @@ the two CLAs by hashing per (primary-block source node EID,
 destination EID) flow:
 
 ~~~~
-/bpa:bpa/admin-endpoint-eid = ["ipn:974848.5.0"]
+/bpa:bpa/admin-eid = ["ipn:974848.5.0"]
 /bpa:bpa/primary-admin-endpoint = "ipn:974848.5.0"
 
 /bpa:bpa/cla:convergence-layers/cla:cla[name="cla-a"]:
@@ -2259,7 +2259,7 @@ sensitive or vulnerable in some network environments.  Write
 operations to these data nodes can have a negative effect on
 network operations.  Specifically:
 
-* `/bpa:bpa/admin-endpoint-eid`, `/bpa:bpa/primary-admin-endpoint`:
+* `/bpa:bpa/admin-eid`, `/bpa:bpa/primary-admin-endpoint`:
   Modifying a BPA's administrative endpoint EIDs changes the
   identity it presents to peers and may invalidate authentication
   state, contact plan entries, and static routes configured by
@@ -2379,7 +2379,7 @@ discussions that shaped this work.
 
 The following issues are flagged for working group discussion:
 
-1. **'min-elements 1' on '/bpa:bpa/admin-endpoint-eid'.**  The
+1. **'min-elements 1' on '/bpa:bpa/admin-eid'.**  The
    leaf-list is currently unconstrained to permit transient
    configurations without any administrative endpoint EIDs.
    Whether to require at least one entry via YANG (with a
